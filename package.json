@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "tsc": "./node_modules/typescript/bin/tsc",
     "dev": "nodemon src/server.ts",
     "build": "rimraf .dist && tsc",
     "start": "npm run build && node dist/server.js",
