@@ -7,7 +7,7 @@
     "tsc": "./node_modules/typescript/bin/tsc",
     "dev": "nodemon src/server.ts",
     "build": "rimraf .dist && tsc",
-    "start": "npm run build && node dist/server.js",
+    "start": "node dist/server.js",
     "rimraf": "./node_modules/rimraf/bin.js"
   },
   "keywords": [],
