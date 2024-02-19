@@ -7,9 +7,15 @@ export const find_user = async (req: Request, res: Response)=>{
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
 
-    const email = req.body.email;
+    
 
-    const user = await userService.getByEmail(email);
+    const email = req.body.email;
+    // const user = await userService.getByEmail(email);
+
+    const user = null;
+
+
+    res.json({succes: false, message: "Passou aqui"});
 
     if(user){
         const usuarioLocalizado = user[0];

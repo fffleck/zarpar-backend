@@ -8,19 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.find_user = void 0;
-const user_service_1 = __importDefault(require("../../services/user.service"));
 const find_user = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
     const email = req.body.email;
-
-    const user = yield user_service_1.default.getByEmail(email);
+    // const user = await userService.getByEmail(email);
+    const user = null;
+    res.json({ succes: false, message: "Passou aqui" });
     if (user) {
         const usuarioLocalizado = user[0];
         res.json({

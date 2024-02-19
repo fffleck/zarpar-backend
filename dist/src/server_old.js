@@ -589,8 +589,8 @@ function converteStrToData2(dataStr) {
     let year = parseInt(yearStr);
     return new Date(year, month, day);
 }
-const PORT = process.env.PORT || 3334;
-// const PORT = process.env.PORT || 3333; //DEV
+// const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3334; //DEV
 const server = app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 });

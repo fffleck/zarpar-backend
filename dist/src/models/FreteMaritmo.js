@@ -53,7 +53,7 @@ const FreteMaritmoSchema = new mongoose_1.default.Schema({
         type: String,
         required: true
     },
-    navio: {
+    nome_navio: {
         type: String,
         required: true
     },

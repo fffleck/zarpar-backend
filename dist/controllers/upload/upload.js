@@ -1,0 +1,97 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.find_user = void 0;
+const user_service_1 = __importDefault(require("../../services/user.service"));
+const frete_maritimo_1 = __importDefault(require("../../services/frete_maritmo.service"));
+const xlsx = require('xlsx');
+
+const upload = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', '*');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    const { data } = req.body;
+
+    const base64Buffer = Buffer.from(data.split(',')[1], 'base64');
+    const workbook = xlsx.read(base64Buffer, { type: 'buffer' });
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const dataFromExcel = xlsx.utils.sheet_to_json(sheet, {raw:false});
+    let total_registros = 0;
+    let total_importados = [];
+    let name_arquivo = null;
+
+
+    for (const row of dataFromExcel) {
+        const {Mercadoria: mercadoria, 'Tipo de Mercadoria': tipo_mercadoria,'Tipo de Container': tipo_container,
+              'Porto de Embarque': porto_embarque, 'Porto de Descarga' : porto_descarga, 'Data de Embarque': data_embarque, 
+              'Cia Maritima': armador, 'Navio': navio, 'Transit Time': tempo_de_transito, 'Data Chegada': data_chegada, 'Frete': frete, 'Transbordo': transbordo  } = row;
+
+        const dia_embarque = data_embarque.split("/")[0];
+        const mes_embarque = data_embarque.split("/")[1];
+        const ano_embarque = data_embarque.split("/")[2];
+        let new_mes_embarque = mes_embarque;
+        if (mes_embarque < 10) {  new_mes_embarque =  ("00" + mes_embarque).slice(-2) }
+
+        const dia_chegada = data_chegada.split("/")[0];
+        const mes_chegada = data_chegada.split("/")[1];
+        const ano_chagada = data_chegada.split("/")[2];
+        let new_mes_chegada = mes_chegada;
+        if (mes_chegada < 10) {  new_mes_chegada =  ("00" + mes_chegada).slice(-2) }
+
+
+        const new_data_embarque = dia_embarque+'/'+ new_mes_embarque +'/'+ano_embarque;
+        const new_data_chegada = dia_chegada+'/'+ new_mes_chegada +'/'+ano_chagada;
+        
+        const newFrete = {
+            mercadoria: mercadoria,
+            id_mercadoria: "1",
+            tipo_mercadoria: tipo_mercadoria,
+            id_tipo_mercadoria: "1",
+            tipo_container: tipo_container,
+            id_tipo_container: tipo_container=="40'DV"? "2" : "1",
+            porto_embarque: porto_embarque,
+            id_porto_embarque: "1",
+            porto_descarga: porto_descarga,
+            id_porto_descarga: "2",
+            armador: armador,
+            id_armador: armador=="Maersk" ? "1" : armador=="Exalog" ? "4": armador=="CMA-CGM" ? "2": armador=="MSC" ? "3" : "0",
+            navio: navio,
+            data_embarque: new_data_embarque,
+            tempo_de_transito: tempo_de_transito,
+            data_chegada: new_data_chegada,
+            frete: frete,
+            transbordo: transbordo
+        }
+
+        total_registros++;
+        name_arquivo = armador
+    
+        frete_maritimo_1.default.create(newFrete)
+        .then((id) => {
+            total_importados.push(id);
+        })
+        .catch(err => {
+            console.log('ERROR => ', err.message);
+        });   
+    }
+
+    return res.status(200).json({
+            success: true,
+            arquivo: name_arquivo,
+            total_registros: total_registros,
+            total_importados: total_registros,
+    });
+});
+
+exports.upload = upload;

@@ -10,6 +10,7 @@ import cotacaoRouter from "./routes/cotacaoRouter"
 import filtersRouter from "./routes/filtersRouter"
 import userRouter from "./routes/userRouter"
 import emailRouter from "./routes/emailRouter"
+import uploadRouter from "./routes/uploadRouter";
 
 class App{
     server: Application
@@ -33,6 +34,7 @@ class App{
         this.server.use("/filters", filtersRouter);
         this.server.use("/user", userRouter);
         this.server.use("/email", emailRouter);
+        this.server.use("/upload", uploadRouter);
     }
 
 }
