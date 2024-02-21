@@ -48,10 +48,10 @@ const zim = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.log("ZIM PORTO_DESCARGA", porto_descarga);
         console.log("ZIM TIPO_CONTAINER", tipo_container);
         try {
-            let api_zim_res = yield axios_1.default.get(`http://localhost:5000/zim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`);
-            // let api_zim_res = await axios.get(
-            //   `https://zarpar-bots-04cdaec0b166.herokuapp.com/zim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`
-            // );
+            // let api_zim_res = yield axios_1.default.get(`http://localhost:5000/zim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`);
+            let api_zim_res = await axios.get(
+              `https://zarpar-bots-e77d3a940747.herokuapp.com/zim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`
+            );
             api_zim_res.data.forEach((result) => {
                 response_freight.push(result);
             });
