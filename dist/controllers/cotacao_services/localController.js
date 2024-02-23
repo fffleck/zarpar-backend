@@ -59,7 +59,7 @@ const local = async (req, res) => {
         data_limite.setDate(data_1.getDate() + 10);
 
     
-        let fretes_banco = await frete_maritimo_service_1.default.getOne({ porto_embarque: porto_embarque_1, porto_descarga: porto_descarga_1, 
+        let fretes_banco = await frete_maritimo_service_1.default.getOne({ porto_embarque: porto_embarque_1, porto_descarga: porto_descarga_1,tipo_container: containers_str, 
         
             $expr: {
                 $and: [
