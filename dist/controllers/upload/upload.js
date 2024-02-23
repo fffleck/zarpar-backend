@@ -65,7 +65,15 @@ const upload = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             porto_descarga: porto_descarga,
             id_porto_descarga: "2",
             armador: armador,
-            id_armador: armador=="Maersk" ? "1" : armador=="Exalog" ? "4": armador=="CMA-CGM" ? "2": armador=="MSC" ? "3" : "0",
+            id_armador: 
+                armador.toUpperCase()=="MAERSK" ? "1" : 
+                armador.toUpperCase()=="CMA-CGM" ? "2": 
+                armador.toUpperCase()=="MSC" ? "3" : 
+                armador.toUpperCase()=="EXALOG" ? "4": 
+                armador.toUpperCase()=="COSCO" ? "5" : 
+                armador.toUpperCase()=="HAPAG" ? "6" : 
+                armador.toUpperCase()=="ONE" ? "7" : 
+                armador.toUpperCase()=="HMM" ? "8" :  "0",
             navio: navio,
             data_embarque: new_data_embarque,
             tempo_de_transito: tempo_de_transito,

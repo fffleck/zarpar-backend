@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.local = exports.localController = void 0;
 const porto_service_1 = require("../../services/porto.service");
 const frete_maritimo_service_1 = require("../../services/frete_maritmo.service");
+const armador_service_1 = require("../../services/armador.service");
+
 const utils_1 = require("../../utils");
 const localController = (req, res) => {
     const { data_saida, porto_embarque, porto_descarga, mercadoria, tipo_container, } = req.query;
@@ -88,6 +90,7 @@ const local = async (req, res) => {
                 });
             });
         }
+        console.log("RESPONSE FREIGTH ", response_freight);
         return response_freight;
     }
     catch (e) {

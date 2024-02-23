@@ -43,10 +43,6 @@ const zim = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Tratar data
         let data_saida_zim = (0, utils_1.formataData2)(new Date(data_saida));
-        console.log("ZIM DATA_SAIDA", data_saida_zim);
-        console.log("ZIM PORTO_EMBARQUE", porto_embarque);
-        console.log("ZIM PORTO_DESCARGA", porto_descarga);
-        console.log("ZIM TIPO_CONTAINER", tipo_container);
         try {
             // let api_zim_res = yield axios_1.default.get(`http://localhost:5000/zim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`);
             let api_zim_res = yield axios_1.default.get(

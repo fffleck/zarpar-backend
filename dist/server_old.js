@@ -61,7 +61,6 @@ app.get("/busca-fretes", (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 }));
 app.get("/test", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.query);
     const { data_saida, porto_embarque, porto_descarga, mercadoria, tipo_container, } = req.query;
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "*");
