@@ -90,7 +90,6 @@ const local = async (req, res) => {
                 });
             });
         }
-        console.log("RESPONSE FREIGTH ", response_freight);
         return response_freight;
     }
     catch (e) {
