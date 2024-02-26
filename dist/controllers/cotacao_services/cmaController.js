@@ -162,7 +162,7 @@ const cma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             data_embarque: (0, utils_1.formataData)(dataPartida),
             tempo_de_transito: `${transitTime} days`,
             data_chegada: (0, utils_1.formataData)(dataChegada),
-            frete: `$ ${parseFloat(frete)}`,
+            frete: parseFloat(frete),
             imagem_link: "http://www.cma-cgm.com/Images/2018/logo/logo-cmacgm.svg",
         });
     });

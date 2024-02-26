@@ -85,7 +85,7 @@ const local = async (req, res) => {
                     data_embarque: linha.data_embarque,
                     tempo_de_transito: linha.tempo_de_transito,
                     data_chegada: linha.data_chegada,
-                    frete: `$ ${parseFloat(linha.frete)}`,
+                    frete: parseFloat(linha.frete),
                     imagem_link: ` - `,
                 });
             });

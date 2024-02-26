@@ -283,7 +283,7 @@ const searates = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                     data_embarque: (0, utils_1.formataData)(data_partida),
                     tempo_de_transito: freight.transitTime,
                     data_chegada: (0, utils_1.formataData)(data_chegada),
-                    frete: `$ ${parseFloat(freight.price) - 100}`,
+                    frete: parseFloat(freight.price) - 100,
                     imagem_link: freight.logo,
                 });
             });
