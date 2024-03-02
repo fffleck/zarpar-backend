@@ -12,29 +12,37 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.find_user = void 0;
+exports.save_booking = void 0;
+const booking_service_1 = __importDefault(require("../../services/booking.service"));
 const user_service_1 = __importDefault(require("../../services/user.service"));
-const find_user = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const save_booking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
-    const email = req.body.email;
+    
+    const informacoesPedido = req.body;
 
-    const user = yield user_service_1.default.getByEmail(email);
-
-    if (user) {
-        const usuarioLocalizado = user[0];
-        res.json({
+    booking_service_1.default.create(informacoesPedido)
+    .then((id) => {
+        return res.status(200).json({
             success: true,
-            message: "Usuário localizado",
-            user: usuarioLocalizado
+            errorCode: 0,
+            message: "Booking cadastrado com sucesso."
         });
+    })
+    .catch(err => {
+    if (err.name === 'MongoServerError' && err.code === 11000) {
+        // Duplicate e-mail
+        return res.status(422).send({ succes: false, errorCode: err.code, message: 'Booking já cadastrado!' });
     }
     else {
-        res.status(401).json({
-            success: false,
-            message: "Problema ao localizar usuário."
-        });
+        return res.status(500).json({ success: false, errorCode: err.code, message: "Problema ao cadastrar booking" });
     }
 });
-exports.find_user = find_user;
+
+
+
+
+});
+
+exports.save_booking = save_booking;

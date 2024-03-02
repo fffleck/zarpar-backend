@@ -39,6 +39,16 @@ const updateUserToken = (usertoken) => __awaiter(void 0, void 0, void 0, functio
         yield user.save();
     }
 });
+const updateSearch = (email) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield User_1.default.findOne({ email: email });
+    if (!user) {
+        throw "Erro ao atualizar, usuario não encontrado.";
+    }
+    else {
+        user.search = user.search ? user.search + 1 : 1;
+        yield user.save();
+    }
+});
 exports.default = {
     create,
     getByEmail,
@@ -46,4 +56,5 @@ exports.default = {
     getUserToken,
     updateUserToken,
     updatePassword,
+    updateSearch,
 };

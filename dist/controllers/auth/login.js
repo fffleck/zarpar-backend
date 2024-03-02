@@ -40,6 +40,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 success: true,
                 token: generatedToken,
                 email: email,
+                name: usuarioEncontrado.name
             });
         }
         else {

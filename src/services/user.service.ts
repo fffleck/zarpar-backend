@@ -42,6 +42,17 @@ const updateUserToken = async (usertoken: IUserToken) => {
   }
 };
 
+const updateSearch = async (email: string) => {
+  const user = await User.findOne({ email: email });
+
+  if (!user) {
+    throw "Erro ao atualizar, usuario não encontrado.";
+  } else {
+    user.search = user.search ? user.search +1 : 1;
+    await user.save();
+  }
+};
+
 export default {
   create,
   getByEmail,
@@ -49,4 +60,5 @@ export default {
   getUserToken,
   updateUserToken,
   updatePassword,
+  updateSearch,
 };

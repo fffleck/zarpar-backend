@@ -12,29 +12,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.find_user = void 0;
+exports.list_booking = void 0;
+const booking_service_1 = __importDefault(require("../../services/booking.service"));
 const user_service_1 = __importDefault(require("../../services/user.service"));
-const find_user = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const list_booking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
-    const email = req.body.email;
+    
+    const informacoesPedido = req.body;
+    const email = informacoesPedido.embarcador_email;
 
-    const user = yield user_service_1.default.getByEmail(email);
+    const listBookings = yield booking_service_1.default.getListByEmail(email);
 
-    if (user) {
-        const usuarioLocalizado = user[0];
-        res.json({
+    if (listBookings) {
+        return res.status(200).json({
             success: true,
-            message: "Usuário localizado",
-            user: usuarioLocalizado
+            message: "Booking cadastrado com sucesso.",
+            list: listBookings
         });
-    }
-    else {
-        res.status(401).json({
+    } else {
+        res.status(404).json({
             success: false,
-            message: "Problema ao localizar usuário."
+            message: "Problema ao localizar bookings"
         });
     }
+
+    
 });
-exports.find_user = find_user;
+
+exports.list_booking = list_booking;

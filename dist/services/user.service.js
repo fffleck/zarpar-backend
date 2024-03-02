@@ -18,8 +18,20 @@ const UserToken_1 = __importDefault(require("../models/UserToken"));
 const create = (body) => User_1.default.create(body);
 const getByEmail = (emailRequerido) => User_1.default.find({ email: emailRequerido });
 const getOneByEmail = (emailRequerido) => User_1.default.findOne({ email: emailRequerido });
+const updateSearch = (emailRequerido) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield User_1.default.findOne({ email: emailRequerido });
+    if (!user) {
+        throw "Erro ao atualizar, search de usuario não encontrado.";
+    }
+    user.search = user.search ? user.search+1 : 1;
+    yield user.save();
+});
+
 const updatePassword = (emailRequerido, password) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield User_1.default.findOne({ email: emailRequerido });
+
+    console.log('USUARIO', user);
+
     if (!user) {
         throw "Erro ao atualizar, usuario não encontrado.";
     }
@@ -46,4 +58,5 @@ exports.default = {
     getUserToken,
     updateUserToken,
     updatePassword,
+    updateSearch,
 };

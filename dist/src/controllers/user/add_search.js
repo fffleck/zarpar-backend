@@ -12,22 +12,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.find_user = void 0;
+exports.add_search = void 0;
 const user_service_1 = __importDefault(require("../../services/user.service"));
-const find_user = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const add_search = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
     const email = req.body.email;
-
-    const user = yield user_service_1.default.getByEmail(email);
-
-    if (user) {
-        const usuarioLocalizado = user[0];
+    const useraddSearch = yield user_service_1.default.updateSearch(email);
+    if (email) {
         res.json({
             success: true,
-            message: "Usuário localizado",
-            user: usuarioLocalizado
+            message: "Atualizado"
         });
     }
     else {
@@ -37,4 +33,4 @@ const find_user = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
 });
-exports.find_user = find_user;
+exports.add_search = add_search;

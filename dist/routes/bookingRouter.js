@@ -3,14 +3,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const register_1 = require("../controllers/user/register");
-const find_user_1 = require("../controllers/user/find_user");
-const search_user_1 = require("../controllers/user/add_search");
+const booking_1 = require("../controllers/booking/save_booking")
+const booking_list_1 = require("../controllers/booking/list_booking")
+
 const express_1 = __importDefault(require("express"));
 const routes = express_1.default.Router();
 // Filtros
-routes.post('/register', register_1.register);
-routes.post('/find_user', find_user_1.find_user);
-routes.post('/add_search', search_user_1.add_search);
+routes.post('/save_booking', booking_1.save_booking);
+routes.post('/list_booking', booking_list_1.list_booking);
 
 exports.default = routes;

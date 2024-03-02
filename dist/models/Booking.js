@@ -4,44 +4,47 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const UserSchema = new mongoose_1.default.Schema({
-    name: {
+const BookingSchema = new mongoose_1.default.Schema({
+    armador: {
         type: String,
         required: true
     },
-    enterpriseName: {
+    data_embarque: {
         type: String,
         required: true
     },
-    address: {
+    embarcador_nome: {
         type: String,
         required: true
     },
-    city: {
+    embarcador_email: {
         type: String,
         required: true
     },
-    state: {
+    tipo_mercadoria: {
         type: String,
         required: true
     },
-    zipCode: {
-        type: String,
-        required: true
-    },
-    email: {
+    porto_embarque: {
         type: String,
         required: true,
-        unique: true
     },
-    password: {
+    porto_descarga: {
         type: String,
         required: true
     },
-    search: {
-        type: Number,
-        required: false
+    quantidade_containers: {
+        type: String,
+        required: true
+    },
+    tipo_container: {
+        type: String,
+        required: true
+    },
+    valor: {
+        type: String,
+        required: true
     }
 });
-const User = mongoose_1.default.model("User", UserSchema);
+const User = mongoose_1.default.model("Booking", BookingSchema);
 exports.default = User;

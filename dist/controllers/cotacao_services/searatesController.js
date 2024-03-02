@@ -82,6 +82,7 @@ const searates = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         containers_str = ` ${tipo_container}: 1,`;
         let platform_id = 4281;
         let token = (yield axios_1.default.get(`https://www.searates.com/auth/platform-token?id=${platform_id}`)).data["s-token"];
+
         const config = {
             headers: { Authorization: `Bearer ${token}` },
         };
@@ -262,6 +263,7 @@ const searates = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                                    `,
         });
         let api_res = yield axios_1.default.post("https://www.searates.com/graphql_rates", data, config);
+
         api_res.data.data.shipment.forEach((shipment) => {
             let freights = shipment.freight;
             freights.forEach((freight) => {
@@ -269,6 +271,7 @@ const searates = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 let tempo_trasito = parseInt(freight.transitTime.split(" ")[0]);
                 let data_chegada = new Date(data_partida);
                 data_chegada.setDate(data_chegada.getDate() + tempo_trasito);
+
                 response_freight.push({
                     shipment_id: shipment.shipmentId,
                     tipo_container: freight.containerType,

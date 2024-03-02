@@ -12,29 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.find_user = void 0;
-const user_service_1 = __importDefault(require("../../services/user.service"));
-const find_user = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', '*');
-    res.setHeader('Access-Control-Allow-Headers', '*');
-    const email = req.body.email;
+const Booking_1 = __importDefault(require("../models/Booking"));
 
-    const user = yield user_service_1.default.getByEmail(email);
+const create = (body) => Booking_1.default.create(body);
+const getListByEmail = (emailRequerido) => Booking_1.default.find({ email: emailRequerido });
 
-    if (user) {
-        const usuarioLocalizado = user[0];
-        res.json({
-            success: true,
-            message: "Usuário localizado",
-            user: usuarioLocalizado
-        });
-    }
-    else {
-        res.status(401).json({
-            success: false,
-            message: "Problema ao localizar usuário."
-        });
-    }
-});
-exports.find_user = find_user;
+exports.default = {
+    create,
+    getListByEmail,
+};

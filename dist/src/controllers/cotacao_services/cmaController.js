@@ -144,6 +144,10 @@ const cma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 routingChegada = routingDetail;
             }
         });
+        console.log(routingChegada);
+        console.log(routingPartida);
+        console.log(dataChegada);
+        console.log(dataPartida);
         response_freight.push({
             shipment_id: voyageReference,
             tipo_container: tipo_container,
