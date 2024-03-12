@@ -54,12 +54,13 @@ export const zim = async (req: Request, res: Response) => {
       let api_zim_res = await axios.get(
         `https://karavel-services-e63c55605b2e.herokuapp.com/zim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`
       );
+
+
+      console.log("URL ZIM ", `https://karavel-services-e63c55605b2e.herokuapp.com/zim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`);
       api_zim_res.data.forEach((result: any) => {
         response_freight.push(result);
       });
-    } catch (e) {
-      console.log("ERRO ZIM ", e.message);
-      
+    } catch (error) {
       console.log("Zim não trouxe resultados.");
     }
     if (response_freight.length === 0) {
