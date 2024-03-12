@@ -58,6 +58,8 @@ export const zim = async (req: Request, res: Response) => {
         response_freight.push(result);
       });
     } catch (e) {
+      console.log("ERRO ZIM ", e.message);
+      
       console.log("Zim não trouxe resultados.");
     }
     if (response_freight.length === 0) {
