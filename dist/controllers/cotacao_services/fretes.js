@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fretes = void 0;
 const zimController_1 = require("./zimController");
+const maerskController_1 = require("./maerskController");
 const searatesController_1 = require("./searatesController");
 const cmaController_1 = require("./cmaController");
 const localController_1 = require("./localController");
@@ -24,6 +25,7 @@ const fretes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     response_freight = [];
     response_freight = yield adicionar_servico(response_freight, req, res, searatesController_1.searates);
     response_freight = yield adicionar_servico(response_freight, req, res, zimController_1.zim);
+    response_freight = yield adicionar_servico(response_freight, req, res, maerskController_1.maersk);
     response_freight = yield adicionar_servico(response_freight, req, res, evergreenController_1.evergreen);
     response_freight = yield adicionar_servico(response_freight, req, res, cmaController_1.cma);
     response_freight = yield adicionar_servico(response_freight, req, res, localController_1.local);
