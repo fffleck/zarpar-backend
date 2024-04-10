@@ -57,9 +57,8 @@ const local = async (req, res) => {
         let data_1 = new Date(data_saida);
         let data_limite = new Date();
         data_limite.setDate(data_1.getDate() + 10);
-
     
-        let fretes_banco = await frete_maritimo_service_1.default.getOne({ porto_embarque: porto_embarque_1, porto_descarga: porto_descarga_1,tipo_container: containers_str, 
+        let fretes_banco = await frete_maritimo_service_1.default.getOne({ porto_embarque: porto_embarque_1.trim(), porto_descarga: porto_descarga_1.trim(),tipo_container: containers_str, 
         
             $expr: {
                 $and: [
@@ -68,6 +67,8 @@ const local = async (req, res) => {
                 ]
               }
         });
+
+
         let response_freight = [];
         if (fretes_banco.length >= 1) {
             fretes_banco.forEach((linha) => {

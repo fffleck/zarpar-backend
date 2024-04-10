@@ -52,6 +52,7 @@ const upload = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 
         const new_data_embarque = dia_embarque+'/'+ new_mes_embarque +'/'+ano_embarque;
         const new_data_chegada = dia_chegada+'/'+ new_mes_chegada +'/'+ano_chagada;
+        const new_porto_descarga = porto_descarga.split("-")[0]
         
         const newFrete = {
             mercadoria: mercadoria,
@@ -62,7 +63,7 @@ const upload = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             id_tipo_container: tipo_container=="40'DV"? "2" : "1",
             porto_embarque: porto_embarque,
             id_porto_embarque: "1",
-            porto_descarga: porto_descarga,
+            porto_descarga: new_porto_descarga.trim(),
             id_porto_descarga: "2",
             armador: armador,
             id_armador: 

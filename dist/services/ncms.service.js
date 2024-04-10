@@ -12,15 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Booking_1 = __importDefault(require("../models/Booking"));
-const Schedule_1 = __importDefault(require("../models/Schedule"));
-
-const create = (body) => Booking_1.default.create(body);
-const getListByEmail = (emailRequerido) => Booking_1.default.find({ email: emailRequerido });
-const scheduleBooking = (body) => Schedule_1.default.create(body);
+const ncm_1 = __importDefault(require("../models/Ncm"));
+const create = (body) => ncm_1.default.create(body);
+const getAll = () => ncm_1.default.find();
+const getByName = (codigo) => ncm_1.default.find({ $or: [{name: new RegExp('.*' + codigo + '.*')},{codigo: new RegExp(codigo + '.*')}] },{_id: 0, code: 1, name: 1})
 
 exports.default = {
     create,
-    getListByEmail,
-    scheduleBooking,
+    getAll,
+    getByName
 };
