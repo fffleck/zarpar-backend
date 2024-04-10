@@ -46,5 +46,5 @@ const BookingSchema = new mongoose_1.default.Schema({
         required: true
     }
 });
-const User = mongoose_1.default.model("Booking", BookingSchema);
-exports.default = User;
+const Booking = mongoose_1.default.model("Booking", BookingSchema);
+exports.default = Booking;
