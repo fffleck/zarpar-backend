@@ -44,10 +44,13 @@ const zim = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         // Tratar data
         let data_saida_zim = (0, utils_1.formataData2)(new Date(data_saida));
         try {
-            // let api_zim_res = yield axios_1.default.get(`http://localhost:5000/zim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`);
+            // let api_zim_res = yield axios_1.default.get(`http://localhost:5001/zim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`);
             let api_zim_res = yield axios_1.default.get(
               `https://zarpar-bots-e77d3a940747.herokuapp.com/zim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`
             );
+
+            console.log("RETORNO ZIM", api_zim_res);
+
             api_zim_res.data.forEach((result) => {
                 response_freight.push(result);
             });
