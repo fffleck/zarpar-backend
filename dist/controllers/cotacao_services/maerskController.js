@@ -44,10 +44,10 @@ const maersk = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         // Tratar data
         let data_saida_maersk = (0, utils_1.formataData2)(new Date(data_saida));
         try {
-            let api_maersk_res = yield axios_1.default.get(`http://localhost:5001/maersk?data_saida=${data_saida_maersk}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&mercadoria=1&tipo_container=${tipo_container}`);
-            // let api_maersk_res = yield axios_1.default.get(
-            //   `https://zarpar-bots-e77d3a940747.herokuapp.com/maersk?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`
-            // );
+            // let api_maersk_res = yield axios_1.default.get(`http://localhost:5001/maersk?data_saida=${data_saida_maersk}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&mercadoria=1&tipo_container=${tipo_container}`);
+            let api_maersk_res = yield axios_1.default.get(
+              `https://zarpar-bots-e77d3a940747.herokuapp.com/maersk?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`
+            );
     
             api_maersk_res.data.forEach((result) => {
                 response_freight.push(result);
