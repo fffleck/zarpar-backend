@@ -106,16 +106,21 @@ const cma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     let chargeFRT00;
     let chargeBAF03;
+    let chargeBAF08;
+    let otherTaxsValue = 0;
+    let objFrete = [];
     chargeFRT00 = surcharges.matchingCargoSurcharges.find((charge) => {
-        // console.log(charge);
+        // console.log("Taxas CMA", charge);
         return charge.charge.chargeCode === "FRT00";
     });
     chargeBAF03 = surcharges.matchingCargoSurcharges.find((charge) => {
         return charge.charge.chargeCode === "BAF03";
     });
-    // console.log(chargeFRT00);
-    let frete = chargeFRT00.amount + chargeBAF03.amount; //FRETE
-    // console.log(frete);
+
+    chargeBAF08 = surcharges.matchingCargoSurcharges.find((charge) => {
+        return charge.charge.chargeCode === "BAF08";
+    });
+
     routings_api_data.forEach((routing) => {
         // console.log("\nROUTING:");
         let transitTime = routing.transitTime;
@@ -162,7 +167,9 @@ const cma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             data_embarque: (0, utils_1.formataData)(dataPartida),
             tempo_de_transito: `${transitTime} days`,
             data_chegada: (0, utils_1.formataData)(dataChegada),
-            frete: parseFloat(frete),
+            base_freight: chargeFRT00.amount,
+            bunker: ((chargeBAF08.amount ?? 0) + (chargeBAF03.amount ?? 0)),
+            isps: otherTaxsValue,
             imagem_link: "http://www.cma-cgm.com/Images/2018/logo/logo-cmacgm.svg",
         });
     });

@@ -69,7 +69,15 @@ const FreteMaritmoSchema = new mongoose_1.default.Schema({
         type: String,
         required: true
     },
-    frete: {
+    base_freight: {
+        type: String,
+        required: true
+    },
+    bunker: {
+        type: String,
+        required: true
+    },
+    isps: {
         type: String,
         required: true
     },

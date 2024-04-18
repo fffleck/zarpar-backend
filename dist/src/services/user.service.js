@@ -30,7 +30,6 @@ const updatePassword = (emailRequerido, password) => __awaiter(void 0, void 0, v
 const getUserToken = (token) => UserToken_1.default.findOne({ token: token });
 const updateUserToken = (usertoken) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield UserToken_1.default.findOne({ email: usertoken.email });
-    console.log(user);
     if (!user) {
         yield UserToken_1.default.create(usertoken);
     }

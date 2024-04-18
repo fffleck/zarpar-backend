@@ -33,9 +33,20 @@ const upload = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 
 
     for (const row of dataFromExcel) {
-        const {Mercadoria: mercadoria, 'Tipo de Mercadoria': tipo_mercadoria,'Tipo de Container': tipo_container,
-              'Porto de Embarque': porto_embarque, 'Porto de Descarga' : porto_descarga, 'Data de Embarque': data_embarque, 
-              'Cia Maritima': armador, 'Navio': navio, 'Transit Time': tempo_de_transito, 'Data Chegada': data_chegada, 'Frete': frete, 'Transbordo': transbordo  } = row;
+        const {Mercadoria: mercadoria, 
+                'Tipo de Mercadoria': tipo_mercadoria,
+                'Tipo de Container': tipo_container,
+                'Porto de Embarque': porto_embarque, 
+                'Porto de Descarga' : porto_descarga, 
+                'Data de Embarque': data_embarque,
+                'Cia Maritima': armador, 
+                'Navio': navio, 
+                'Transit Time': tempo_de_transito, 
+                'Data Chegada': data_chegada, 
+                'Base Frete': base_freight,
+                'Bunker': bunker,
+                'ISPS': isps,
+                'Transbordo': transbordo  } = row;
 
         const dia_embarque = data_embarque.split("/")[0];
         const mes_embarque = data_embarque.split("/")[1];
@@ -79,7 +90,9 @@ const upload = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             data_embarque: new_data_embarque,
             tempo_de_transito: tempo_de_transito,
             data_chegada: new_data_chegada,
-            frete: frete,
+            base_freight: base_freight,
+            bunker: bunker,
+            isps: isps,
             transbordo: transbordo
         }
 

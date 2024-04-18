@@ -65,7 +65,6 @@ app.get("/busca-fretes", async (req, res) => {
 });
 
 app.get("/test", async (req, res) => {
-  console.log(req.query);
   const {
     data_saida,
     porto_embarque,

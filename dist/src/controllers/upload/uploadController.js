@@ -15,6 +15,5 @@ const files = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
     const file = req.body.data;
-    console.log('ARQUIVO ', file);
 });
 exports.files = files;

@@ -86,11 +86,14 @@ const local = async (req, res) => {
                     data_embarque: linha.data_embarque,
                     tempo_de_transito: linha.tempo_de_transito,
                     data_chegada: linha.data_chegada,
-                    frete: parseFloat(linha.frete),
+                    base_freight: parseFloat(linha.base_freight),
+                    bunker: parseFloat(linha.bunker),
+                    isps: parseFloat(linha.isps),
                     imagem_link: ` - `,
                 });
             });
         }
+
         return response_freight;
     }
     catch (e) {

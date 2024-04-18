@@ -30,8 +30,6 @@ const updateSearch = (emailRequerido) => __awaiter(void 0, void 0, void 0, funct
 const updatePassword = (emailRequerido, password) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield User_1.default.findOne({ email: emailRequerido });
 
-    console.log('USUARIO', user);
-
     if (!user) {
         throw "Erro ao atualizar, usuario não encontrado.";
     }

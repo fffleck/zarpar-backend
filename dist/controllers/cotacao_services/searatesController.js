@@ -80,16 +80,16 @@ const searates = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             containers_str += ` REF40: ${containers.REF40},`;
         }
         containers_str = ` ${tipo_container}: 1,`;
+
         let platform_id = 4281;
         let token = (yield axios_1.default.get(`https://www.searates.com/auth/platform-token?id=${platform_id}`)).data["s-token"];
 
         const config = {
             headers: { Authorization: `Bearer ${token}` },
         };
+
         let data = JSON.stringify({
-            query: `
-   
-     {
+            query: `{
        shipment: fcl(from: [${from.lat}, ${from.long}],to: [${to.lat}, ${to.long}],${containers_str} , date: "${data_saida}",  currency: USD) {
          shipmentId
          transportationMode
@@ -262,6 +262,7 @@ const searates = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
      
                                    `,
         });
+
         let api_res = yield axios_1.default.post("https://www.searates.com/graphql_rates", data, config);
 
         api_res.data.data.shipment.forEach((shipment) => {
@@ -271,7 +272,18 @@ const searates = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 let tempo_trasito = parseInt(freight.transitTime.split(" ")[0]);
                 let data_chegada = new Date(data_partida);
                 data_chegada.setDate(data_chegada.getDate() + tempo_trasito);
+                let bunker = 0;
+                const isps = 19;
 
+                if (containers_str == "ST20: 1") {
+                  bunker = 178;
+                } else {
+                  bunker = 356;
+                }
+
+                ///calculo de frete 
+                const base_freight = parseFloat(freight.price) - bunker - isps;
+                
                 response_freight.push({
                     shipment_id: shipment.shipmentId,
                     tipo_container: freight.containerType,
@@ -286,13 +298,16 @@ const searates = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                     data_embarque: (0, utils_1.formataData)(data_partida),
                     tempo_de_transito: freight.transitTime,
                     data_chegada: (0, utils_1.formataData)(data_chegada),
-                    frete: parseFloat(freight.price) - 100,
+                    base_freight: base_freight,
+                    bunker: bunker,
+                    isps: isps,
                     imagem_link: freight.logo,
                 });
             });
         });
         
         if (response_freight.length === 0) {
+          
             return [];
         }
         else {
