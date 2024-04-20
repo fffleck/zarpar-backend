@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.send_quotation = void 0;
 const nodemailer = require("nodemailer");
 const SMTP_CONFIG = require("../../config/mail_smtp");
-// const emailsAnalise = ['alvaro@karavel.com.br'];
 const emailsAnalise = ["alvaro@karavel.com.br"];
 const transporter = nodemailer.createTransport({
     host: SMTP_CONFIG.host,
@@ -33,8 +32,8 @@ const send_quotation = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const informacoesPedido = req.body;
     yield transporter
         .sendMail({
-        from: `Pedidos Karavel Shipping - <lephanyx@gmail.com>`,
-        subject: `Pedido de Cotação Karavel - ${informacoesPedido.embarcador_nome}`,
+        from: `Pedidos Zarpar Shipping - <lephanyx@gmail.com>`,
+        subject: `Pedido de Cotação Zarpar - ${informacoesPedido.embarcador_nome}`,
         to: emailsAnalise,
         html: `
       <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">

@@ -31,8 +31,8 @@ const send_analysis = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     res.setHeader('Access-Control-Allow-Headers', '*');
     const informacoesPedido = req.body;
     yield transporter.sendMail({
-        from: `Pedidos Karavel Shipping - <lephanyx@gmail.com>`,
-        subject: `Pedido Karavel - ${informacoesPedido.embarcador_nome}`,
+        from: `Pedidos Zarpar Shipping - <lephanyx@gmail.com>`,
+        subject: `Pedido Zarpar - ${informacoesPedido.embarcador_nome}`,
         to: emailsAnalise,
         html: `
         <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">

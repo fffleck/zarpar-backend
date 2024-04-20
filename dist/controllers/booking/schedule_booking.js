@@ -22,7 +22,7 @@ const save_schedule = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     
     const informacoesBooking = req.body;
 
-    informacoesBooking.mercadoria = informacoesBooking.selectMercadoria.split(" - ")[1];
+    informacoesBooking.mercadoria = informacoesBooking.selectMercadoria ? informacoesBooking.selectMercadoria.split(" - ")[1] : null;
     informacoesBooking.valor  = parseFloat(informacoesBooking.quantidade_containers) * parseFloat(informacoesBooking.frete)
 
     booking_service_1.default.scheduleBooking(informacoesBooking)

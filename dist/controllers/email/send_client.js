@@ -30,8 +30,8 @@ const send_client = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     res.setHeader('Access-Control-Allow-Headers', '*');
     const informacoesPedido = req.body;
     yield transporter.sendMail({
-        from: `Pedidos Karavel Shipping - <lephanyx@gmail.com>`,
-        subject: `Booking Karavel - ${informacoesPedido.embarcador_nome}`,
+        from: `Pedidos Zarpar Shipping - <lephanyx@gmail.com>`,
+        subject: `Booking Zarpar - ${informacoesPedido.embarcador_nome}`,
         to: [informacoesPedido.embarcador_email],
         html: `
         <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
