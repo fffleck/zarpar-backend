@@ -21,9 +21,10 @@ const list_booking = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     res.setHeader('Access-Control-Allow-Headers', '*');
     
     const informacoesPedido = req.body;
-    const email = informacoesPedido.embarcador_email;
 
-    const listBookings = yield booking_service_1.default.getListByEmail(email);
+    const email = informacoesPedido.params.email;
+
+    const listBookings = yield booking_service_1.default.getBookinByEmail(email);
 
     if (listBookings) {
         return res.status(200).json({

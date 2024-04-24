@@ -55,8 +55,6 @@ const fretes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.log({
             message: "[COTAÇÕES] Fretes nao encontrado.",
         });
-
-        console.log("RETORNO", response_freight);
         
         res.status(200).json(msg_default);
     }

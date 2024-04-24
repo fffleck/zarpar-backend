@@ -17,10 +17,12 @@ const Schedule_1 = __importDefault(require("../models/Schedule"));
 
 const create = (body) => Booking_1.default.create(body);
 const getListByEmail = (emailRequerido) => Booking_1.default.find({ email: emailRequerido });
+const getBookinByEmail = (emailRequerido) => Schedule_1.default.find({ embarcador_email: emailRequerido });
 const scheduleBooking = (body) => Schedule_1.default.create(body);
 
 exports.default = {
     create,
     getListByEmail,
+    getBookinByEmail,
     scheduleBooking,
 };
