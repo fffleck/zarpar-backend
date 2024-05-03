@@ -22,7 +22,9 @@ const list_booking = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     
     const informacoesPedido = req.body;
 
-    const email = informacoesPedido.params.email;
+    const email = informacoesPedido.email;
+
+    console.log("Email", email)
 
     const listBookings = yield booking_service_1.default.getBookinByEmail(email);
 
