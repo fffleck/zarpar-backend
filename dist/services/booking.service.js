@@ -18,11 +18,36 @@ const Schedule_1 = __importDefault(require("../models/Schedule"));
 const create = (body) => Booking_1.default.create(body);
 const getListByEmail = (emailRequerido) => Booking_1.default.find({ email: emailRequerido });
 const getBookinByEmail = (emailRequerido) => Schedule_1.default.find({ embarcador_email: emailRequerido });
+const getBookingById = (id) => Schedule_1.default.findById(id);
 const scheduleBooking = (body) => Schedule_1.default.create(body);
+// const updateBooking = (body, id) => Schedule_1.default.update({_id: id},{status: body.status, booking_id: body.booking_id, bl_number: body.blNumber })
+const updateBooking = async (body, bookingId) => {
+    try {
+      const Schedule = Schedule_1.default;
+    
+      const updatedBooking = await Schedule.findByIdAndUpdate(body.bookingId, {
+        status: body.body.status,
+        booking_id: body.body.booking_id,
+        bl_number: body.body.blNumber
+      }, { new: true });
+  
+      if (!updatedBooking) {
+        throw new Error('Reserva não encontrada ou não pôde ser atualizada.');
+      }
+  
+      return updatedBooking;
+    } catch (error) {
+      console.error('Erro ao atualizar reserva:', error);
+      throw error; 
+    }
+  };
+
 
 exports.default = {
     create,
     getListByEmail,
     getBookinByEmail,
+    getBookingById,
     scheduleBooking,
+    updateBooking
 };

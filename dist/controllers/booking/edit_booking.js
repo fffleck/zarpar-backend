@@ -15,21 +15,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.list_booking = void 0;
 const booking_service_1 = __importDefault(require("../../services/booking.service"));
 const user_service_1 = __importDefault(require("../../services/user.service"));
-const list_booking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const edit_booking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
-    
-    const informacoesPedido = req.body;
 
-    const email = informacoesPedido.email;
+    const pedido = req.params.id;
 
-    const listBookings = yield booking_service_1.default.getBookinByEmail(email);
+    const listBookings = yield booking_service_1.default.getBookingById(pedido)
 
     if (listBookings) {
         return res.status(200).json({
             success: true,
-            message: "Booking cadastrado com sucesso.",
+            message: "Booking encontrado",
             list: listBookings
         });
     } else {
@@ -42,4 +40,4 @@ const list_booking = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     
 });
 
-exports.list_booking = list_booking;
+exports.edit_booking = edit_booking;

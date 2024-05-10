@@ -13,33 +13,39 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.list_booking = void 0;
-const booking_service_1 = __importDefault(require("../../services/booking.service"));
-const user_service_1 = __importDefault(require("../../services/user.service"));
-const list_booking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const taxes_service_1 = __importDefault(require("../../services/taxes.service"));
+
+const search_taxes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
     
-    const informacoesPedido = req.body;
+    const infoBooking = req.body;
 
-    const email = informacoesPedido.email;
+    // console.log("BOOKING INFO ", infoBooking);
 
-    const listBookings = yield booking_service_1.default.getBookinByEmail(email);
+    const porto = infoBooking.props.porto_embarque.split("-")[0];
+    const armador = infoBooking.props.armador.replace(" ", "-");
 
-    if (listBookings) {
+    console.log("PORTO ", porto);
+    console.log("ARMADOR ", armador);
+
+    const listTaxes = yield taxes_service_1.default.getByPort({porto: porto, armador: armador})
+
+    if (listTaxes) {
         return res.status(200).json({
             success: true,
-            message: "Booking cadastrado com sucesso.",
-            list: listBookings
+            message: "Lista de Taxas.",
+            list: listTaxes
         });
     } else {
         res.status(404).json({
             success: false,
-            message: "Problema ao localizar bookings"
+            message: "Problema ao localizar Taxas"
         });
     }
 
     
 });
 
-exports.list_booking = list_booking;
+exports.search_taxes = search_taxes;

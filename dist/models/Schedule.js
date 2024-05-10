@@ -47,7 +47,9 @@ const ScheduleSchema = new mongoose_1.default.Schema({
     transbordo: { type: String },
     typeContainer: { type: String },
     valor : { type: Number },
-    status: { type: String }
+    status: { type: String },
+    booking_id: { type: String },
+    bl_number: { type: String },
 });
 const Schedule = mongoose_1.default.model("Schedule", ScheduleSchema);
 exports.default = Schedule;

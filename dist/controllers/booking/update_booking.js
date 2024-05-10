@@ -12,34 +12,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.list_booking = void 0;
+exports.save_booking = void 0;
 const booking_service_1 = __importDefault(require("../../services/booking.service"));
 const user_service_1 = __importDefault(require("../../services/user.service"));
-const list_booking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const update_booking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
     
-    const informacoesPedido = req.body;
+    const bookingId = req.body.bookingid;
+    const statusBooking = req.body.Status
+    const blNumber = req.body.inputBLNumber
+    const BookingNumber = req.body.inputBookingId
 
-    const email = informacoesPedido.email;
-
-    const listBookings = yield booking_service_1.default.getBookinByEmail(email);
-
-    if (listBookings) {
+    booking_service_1.default.updateBooking({body: {blNumber: blNumber, booking_id: BookingNumber, status: statusBooking}, bookingId})
+    .then((id) => {
         return res.status(200).json({
             success: true,
-            message: "Booking cadastrado com sucesso.",
-            list: listBookings
+            errorCode: 0,
+            message: "Booking atualizado com sucesso."
         });
-    } else {
-        res.status(404).json({
-            success: false,
-            message: "Problema ao localizar bookings"
-        });
+    })
+    .catch(err => {
+    if (err.name === 'MongoServerError' && err.code === 11000) {
+        // Duplicate e-mail
+        return res.status(422).send({ succes: false, errorCode: err.code, message: 'Booking já cadastrado!' });
     }
-
-    
+    else {
+        return res.status(500).json({ success: false, errorCode: err.code, message: "Problema ao cadastrar booking" });
+    }
 });
 
-exports.list_booking = list_booking;
+
+
+
+});
+
+exports.update_booking = update_booking;
