@@ -15,10 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Taxes_1 = __importDefault(require("../models/Taxes"));
 
 const create = (body) => Booking_1.default.create(body);
-const getByPort = (body) => {
-    console.log("BODY", body)
-    Taxes_1.default.find({porto: body.porto, armador: body.armador})
-}
+const getByPort = async (body) => {
+    try {
+        const taxes = await Taxes_1.default.find({ direcao: "EXPORTAÇÃO", porto: body.porto.trim(), armador: body.armador.trim(), container: body.container});
+        return taxes;
+    } catch (error) {
+        return [];
+    }
+};
 const getAll = () => Taxes_1.default.find();
 
 

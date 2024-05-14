@@ -22,15 +22,11 @@ const search_taxes = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     
     const infoBooking = req.body;
 
-    // console.log("BOOKING INFO ", infoBooking);
-
     const porto = infoBooking.props.porto_embarque.split("-")[0];
     const armador = infoBooking.props.armador.replace(" ", "-");
+    const typeConteiner = infoBooking.props.tipo_container.replace('ST','').replace('HQ','');
 
-    console.log("PORTO ", porto);
-    console.log("ARMADOR ", armador);
-
-    const listTaxes = yield taxes_service_1.default.getByPort({porto: porto, armador: armador})
+    const listTaxes = yield taxes_service_1.default.getByPort({porto: porto, armador: armador, container: parseFloat(typeConteiner)})
 
     if (listTaxes) {
         return res.status(200).json({
