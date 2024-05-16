@@ -21,6 +21,16 @@ const save_booking = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     res.setHeader('Access-Control-Allow-Headers', '*');
     
     const informacoesPedido = req.body;
+    let totalTaxas = 0;
+
+    if (informacoesPedido.taxas.length > 0) {
+        informacoesPedido.taxas.forEach((taxLine) => {
+            totalTaxas =+ totalTaxas+(taxLine.taxValue * informacoesPedido.quantidade_containers);
+        })
+    }
+
+    informacoesPedido.valor = parseFloat(informacoesPedido.valor) + totalTaxas + 100; // os 100 é a taxa da Zarpar
+
 
     booking_service_1.default.create(informacoesPedido)
     .then((id) => {

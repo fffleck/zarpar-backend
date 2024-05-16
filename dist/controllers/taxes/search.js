@@ -23,8 +23,8 @@ const search_taxes = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const infoBooking = req.body;
 
     const porto = infoBooking.props.porto_embarque.split("-")[0];
-    const armador = infoBooking.props.armador.replace(" ", "-");
-    const typeConteiner = infoBooking.props.tipo_container.replace('ST','').replace('HQ','');
+    const armador = infoBooking.props.armador.replace(" ", "-").toUpperCase();
+    const typeConteiner = parseInt(infoBooking.props.tipo_container.replace(/[^0-9]/g,''));
 
     const listTaxes = yield taxes_service_1.default.getByPort({porto: porto, armador: armador, container: parseFloat(typeConteiner)})
 

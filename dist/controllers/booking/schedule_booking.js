@@ -21,10 +21,21 @@ const save_schedule = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     res.setHeader('Access-Control-Allow-Headers', '*');
     
     const informacoesBooking = req.body;
+    let totalTaxas = 0;
+    const valor_inicial  = parseFloat(informacoesBooking.quantidade_containers) * parseFloat(informacoesBooking.frete)
 
+    
+    if (informacoesBooking.taxas.length > 0) {
+        informacoesBooking.taxas.forEach((taxLine) => {
+            totalTaxas =+ totalTaxas+(taxLine.taxValue * informacoesBooking.quantidade_containers);
+        })
+    }
+
+    informacoesBooking.valor = valor_inicial + totalTaxas + 100; // os 100 é a taxa da Zarpar
     informacoesBooking.mercadoria = informacoesBooking.selectMercadoria ? informacoesBooking.selectMercadoria.split(" - ")[1] : null;
-    informacoesBooking.valor  = parseFloat(informacoesBooking.quantidade_containers) * parseFloat(informacoesBooking.frete)
     informacoesBooking.status = 'Pending'
+
+
 
     booking_service_1.default.scheduleBooking(informacoesBooking)
     .then((id) => {

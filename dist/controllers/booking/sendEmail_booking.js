@@ -13,6 +13,7 @@ exports.send_email = void 0;
 const nodemailer = require('nodemailer');
 const SMTP_CONFIG = require('../../config/mail_smtp');
 const emailsAnalise = ['alvaro@karavel.com.br'];
+// const emailsAnalise = ['ffleck@gmail.com'];
 const transporter = nodemailer.createTransport({
     host: SMTP_CONFIG.host,
     port: SMTP_CONFIG.port,
@@ -30,7 +31,14 @@ const send_email = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
     const informacoesEmail = req.body;
+    let totalTaxas = 0;
 
+    if (informacoesEmail.taxas.length > 0) {
+        informacoesEmail.taxas.forEach((taxLine) => {
+            totalTaxas =+ totalTaxas+(taxLine.taxValue * informacoesEmail.quantidade_containers);
+        })
+    }
+    
 
     yield transporter.sendMail({
         from: `Novo Pedido de Booking Zarpar - <lephanyx@gmail.com>`,
@@ -265,7 +273,7 @@ const send_email = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             <p style="line-height: 19.6px;"><strong>Payment Location: </strong> ${informacoesEmail.inputPaymentLocation}</p>
             <p style="line-height: 19.6px;"><strong>Comments: </strong> ${informacoesEmail.textAreaCustomerComment}</p>
             <p style="line-height: 19.6px;"><strong>Email Notifications: </strong> ${informacoesEmail.inputPartnerEmailNotifications}</p>
-            <p style="line-height: 19.6px;"><strong>Total do Frete:</strong> ${informacoesEmail.valor}</p>
+            <p style="line-height: 19.6px;"><strong>Total do Frete:</strong> ${parseFloat(informacoesEmail.valor) + totalTaxas + 100}</p>
         </div>
 
             </td>
