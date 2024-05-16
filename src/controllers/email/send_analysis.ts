@@ -27,7 +27,7 @@ export const send_analysis =  async (req: Request, res: Response)=>{
     const informacoesPedido = req.body;
     let totalTaxas = 0;
     if (informacoesPedido.taxas.length > 0) {
-        informacoesPedido.taxas.forEach((taxLine) => {
+        informacoesPedido.taxas.forEach((taxLine: { taxValue: number; }) => {
             totalTaxas =+ totalTaxas+(taxLine.taxValue * informacoesPedido.quantidade_containers);
         })
     }
