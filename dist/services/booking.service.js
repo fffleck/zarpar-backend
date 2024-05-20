@@ -18,6 +18,7 @@ const Schedule_1 = __importDefault(require("../models/Schedule"));
 const create = (body) => Booking_1.default.create(body);
 const getListByEmail = (emailRequerido) => Booking_1.default.find({ email: emailRequerido });
 const getBookinByEmail = (emailRequerido) => Schedule_1.default.find({ embarcador_email: emailRequerido });
+const getAll = () => Schedule_1.default.find();
 const getBookingById = (id) => Schedule_1.default.findById(id);
 const scheduleBooking = (body) => Schedule_1.default.create(body);
 // const updateBooking = (body, id) => Schedule_1.default.update({_id: id},{status: body.status, booking_id: body.booking_id, bl_number: body.blNumber })
@@ -47,6 +48,7 @@ exports.default = {
     create,
     getListByEmail,
     getBookinByEmail,
+    getAll,
     getBookingById,
     scheduleBooking,
     updateBooking
