@@ -298,7 +298,7 @@ const searates = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                     data_embarque: (0, utils_1.formataData)(data_partida),
                     tempo_de_transito: freight.transitTime,
                     data_chegada: (0, utils_1.formataData)(data_chegada),
-                    base_freight: base_freight,
+                    base_freight: base_freight.toFixed(2),
                     bunker: bunker,
                     isps: isps,
                     imagem_link: freight.logo,
