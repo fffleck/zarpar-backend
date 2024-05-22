@@ -56,6 +56,7 @@ const zim = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         catch (e) {
             console.log("Zim não trouxe resultados.");
+            return [];
         }
         if (response_freight.length === 0) {
             return [];
