@@ -24,7 +24,7 @@ const fretes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let response_freight;
     response_freight = [];
     response_freight = yield adicionar_servico(response_freight, req, res, searatesController_1.searates);
-    response_freight = yield adicionar_servico(response_freight, req, res, zimController_1.zim);
+    // response_freight = yield adicionar_servico(response_freight, req, res, zimController_1.zim);
     response_freight = yield adicionar_servico(response_freight, req, res, maerskController_1.maersk);
     // response_freight = yield adicionar_servico(response_freight, req, res, evergreenController_1.evergreen);
     response_freight = yield adicionar_servico(response_freight, req, res, cmaController_1.cma);
