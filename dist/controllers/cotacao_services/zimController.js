@@ -48,8 +48,7 @@ const zim = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             let api_zim_res = yield axios_1.default.get(
               `https://zarpar-bots-e77d3a940747.herokuapp.com/zim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`
             );
-
-
+            
             api_zim_res.data.forEach((result) => {
                 response_freight.push(result);
             });
