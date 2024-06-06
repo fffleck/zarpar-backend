@@ -12,6 +12,7 @@ routes.get('/portos_descarga', filtersController_1.portos_descarga);
 routes.get('/portos_embarque', filtersController_1.portos_embarque);
 routes.get('/tipos_container', filtersController_1.tipos_container);
 routes.get('/tipos_mercadoria', filtersController_1.tipos_mercadoria);
+routes.get('/armadores', filtersController_1.armadores);
 routes.post('/ncms', filtersController_1.ncms)
 
 exports.default = routes;

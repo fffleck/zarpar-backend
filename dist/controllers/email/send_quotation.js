@@ -34,7 +34,7 @@ const send_quotation = (req, res) => __awaiter(void 0, void 0, void 0, function*
     yield transporter
         .sendMail({
         from: `Pedidos Zarpar Shipping - <lephanyx@gmail.com>`,
-        subject: `Pedido de Cotação Zarpar - ${informacoesPedido.embarcador_nome}`,
+        subject: `Pedido de Cotação SPOT Zarpar - ${informacoesPedido.embarcador_nome}`,
         to: emailsAnalise,
         html: `
       <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">

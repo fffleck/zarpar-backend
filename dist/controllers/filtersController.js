@@ -18,6 +18,8 @@ const ncms_service_1 = __importDefault(require("../services/ncms.service"));
 const porto_service_1 = __importDefault(require("../services/porto.service"));
 const tipo_container_service_1 = __importDefault(require("../services/tipo_container.service"));
 const tipo_mercadoria_service_1 = __importDefault(require("../services/tipo_mercadoria.service"));
+const armadores_service_1 = __importDefault(require("../services/armador.service"));
+
 const mercadorias = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "*");
@@ -69,6 +71,7 @@ const tipos_container = (req, res) => __awaiter(void 0, void 0, void 0, function
     res.status(200).json(response);
 });
 exports.tipos_container = tipos_container;
+
 const tipos_mercadoria = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "*");
@@ -77,3 +80,12 @@ const tipos_mercadoria = (req, res) => __awaiter(void 0, void 0, void 0, functio
     res.status(200).json(response);
 });
 exports.tipos_mercadoria = tipos_mercadoria;
+
+const armadores = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "*");
+    res.setHeader("Access-Control-Allow-Headers", "*");
+    let response = yield armadores_service_1.default.getAll();
+    res.status(200).json(response);
+});
+exports.armadores = armadores;
