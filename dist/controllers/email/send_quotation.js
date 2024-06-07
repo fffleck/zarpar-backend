@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.send_quotation = void 0;
 const nodemailer = require("nodemailer");
 const SMTP_CONFIG = require("../../config/mail_smtp");
-const emailsAnalise = ["alvaro@karavel.com.br"];
+const emailsAnalise = ["alvaro@zarpar.net"];
 
 const transporter = nodemailer.createTransport({
     host: SMTP_CONFIG.host,

@@ -2,7 +2,7 @@ import {Request, Response} from "express";
 const nodemailer = require('nodemailer');
 const SMTP_CONFIG = require('../../config/mail_smtp');
 
-const emailsAnalise = ['alvaro@karavel.com.br'];
+const emailsAnalise = ['alvaro@zarpar.net'];
 // const emailsAnalise = ['ffleck@gmail.com'];
 
 
