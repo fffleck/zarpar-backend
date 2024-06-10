@@ -200,7 +200,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
 	<p style="line-height: 19.6px;"><strong>Data de embarque:</strong> ${informacoesPedido.data_embarque}</p>
 	<p style="line-height: 19.6px;"><strong>Tipo de container:</strong> ${informacoesPedido.tipo_container}</p>
 	<p style="line-height: 19.6px;"><strong>Quantidade de containers:</strong> ${informacoesPedido.quantidade_containers}</p>
-	<p style="line-height: 19.6px;"><strong>Preço do Frete:</strong> ${parseFloat(informacoesPedido.valor) + totalTaxas + 100}</p>
+	<p style="line-height: 19.6px;"><strong>Preço do Frete:</strong> ${parseFloat(informacoesPedido.valor)}</p>
 	<br>
 	<p style="line-height: 140%;"> </p>
 	<p style="line-height: 140%;">Em breve um de nossos analistas irá entrar em contato.<br />Se preferir, fale agora com um analista através do WhatsApp clicando no seguinte link:</p>
