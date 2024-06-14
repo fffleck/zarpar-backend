@@ -33,7 +33,6 @@ const getUserToken = (token: string | any) =>
 
 const updateUserToken = async (usertoken: IUserToken) => {
   const user = await UserToken.findOne({ email: usertoken.email });
-  console.log(user);
   if (!user) {
     await UserToken.create(usertoken);
   } else {

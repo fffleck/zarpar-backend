@@ -16,6 +16,7 @@ const userRouter_1 = __importDefault(require("./routes/userRouter"));
 const emailRouter_1 = __importDefault(require("./routes/emailRouter"));
 const uploadRouter_1 = __importDefault(require("./routes/uploadRouter"));
 const bookingRouter_1 = __importDefault(require("./routes/bookingRouter"));
+const quotationsNAC_1 = __importDefault(require("./routes/cotacoesNacRouter"))
 class App {
     constructor() {
         this.server = (0, express_1.default)();
@@ -36,6 +37,7 @@ class App {
         this.server.use("/email", emailRouter_1.default);
         this.server.use("/upload", uploadRouter_1.default);
         this.server.use("/booking", bookingRouter_1.default);
+        this.server.use("/quotations", quotationsNAC_1.default);
     }
 }
 exports.default = new App().server;

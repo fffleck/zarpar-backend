@@ -97,8 +97,8 @@ const cma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //console.log(frete_api_data[0].surcharges.matchingSurchargesPerEquipment);
     let surcharges;
     surcharges = frete_api_data[0].surcharges.matchingSurchargesPerEquipment.find((equipment) => {
-        console.log(containerAndSize);
-        console.log(equipment.equipmentSizeType);
+        // console.log(containerAndSize);
+        // console.log(equipment.equipmentSizeType);
         return equipment.equipmentSizeType === containerAndSize;
     });
     if (!surcharges || surcharges.length == 0) {

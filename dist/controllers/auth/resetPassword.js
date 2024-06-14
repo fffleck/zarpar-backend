@@ -24,7 +24,6 @@ const resetPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const { token } = req.params;
     const { password } = req.body;
     const verifiedToken = yield (0, validateTokenResetPassword_1.validadeTokenPassword)(token);
-    console.log(verifiedToken);
     if (verifiedToken &&
         verifiedToken.success &&
         verifiedToken.user &&

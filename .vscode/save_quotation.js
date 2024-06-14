@@ -12,40 +12,51 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.register = void 0;
-const user_service_1 = __importDefault(require("../../services/user.service"));
-var CryptoJS = require("crypto-js");
-const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.save_quotation = void 0;
+const quotation_service_1 = __importDefault(require("../../services/quotations.service"));
+
+const save_quotation = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
-    const newUser = req.body.userData;
+    
+    const informacoesQuotation = req.body;
+    
+    const armadores = informacoesQuotation.Armadores.split(",")
 
-    newUser.password = CryptoJS.MD5(newUser.senha).toString(CryptoJS.enc.Hex); //Converte a senha para MD5
-    newUser.telefone = newUser.telefone.replace(/\D/g, '')
-    newUser.zipCode = newUser.cep
-    newUser.name = newUser.nomeCompleto
-    newUser.enterpriseName = newUser.nomeEmpresa
-    newUser.address = newUser.endereco
-    newUser.city = newUser.cidade
-    newUser.state = newUser.estado
+    if (armadores.length > 0) {
+      armadores.forEach(async (armador) => {
+        informacoesQuotation.armador = armador;
 
-    user_service_1.default.create(newUser)
-        .then((id) => {
+        await quotation_service_1.default.create(informacoesQuotation)
+      })
+      return res.status(200).json({
+          success: true,
+          errorCode: 0,
+          message: "Quotations salvas com sucesso."
+      });
+
+    } else {
+      informacoesQuotation.armador = informacoesQuotation.Armadores;
+      quotation_service_1.default.create(informacoesQuotation).then((id) => {
         return res.status(200).json({
             success: true,
             errorCode: 0,
-            message: "Usuário cadastrado com sucesso."
+            message: "Quotation salva com sucesso."
         });
-    })
-        .catch(err => {
+      }).catch(err => {
         if (err.name === 'MongoServerError' && err.code === 11000) {
-            // Duplicate e-mail
-            return res.status(422).send({ succes: false, errorCode: err.code, message: 'E-mail já cadastrado!' });
+            return res.status(422).send({ succes: false, errorCode: err.code, message: 'Quotation já cadastrado!' });
+        } else {
+            return res.status(500).json({ success: false, errorCode: err.code, message: "Problema ao cadastrar Quotation" });
         }
-        else {
-            return res.status(500).json({ success: false, errorCode: err.code, message: "Problema ao cadastrar usuário" });
-        }
-    });
+      });
+  }
+    
+
+
+
+
 });
-exports.register = register;
+
+exports.save_quotation = save_quotation;

@@ -26,7 +26,7 @@ const save_quotation = (req, res) => __awaiter(void 0, void 0, void 0, function*
 
     if (armadores.length > 0) {
       armadores.forEach(async (armador) => {
-        informacoesQuotation.armador = armador;
+        informacoesQuotation.armador = armador;        
         await quotation_service_1.default.create(informacoesQuotation)
       })
       return res.status(200).json({
