@@ -17,25 +17,40 @@ const Quotation_1 = __importDefault(require("../models/QuotationNAC"));
 const create = (body) => Quotation_1.default.create(body);
 const getListByEmail = (emailRequerido) => Quotation_1.default.find({ embarcador_email: emailRequerido });
 const getQuotationById = (id) => Quotation_1.default.findById(id);
-const getAll = () => Quotation_1.default.find();
+const getAll = () => Quotation_1.default.find({ status: 'Active'});
+const { isValidObjectId } = require('mongoose');
+
 const updateQuotation = async (body, quotationId) => {
     try {
-      const Quotation = Quotation_1.default;
-    
-      const updatedQuotation = await Quotation.findByIdAndUpdate(quotationId, {
-        body
-      }, { new: true });
-  
-      if (!updatedQuotation) {
-        throw new Error('Reserva não encontrada ou não pôde ser atualizada.');
-      }
-  
-      return updatedQuotation;
+        if (!isValidObjectId(quotationId)) {
+            throw new Error('ID inválido');
+        }
+
+        if (!body || !body.status) {
+            throw new Error('Campo "status" está faltando ou é inválido');
+        }
+
+        const existingQuotation = await Quotation_1.default.findById(quotationId);
+        if (!existingQuotation) {
+            throw new Error('Quotation não encontrada');
+        }
+
+        const updatedQuotation = await Quotation_1.default.findByIdAndUpdate(
+            quotationId, 
+            { status: body.status },
+            { new: true, useFindAndModify: false } // Adicione useFindAndModify: false se estiver usando Mongoose v5.x
+        );
+
+        if (!updatedQuotation) {
+            throw new Error('Quotation não pôde ser atualizada');
+        }
+        
+        return updatedQuotation;
     } catch (error) {
-      console.error('Erro ao atualizar quotation:', error);
-      throw error; 
+        console.error('Erro ao atualizar quotation:', error);
+        throw error; 
     }
-  };
+};
 
 
 exports.default = {

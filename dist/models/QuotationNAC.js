@@ -26,6 +26,7 @@ const QuotationNacSchema = new mongoose_1.default.Schema({
     Currency: { type: String },
     agenteDeCarga: { type: String },
     CargaEspecial: { type: String },
+    status: { type: String, default: "Active" },
 });
 const QuotationNac = mongoose_1.default.model("QuotationNac", QuotationNacSchema);
 exports.default = QuotationNac;
