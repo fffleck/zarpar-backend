@@ -23,6 +23,7 @@ const updateSearch = (emailRequerido) => __awaiter(void 0, void 0, void 0, funct
     if (!user) {
         throw "Erro ao atualizar, search de usuario não encontrado.";
     }
+    user.telefone = user.telefone ?? '99999999999'
     user.search = user.search ? user.search+1 : 1;
     yield user.save();
 });

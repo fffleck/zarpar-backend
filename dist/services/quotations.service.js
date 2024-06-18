@@ -44,7 +44,7 @@ const updateQuotation = async (body, quotationId) => {
         if (!updatedQuotation) {
             throw new Error('Quotation não pôde ser atualizada');
         }
-        
+
         return updatedQuotation;
     } catch (error) {
         console.error('Erro ao atualizar quotation:', error);
