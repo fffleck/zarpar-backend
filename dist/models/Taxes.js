@@ -9,8 +9,9 @@ const TaxesSchema = new mongoose_1.default.Schema({
     armador: { type: String },
     porto: { type: String },
     container: { type: Number },
-    taxName: { type: String },
+    taxname: { type: String },
     taxValue: { type: Number },
+    currency: { type: String },
 });
 const Taxes = mongoose_1.default.model("Taxe", TaxesSchema);
 exports.default = Taxes;
