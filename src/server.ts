@@ -1,10 +1,11 @@
-import app from "./app";
+import express from 'express';
+import app from './app'; // Configuração do servidor Express
+import swaggerApp from './swagger'; // Configuração do Swagger
 
-// const PORT = process.env.PORT || 3000;
-const PORT = process.env.PORT || 3334; //DEV
+const PORT = process.env.PORT || 3334;
 
-const server = app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
+app.use('/api', swaggerApp); // Adiciona a rota para a documentação
+
+app.listen(PORT, () => {
+  console.log(`Server is running up port ${PORT}`);
 });
-server.on("error", (e) => console.error("Error", e));
-server.timeout = 60 * 2 * 1000;

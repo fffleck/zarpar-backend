@@ -33,7 +33,7 @@ const zimController = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.zimController = zimController;
-const zim = (req, res) => __awaiter(void 0, void 0, void 0, async function* () {
+const zim = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { data_saida, porto_embarque, porto_descarga, mercadoria, tipo_container, } = req.query;
     if (!data_saida || !porto_embarque || !porto_descarga || !tipo_container) {
         return [];
@@ -43,16 +43,15 @@ const zim = (req, res) => __awaiter(void 0, void 0, void 0, async function* () {
     try {
         // Tratar data
         let data_saida_zim = (0, utils_1.formataData2)(new Date(data_saida));
+        console.log("URL ZIM ", `https://karavel-services-e63c55605b2e.herokuapp.com/zim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`);
         try {
-            // let api_zim_res = yield axios_1.default.get(`http://localhost:3334/zim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`);
-            let api_zim_res = await axios.get(
-              `https://karavel-services-e63c55605b2e.herokuapp.com/zim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`
-            );
+            // let api_zim_res = await axios.get(`http://localhost:5000/zim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`)
+            let api_zim_res = yield axios_1.default.get(`https://karavel-services-e63c55605b2e.herokuapp.com/zim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`);
             api_zim_res.data.forEach((result) => {
                 response_freight.push(result);
             });
         }
-        catch (e) {
+        catch (error) {
             console.log("Zim não trouxe resultados.");
         }
         if (response_freight.length === 0) {
