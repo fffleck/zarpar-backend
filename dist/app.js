@@ -29,7 +29,6 @@ class App {
         this.server.use(cors());
     }
     routes() {
-        // this.server.use(routes);
         this.server.use("/auth", authRouter_1.default);
         this.server.use("/cotacao", cotacaoRouter_1.default);
         this.server.use("/filters", filtersRouter_1.default);
