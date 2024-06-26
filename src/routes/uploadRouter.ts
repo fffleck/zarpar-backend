@@ -1,5 +1,6 @@
-import { files } from "../controllers/upload/uploadController";
+import { upload } from "../controllers/upload/upload";
 import express, { Router } from "express";
+import { upload_taxes } from "../controllers/upload/upload_taxes";
 const routes: Router = express.Router();
 
 /**
@@ -61,6 +62,7 @@ const routes: Router = express.Router();
  *                   type: string
  *                   description: Mensagem de erro
  */
-routes.post('/files', files);
+routes.post('/files', upload);
+routes.post('/taxes', upload_taxes);
 
 export default routes;

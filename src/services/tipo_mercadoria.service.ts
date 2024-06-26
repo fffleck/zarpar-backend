@@ -1,7 +1,5 @@
-import { ITipoMercadoria } from '../models/TipoMercadoria';
-import TipoMercadoria from "../models/TipoMercadoria";
-import { ITipoMercadoriaDepara } from '../models/TipoMercadoriaDepara';
-import TipoMercadoriaDepara from "../models/TipoMercadoriaDepara";
+import TipoMercadoria, { ITipoMercadoria } from '../models/TipoMercadoria';
+import TipoMercadoriaDepara, { ITipoMercadoriaDepara } from '../models/TipoMercadoriaDepara';
 
 const create = (body: ITipoMercadoria) => TipoMercadoria.create(body);
 const createDepara = (body: ITipoMercadoriaDepara) => TipoMercadoriaDepara.create(body);

@@ -1,10 +1,12 @@
-import { IFreteMaritmo } from '../models/FreteMaritmo';
-import FreteMaritmo from "../models/FreteMaritmo";
+import { FilterQuery } from 'mongoose';
+import FreteMaritmo, { IFreteMaritmo } from '../models/FreteMaritmo';
 
-const create = (body: IFreteMaritmo) => FreteMaritmo.create(body);
+const create = (body: any) => FreteMaritmo.create(body);
 const getAll = () => FreteMaritmo.find();
+const getOne = (params: FilterQuery<IFreteMaritmo>) => FreteMaritmo.find(params);
 
 export default {
     create,
-    getAll
+    getAll,
+    getOne
 }

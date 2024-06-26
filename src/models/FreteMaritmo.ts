@@ -18,7 +18,9 @@ export interface IFreteMaritmo extends mongoose.Document {
     data_embarque: string;
     tempo_de_transito: string;
     data_chegada: string;
-    frete: string;
+    base_freight: string;
+    bunker: string;
+    isps: string;
     transbordo:string;
   }
 
@@ -87,9 +89,17 @@ const FreteMaritmoSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    frete: {
-        type:String,
-        required:true
+    base_freight: {
+        type: String,
+        required: true
+    },
+    bunker: {
+        type: Number,
+        default: 0
+    },
+    isps: {
+        type: Number,
+        default: 0
     },
     transbordo:{
         type:String,

@@ -3,15 +3,9 @@ import { zim } from "./zimController";
 import { searates } from "./searatesController";
 import { evergreen } from "./evergreenController";
 import { cma } from "./cmaController";
+import { local } from "./localController";
 
 export const fretes = async (req: Request, res: Response) => {
-  const {
-    data_saida,
-    porto_embarque,
-    porto_descarga,
-    mercadoria,
-    tipo_container,
-  }: any = req.query;
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "*");
   res.setHeader("Access-Control-Allow-Headers", "*");
@@ -19,24 +13,11 @@ export const fretes = async (req: Request, res: Response) => {
   let response_freight: any[];
   response_freight = [];
 
-  response_freight = await adicionar_servico(
-    response_freight,
-    req,
-    res,
-    searates
-  );
-
+  response_freight = await adicionar_servico(response_freight,req,res,searates);
   response_freight = await adicionar_servico(response_freight, req, res, zim);
-
-  // ERRO EVERGREEN
-
-  // response_freight = await adicionar_servico(
-  //   response_freight,
-  //   req,
-  //   res,
-  //   evergreen
-  // );
   response_freight = await adicionar_servico(response_freight, req, res, cma);
+  response_freight = await adicionar_servico(response_freight, req, res, evergreen);
+  response_freight = await adicionar_servico(response_freight, req, res, local);
 
   let msg_default = [
     {

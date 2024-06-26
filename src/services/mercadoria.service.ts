@@ -1,7 +1,5 @@
-import { IMercadoria } from '../models/Mercadoria';
-import Mercadoria from "../models/Mercadoria";
-import { IMercadoriaDepara } from '../models/MarcadoriaDepara';
-import MercadoriaDepara from "../models/MarcadoriaDepara";
+import Mercadoria, { IMercadoria } from '../models/Mercadoria';
+import MercadoriaDepara, { IMercadoriaDepara } from '../models/MarcadoriaDepara';
 
 const create = (body: IMercadoria) => Mercadoria.create(body);
 const createDepara = (body: IMercadoriaDepara) => MercadoriaDepara.create(body);

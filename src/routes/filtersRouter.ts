@@ -1,5 +1,7 @@
 import {
+  armadores,
   mercadorias,
+  ncms,
   portos_descarga,
   portos_embarque,
   tipos_container,
@@ -149,5 +151,9 @@ routes.get('/tipos_container', tipos_container);
  *         description: Erro interno do servidor
  */
 routes.get('/tipos_mercadoria', tipos_mercadoria);
+
+routes.get('/armadores', armadores)
+
+routes.post('/ncms', ncms)
 
 export default routes;

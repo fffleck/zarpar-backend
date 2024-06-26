@@ -1,8 +1,5 @@
-import { IUser } from "../models/User";
-import User from "../models/User";
-import { IUserToken } from "../models/UserToken";
-import UserToken from "../models/UserToken";
-
+import User, { IUser } from "../models/User";
+import UserToken, { IUserToken } from "../models/UserToken";
 interface usertoken {
   email: string;
   token: string;
@@ -45,8 +42,9 @@ const updateSearch = async (email: string) => {
   const user = await User.findOne({ email: email });
 
   if (!user) {
-    throw "Erro ao atualizar, usuario não encontrado.";
+    throw new Error("Erro ao atualizar, usuario não encontrado.");
   } else {
+    user.telefone = user.telefone ?? '99999999999'
     user.search = user.search ? user.search +1 : 1;
     await user.save();
   }
