@@ -8,7 +8,7 @@ export const update_booking = async (req: Request, res: Response)=>{
 
   const informacoesBooking = req.body;
   
-  const update_booking = await bookingService.updateBooking(informacoesBooking, informacoesBooking.bookingId)
+  const update_booking = await bookingService.updateBooking(informacoesBooking, informacoesBooking.bookingid)
 
   if(update_booking){
       res.json({

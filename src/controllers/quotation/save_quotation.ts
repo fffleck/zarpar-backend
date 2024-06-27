@@ -6,18 +6,24 @@ export const save_quotation = async (req: Request, res: Response)=>{
   res.setHeader('Access-Control-Allow-Methods', '*');
   res.setHeader('Access-Control-Allow-Headers', '*');
 
-  let saveQuotation = null
+  const savedQuotations = []
+  let salvou = false
   const informacoesQuotations = req.body
 
-  const armadores = informacoesQuotations.Armadores.split(",")
+  const armadores = informacoesQuotations.Armadores
 
-  if (armadores.lenght > 0) {
-    armadores.forEach(async (armador: any) => {
-      informacoesQuotations.armador = armador
-      saveQuotation = await quotationsService.create(informacoesQuotations)
-    })
+  const arrArmador = armadores.split(',')
 
-    if(saveQuotation){
+  if (arrArmador.length > 0) {
+    for (const armador of arrArmador) {
+      informacoesQuotations.armador = armador;
+      const saveQuotation = await quotationsService.create(informacoesQuotations);
+      if (saveQuotation) {
+        savedQuotations.push(saveQuotation);
+      }
+    }
+
+    if (savedQuotations.length > 0) {
       res.json({
           success: true,
           message: "Quotations Criado com sucesso",
@@ -30,9 +36,11 @@ export const save_quotation = async (req: Request, res: Response)=>{
     }
   } else {
     informacoesQuotations.armador = informacoesQuotations.Armadores;
-    saveQuotation = await quotationsService.create(informacoesQuotations)
+    const saveQuotation = await quotationsService.create(informacoesQuotations)
 
-    if(saveQuotation){
+    savedQuotations.push(saveQuotation)
+
+    if (savedQuotations.length > 0) {
       res.json({
           success: true,
           message: "Quotations Criado com sucesso",

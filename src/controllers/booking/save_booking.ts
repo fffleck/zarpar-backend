@@ -7,8 +7,7 @@ export const save_booking = async (req: Request, res: Response)=>{
   res.setHeader('Access-Control-Allow-Methods', '*');
   res.setHeader('Access-Control-Allow-Headers', '*');
 
-  const informacoesPedido = req.body;
-  
+  const informacoesPedido = req.body;  
   let totalTaxas = 0;
 
 

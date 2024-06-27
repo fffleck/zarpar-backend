@@ -1,0 +1,24 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const save_booking_1 = require("../controllers/booking/save_booking");
+const save_quotation_1 = require("../controllers/quotation/save_quotation");
+const list_booking_1 = require("../controllers/booking/list_booking");
+const schedule_booking_1 = require("../controllers/booking/schedule_booking");
+const search_1 = require("../controllers/taxes/search");
+const update_booking_1 = require("../controllers/booking/update_booking");
+const sendEmail_booking_1 = require("../controllers/booking/sendEmail_booking");
+const edit_booking_1 = require("../controllers/booking/edit_booking");
+const routes = express_1.default.Router();
+routes.post("/save_booking", save_booking_1.save_booking);
+routes.post("/save_quotation", save_quotation_1.save_quotation);
+routes.post("/list_booking", list_booking_1.list_booking);
+routes.post("/reservas", schedule_booking_1.save_schedule);
+routes.post("/taxes", search_1.search_taxes);
+routes.post("/update", update_booking_1.update_booking);
+routes.post("/send_email", sendEmail_booking_1.send_email);
+routes.get("/edit/:id", edit_booking_1.edit_booking);
+exports.default = routes;

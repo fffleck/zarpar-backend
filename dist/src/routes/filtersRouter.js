@@ -142,4 +142,6 @@ routes.get('/tipos_container', filtersController_1.tipos_container);
  *         description: Erro interno do servidor
  */
 routes.get('/tipos_mercadoria', filtersController_1.tipos_mercadoria);
+routes.get('/armadores', filtersController_1.armadores);
+routes.post('/ncms', filtersController_1.ncms);
 exports.default = routes;

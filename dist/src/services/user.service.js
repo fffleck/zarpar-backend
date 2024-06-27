@@ -39,11 +39,13 @@ const updateUserToken = (usertoken) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 const updateSearch = (email) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const user = yield User_1.default.findOne({ email: email });
     if (!user) {
-        throw "Erro ao atualizar, usuario não encontrado.";
+        throw new Error("Erro ao atualizar, usuario não encontrado.");
     }
     else {
+        user.telefone = (_a = user.telefone) !== null && _a !== void 0 ? _a : '99999999999';
         user.search = user.search ? user.search + 1 : 1;
         yield user.save();
     }

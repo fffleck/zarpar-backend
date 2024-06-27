@@ -12,8 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.tipos_mercadoria = exports.tipos_container = exports.portos_descarga = exports.portos_embarque = exports.mercadorias = void 0;
+exports.ncms = exports.armadores = exports.tipos_mercadoria = exports.tipos_container = exports.portos_descarga = exports.portos_embarque = exports.mercadorias = void 0;
+const armador_service_1 = __importDefault(require("../services/armador.service"));
 const mercadoria_service_1 = __importDefault(require("../services/mercadoria.service"));
+const ncms_service_1 = __importDefault(require("../services/ncms.service"));
 const porto_service_1 = __importDefault(require("../services/porto.service"));
 const tipo_container_service_1 = __importDefault(require("../services/tipo_container.service"));
 const tipo_mercadoria_service_1 = __importDefault(require("../services/tipo_mercadoria.service"));
@@ -59,3 +61,21 @@ const tipos_mercadoria = (req, res) => __awaiter(void 0, void 0, void 0, functio
     res.status(200).json(response);
 });
 exports.tipos_mercadoria = tipos_mercadoria;
+const armadores = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "*");
+    res.setHeader("Access-Control-Allow-Headers", "*");
+    let response = yield armador_service_1.default.getAll();
+    res.status(200).json(response);
+});
+exports.armadores = armadores;
+const ncms = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "*");
+    res.setHeader("Access-Control-Allow-Headers", "*");
+    const informacoesNcm = req.body;
+    const codigoNcm = informacoesNcm.code;
+    let response = yield ncms_service_1.default.getByName(codigoNcm);
+    res.status(200).json(response);
+});
+exports.ncms = ncms;

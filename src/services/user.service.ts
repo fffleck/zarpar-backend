@@ -7,15 +7,15 @@ interface usertoken {
 
 // USER
 const create = (body: IUser) => User.create(body);
-const getByEmail = (emailRequerido: string | any) =>
+const getByEmail = (emailRequerido: any) =>
   User.find({ email: emailRequerido });
 
-const getOneByEmail = (emailRequerido: string | any) =>
+const getOneByEmail = (emailRequerido: any) =>
   User.findOne({ email: emailRequerido });
 
 const updatePassword = async (
-  emailRequerido: string | any,
-  password: string | any
+  emailRequerido: any,
+  password: any
 ) => {
   const user = await User.findOne({ email: emailRequerido });
   if (!user) {

@@ -13,7 +13,6 @@ exports.send_quotation = void 0;
 const nodemailer = require("nodemailer");
 const SMTP_CONFIG = require("../../config/mail_smtp");
 const emailsAnalise = ["alvaro@zarpar.net"];
-// const emailsAnalise = ['ffleck@gmail.com'];
 const transporter = nodemailer.createTransport({
     host: SMTP_CONFIG.host,
     port: SMTP_CONFIG.port,
@@ -33,8 +32,8 @@ const send_quotation = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const informacoesPedido = req.body;
     yield transporter
         .sendMail({
-        from: `Pedidos Karavel Shipping - <lephanyx@gmail.com>`,
-        subject: `Pedido de Cotação Karavel - ${informacoesPedido.embarcador_nome}`,
+        from: `Pedidos Zarpar Shipping - <lephanyx@gmail.com>`,
+        subject: `Pedido de Cotação SPOT de - ${informacoesPedido.embarcador_nome}`,
         to: emailsAnalise,
         html: `
       <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -310,14 +309,14 @@ const send_quotation = (req, res) => __awaiter(void 0, void 0, void 0, function*
         .then(() => {
         res.json({
             success: true,
-            message: "E-mail enviado para análise",
+            message: "E-mail enviado para quotation SPOT",
         });
     })
         .catch((err) => {
         console.error(err);
         res.json({
             success: false,
-            message: "Problema ao enviar e-mail para análise",
+            message: "Problema ao enviar e-mail para quotation SPOT",
         });
     });
 });

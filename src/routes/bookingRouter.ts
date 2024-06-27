@@ -11,12 +11,12 @@ import { edit_booking } from "../controllers/booking/edit_booking";
 const routes: Router = express.Router();
 
 routes.post("/save_booking", save_booking);
-routes.post("/save_quotations", save_quotation);
+routes.post("/save_quotation", save_quotation);
 routes.post("/list_booking", list_booking);
 routes.post("/reservas", save_schedule);
 routes.post("/taxes", search_taxes);
 routes.post("/update", update_booking);
 routes.post("/send_email", send_email);
-routes.post("/edit/:id", edit_booking);
+routes.get("/edit/:id", edit_booking);
 
 export default routes;

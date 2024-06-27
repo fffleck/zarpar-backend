@@ -8,12 +8,13 @@ const getBookingByEmail = (emailRequerido: any) => Schedule.find({embarcador_ema
 const getAll = () => Schedule.find();
 const getBookingById = (id: ObjectId) => Schedule.findById(id);
 const scheduleBooking = (body: ISchedule) => Schedule.create(body);
-const updateBooking = async (body: ISchedule, bookingId: ObjectId) => {
+const updateBooking = async (body: any, bookingId: any) => {
   try {
     const updateBooking = await Schedule.findByIdAndUpdate(bookingId, {
-      status: body.status,
+      status: body.Status,
       id: bookingId,
-      bl_number: body.bl_number,
+      bl_number: body.inputBLNumber,
+      booking_id: body.inputBookingId,
     }, { new: true});
 
     if (!updateBooking) {

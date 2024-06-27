@@ -8,28 +8,37 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.find_user = void 0;
+const user_service_1 = __importDefault(require("../../services/user.service"));
 const find_user = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
     const email = req.body.email;
-    // const user = await userService.getByEmail(email);
-    const user = null;
-    res.json({ succes: false, message: "Passou aqui" });
-    if (user) {
-        const usuarioLocalizado = user[0];
-        res.json({
+    try {
+        const users = yield user_service_1.default.getByEmail(email);
+        if (users.length === 0) {
+            return res.status(401).json({
+                success: false,
+                message: "Usuário não encontrado."
+            });
+        }
+        const user = users[0];
+        return res.json({
             success: true,
             message: "Usuário localizado",
-            user: usuarioLocalizado
+            user: user
         });
     }
-    else {
-        res.status(401).json({
+    catch (error) {
+        console.error("Erro ao localizar usuário:", error);
+        return res.status(500).json({
             success: false,
-            message: "Problema ao localizar usuário."
+            message: "Erro interno do servidor."
         });
     }
 });

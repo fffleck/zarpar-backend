@@ -6,8 +6,6 @@ export const list_booking = async (req: Request, res: Response)=>{
   res.setHeader('Access-Control-Allow-Methods', '*');
   res.setHeader('Access-Control-Allow-Headers', '*');
 
-  
-
   const informacoesPedido = req.body;
   let listBookings = [];
 

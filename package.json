@@ -1,5 +1,5 @@
 {
-  "name": "karavel.shipping-backend",
+  "name": "zarpar.shipping-backend",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -7,12 +7,12 @@
     "tsc": "./node_modules/typescript/bin/tsc",
     "dev": "nodemon src/server.ts",
     "build": "rimraf .dist && tsc",
-    "start": "node dist/server.js",
+    "start": "node dist/src/server.js",
     "rimraf": "./node_modules/rimraf/bin.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Fabio Fleck",
+  "license": "MIT",
   "dependencies": {
     "@types/crypto-js": "^4.1.1",
     "@types/express": "^4.17.14",

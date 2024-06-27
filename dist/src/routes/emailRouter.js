@@ -7,6 +7,7 @@ const send_quotation_1 = require("./../controllers/email/send_quotation");
 const send_analysis_1 = require("../controllers/email/send_analysis");
 const send_client_1 = require("../controllers/email/send_client");
 const express_1 = __importDefault(require("express"));
+const send_quotation_nac_1 = require("../controllers/email/send_quotation_nac");
 const routes = express_1.default.Router();
 /**
  * @swagger
@@ -92,4 +93,30 @@ routes.post("/send_quotation", send_quotation_1.send_quotation);
  *         description: Requisição inválida
  */
 routes.post("/send_client", send_client_1.send_client);
+/**
+ * @swagger
+ * /email/send_client:
+ *   post:
+ *     summary: Envia informações ao cliente por email
+ *     tags: [Email]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: O email do destinatário
+ *               clientData:
+ *                 type: object
+ *                 description: Dados do cliente
+ *     responses:
+ *       200:
+ *         description: Informações enviadas com sucesso ao cliente
+ *       400:
+ *         description: Requisição inválida
+ */
+routes.post("/send_quotationnac", send_quotation_nac_1.send_quotation_nac);
 exports.default = routes;

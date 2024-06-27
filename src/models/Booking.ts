@@ -4,13 +4,13 @@ import mongoose from 'mongoose';
 export interface Ibooking extends mongoose.Document {
     armador: string;
     data_embarque: string;
-    embarcador_name: string;
+    embarcador_nome: string;
     embarcador_email: string;
     tipo_mercadoria: string;
     porto_embarque: string;
     porto_descarga: string;
     quantidade_containers: string;
-    tipo_containers: string;
+    tipo_container: string;
     valor: string;
   }
 
@@ -23,7 +23,7 @@ const BookingSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    embarcador_name:{
+    embarcador_nome:{
       type:String,
       required:true
     },
@@ -47,7 +47,7 @@ const BookingSchema = new mongoose.Schema({
       type:String,
       required:true
     },
-    tipo_containers:{
+    tipo_container:{
       type:String,
       required:true
     },

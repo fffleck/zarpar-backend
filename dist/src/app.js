@@ -12,6 +12,8 @@ const filtersRouter_1 = __importDefault(require("./routes/filtersRouter"));
 const userRouter_1 = __importDefault(require("./routes/userRouter"));
 const emailRouter_1 = __importDefault(require("./routes/emailRouter"));
 const uploadRouter_1 = __importDefault(require("./routes/uploadRouter"));
+const bookingRouter_1 = __importDefault(require("./routes/bookingRouter"));
+const cotacoesNacRouter_1 = __importDefault(require("./routes/cotacoesNacRouter"));
 // Importando Swagger
 const swagger_1 = __importDefault(require("./swagger"));
 class App {
@@ -32,6 +34,8 @@ class App {
         this.server.use("/user", userRouter_1.default);
         this.server.use("/email", emailRouter_1.default);
         this.server.use("/upload", uploadRouter_1.default);
+        this.server.use("/booking", bookingRouter_1.default);
+        this.server.use("/quotations", cotacoesNacRouter_1.default);
         this.server.use("/swagger", swagger_1.default); // Rota para a documentação do Swagger
     }
 }
