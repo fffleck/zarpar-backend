@@ -51,11 +51,6 @@ const cma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let to = { lat: pd_obj === null || pd_obj === void 0 ? void 0 : pd_obj.lat_float, long: pd_obj === null || pd_obj === void 0 ? void 0 : pd_obj.lon_float };
     let container;
     let containerAndSize;
-    // CONTAINER -> PARAMETRO DA API
-    // ST: Dry
-    // RF: reefer
-    // SP: Special
-    // containerAndSize -> PARA ACHAR O TIPO DE CONTAINER NA RESPOSTA
     if (tipo_container == "ST20" || tipo_container == "ST40") {
         container = "ST";
         if (tipo_container == "ST20") {
@@ -94,7 +89,6 @@ const cma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let routings_api = yield axios_1.default.get(`https://apis.cma-cgm.net/vesseloperation/route/v2/routings?placeOfLoading=${pe_obj === null || pe_obj === void 0 ? void 0 : pe_obj.port_code}&placeOfDischarge=${pd_obj === null || pd_obj === void 0 ? void 0 : pd_obj.port_code}&departureDate=${data_saida}&equipmentType=${container}`, config);
     const frete_api_data = frete_api.data;
     const routings_api_data = routings_api.data;
-    //console.log(frete_api_data[0].surcharges.matchingSurchargesPerEquipment);
     let surcharges;
     surcharges = frete_api_data[0].surcharges.matchingSurchargesPerEquipment.find((equipment) => {
         // console.log(containerAndSize);
@@ -106,6 +100,9 @@ const cma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     let chargeFRT00;
     let chargeBAF03;
+    let chargeBAF08;
+    let otherTaxsValue = 0;
+    let objFrete = [];
     chargeFRT00 = surcharges.matchingCargoSurcharges.find((charge) => {
         // console.log(charge);
         return charge.charge.chargeCode === "FRT00";
@@ -113,11 +110,12 @@ const cma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     chargeBAF03 = surcharges.matchingCargoSurcharges.find((charge) => {
         return charge.charge.chargeCode === "BAF03";
     });
-    // console.log(chargeFRT00);
+    chargeBAF08 = surcharges.matchingCargoSurcharges.find((charge) => {
+        return charge.charge.chargeCode === "BAF08";
+    });
     let frete = chargeFRT00.amount + chargeBAF03.amount; //FRETE
-    // console.log(frete);
     routings_api_data.forEach((routing) => {
-        console.log("\nROUTING:");
+        var _a;
         let transitTime = routing.transitTime;
         let voyageReference = routing.routingDetails[0].transportation.vehicule.reference;
         let vessel = routing.routingDetails[0].transportation.vehicule.vehiculeName;
@@ -144,7 +142,6 @@ const cma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 routingChegada = routingDetail;
             }
         });
-        
         response_freight.push({
             shipment_id: voyageReference,
             tipo_container: tipo_container,
@@ -159,37 +156,12 @@ const cma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             data_embarque: (0, utils_1.formataData)(dataPartida),
             tempo_de_transito: `${transitTime} days`,
             data_chegada: (0, utils_1.formataData)(dataChegada),
-            frete: `$ ${parseFloat(frete)}`,
+            base_freight: chargeFRT00.amount,
+            bunker: ((chargeBAF08 ? chargeBAF08.amount : 0) + ((_a = chargeBAF03.amount) !== null && _a !== void 0 ? _a : 0)),
+            isps: otherTaxsValue,
             imagem_link: "http://www.cma-cgm.com/Images/2018/logo/logo-cmacgm.svg",
         });
     });
-    // // SEARATES
-    // frete_api.data.forEach((shipment: any) => {
-    //   let freights = shipment.freight;
-    //   freights.forEach((freight: any) => {
-    //     let data_partida = converteStrToData2(freight.validTo);
-    //     let tempo_trasito = parseInt(freight.transitTime.split(" ")[0]);
-    //     let data_chegada = new Date(data_partida);
-    //     data_chegada.setDate(data_chegada.getDate() + tempo_trasito);
-    //     response_freight.push({
-    //       shipment_id: shipment.shipmentId,
-    //       tipo_container: freight.containerType,
-    //       id_tipo_container: freight.containerCode,
-    //       porto_embarque: shipment.portFrom.name,
-    //       id_porto_embarque: shipment.portFrom.code,
-    //       porto_descarga: shipment.portTo.name,
-    //       id_porto_descarga: shipment.portTo.code,
-    //       armador: freight.shippingLine,
-    //       id_armador: freight.shippingLine,
-    //       navio: "",
-    //       data_embarque: formataData(data_partida),
-    //       tempo_de_transito: freight.transitTime,
-    //       data_chegada: formataData(data_chegada),
-    //       frete: `$ ${parseFloat(freight.price) - 100}`,
-    //       imagem_link: freight.logo,
-    //     });
-    //   });
-    // });
     if (response_freight.length === 0) {
         return [];
     }

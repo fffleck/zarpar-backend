@@ -51,7 +51,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
   });
 
   const mailOptions = {
-    from: `Karavel Shipping - <lephanyx@gmail.com>`,
+    from: `Zarpar Shipping - <lephanyx@gmail.com>`,
     subject: `Recuperação de Senha`,
     to: user.email,
     html: `
@@ -60,6 +60,8 @@ export const forgotPassword = async (req: Request, res: Response) => {
       <a href="${process.env.BASE_URL}/reset-password/${token}">Redefinir senha</a>
       <p>O link expirará em 1 hora.</p>
       <p>Se você não solicitou a redefinição de senha, ignore este email.</p>
+      <br><br>
+      <p>Se preferir, fale conosco  agora através da nossa <a href="mailto:comercial@zarpar.net"> Central do Cliente</a>:</p>
     `,
   };
 

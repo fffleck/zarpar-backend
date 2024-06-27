@@ -12,9 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fretes = void 0;
 const zimController_1 = require("./zimController");
 const searatesController_1 = require("./searatesController");
+const evergreenController_1 = require("./evergreenController");
 const cmaController_1 = require("./cmaController");
+const localController_1 = require("./localController");
 const fretes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { data_saida, porto_embarque, porto_descarga, mercadoria, tipo_container, } = req.query;
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "*");
     res.setHeader("Access-Control-Allow-Headers", "*");
@@ -22,14 +23,9 @@ const fretes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     response_freight = [];
     response_freight = yield adicionar_servico(response_freight, req, res, searatesController_1.searates);
     response_freight = yield adicionar_servico(response_freight, req, res, zimController_1.zim);
-    // ERRO EVERGREEN
-    // response_freight = await adicionar_servico(
-    //   response_freight,
-    //   req,
-    //   res,
-    //   evergreen
-    // );
     response_freight = yield adicionar_servico(response_freight, req, res, cmaController_1.cma);
+    response_freight = yield adicionar_servico(response_freight, req, res, evergreenController_1.evergreen);
+    response_freight = yield adicionar_servico(response_freight, req, res, localController_1.local);
     let msg_default = [
         {
             shipment_id: "1",

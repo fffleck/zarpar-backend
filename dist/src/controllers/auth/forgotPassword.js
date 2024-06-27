@@ -57,7 +57,7 @@ const forgotPassword = (req, res) => __awaiter(void 0, void 0, void 0, function*
         },
     });
     const mailOptions = {
-        from: `Karavel Shipping - <lephanyx@gmail.com>`,
+        from: `Zarpar Shipping - <lephanyx@gmail.com>`,
         subject: `Recuperação de Senha`,
         to: user.email,
         html: `
@@ -66,6 +66,8 @@ const forgotPassword = (req, res) => __awaiter(void 0, void 0, void 0, function*
       <a href="${process.env.BASE_URL}/reset-password/${token}">Redefinir senha</a>
       <p>O link expirará em 1 hora.</p>
       <p>Se você não solicitou a redefinição de senha, ignore este email.</p>
+      <br><br>
+      <p>Se preferir, fale conosco  agora através da nossa <a href="mailto:comercial@zarpar.net"> Central do Cliente</a>:</p>
     `,
     };
     transporter.sendMail(mailOptions, (error, info) => {

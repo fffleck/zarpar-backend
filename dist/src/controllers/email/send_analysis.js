@@ -14,7 +14,6 @@ const nodemailer = require('nodemailer');
 const SMTP_CONFIG = require('../../config/mail_smtp');
 const emailsAnalise = ['alvaro@zarpar.net'];
 // const emailsAnalise = ['ffleck@gmail.com'];
-
 const transporter = nodemailer.createTransport({
     host: SMTP_CONFIG.host,
     port: SMTP_CONFIG.port,
@@ -32,6 +31,12 @@ const send_analysis = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
     const informacoesPedido = req.body;
+    let totalTaxas = 0;
+    if (informacoesPedido.taxas.length > 0) {
+        informacoesPedido.taxas.forEach((taxLine) => {
+            totalTaxas = +totalTaxas + (taxLine.taxValue * informacoesPedido.quantidade_containers);
+        });
+    }
     yield transporter.sendMail({
         from: `Pedidos Karavel Shipping - <lephanyx@gmail.com>`,
         subject: `Pedido Karavel - ${informacoesPedido.embarcador_nome}`,
@@ -239,7 +244,7 @@ const send_analysis = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             <p style="line-height: 19.6px;"><strong>Data de embarque:</strong> ${informacoesPedido.data_embarque}</p>
             <p style="line-height: 19.6px;"><strong>Tipo de container:</strong> ${informacoesPedido.tipo_container}</p>
             <p style="line-height: 19.6px;"><strong>Quantidade de containers:</strong> ${informacoesPedido.quantidade_containers}</p>
-            <p style="line-height: 19.6px;"><strong>Preço do Frete:</strong> ${informacoesPedido.valor}</p>
+            <p style="line-height: 19.6px;"><strong>Preço do Frete:</strong> ${parseFloat(informacoesPedido.valor) + totalTaxas + 100}</p>
         </div>
 
             </td>
