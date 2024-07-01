@@ -52,7 +52,7 @@ export const evergreen = async (req: Request, res: Response) => {
     try {
       // let api_evergreen_res = await axios.get(`http://localhost:5001/evergreen?data_saida=${data_saida_evergreen}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`)
       let api_evergreen_res = await axios.get(
-        `https://karavel-services-e63c55605b2e.herokuapp.com/evergreen?data_saida=${data_saida_evergreen}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`
+        `https://zarpar-bots-e77d3a940747.herokuapp.com/evergreen?data_saida=${data_saida_evergreen}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`
       );
       api_evergreen_res.data.forEach((result: any) => {
         response_freight.push(result);
