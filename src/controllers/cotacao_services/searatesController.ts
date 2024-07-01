@@ -483,7 +483,9 @@ export const searates = async (req: Request, res: Response) => {
           data_embarque: formataData(data_partida),
           tempo_de_transito: freight.transitTime,
           data_chegada: formataData(data_chegada),
-          frete: `$ ${parseFloat(freight.price) - 100}`,
+          base_freight: freight.price,
+          bunker: 0,
+          isps: 0,
           imagem_link: freight.logo,
         });
       });
