@@ -6,6 +6,8 @@ const nodemailer = require("nodemailer");
 const SMTP_CONFIG = require("../../config/mail_smtp");
 import userService from "../../services/user.service";
 const KEY_JWT = "karavel2023jwt";
+const BASE_URL = "https://zarpar-f2dd5224c9f5.herokuapp.com"
+
 
 export const forgotPassword = async (req: Request, res: Response) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -57,7 +59,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
     html: `
       <p>Olá ${user.name},</p>
       <p>Recebemos uma solicitação para redefinir a senha da sua conta. Para redefinir sua senha, clique no link abaixo:</p>
-      <a href="${process.env.BASE_URL}/reset-password/${token}">Redefinir senha</a>
+      <a href="${BASE_URL}/reset-password/${token}">Redefinir senha</a>
       <p>O link expirará em 1 hora.</p>
       <p>Se você não solicitou a redefinição de senha, ignore este email.</p>
       <br><br>
