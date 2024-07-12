@@ -288,7 +288,16 @@ export const searates = async (req: Request, res: Response) => {
 
     api_res.data.data.shipment.forEach((shipment: any) => {
       let freights = shipment.freight;
+      let bunkerFreight = 0;
+
       freights.forEach((freight: any) => {
+        freight.portFeesFrom.forEach((taxs: any) => {
+          if (taxs.originalCurrency === 'USD') {
+            bunkerFreight += taxs.price;
+          }
+        })
+      
+
         let data_partida = converteStrToData2(freight.validTo);
         let tempo_trasito = parseInt(freight.transitTime.split(" ")[0]);
         let data_chegada = new Date(data_partida);
@@ -308,8 +317,8 @@ export const searates = async (req: Request, res: Response) => {
           data_embarque: formataData(data_partida),
           tempo_de_transito: freight.transitTime,
           data_chegada: formataData(data_chegada),
-          base_freight: freight.price,
-          bunker: 0,
+          base_freight: parseInt(freight.price) - bunkerFreight,
+          bunker: bunkerFreight,
           isps: 0,
           imagem_link: freight.logo,
         });
