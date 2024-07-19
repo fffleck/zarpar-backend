@@ -262,177 +262,15 @@ const searates = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                                    `,
         });
         let api_res = yield axios_1.default.post("https://www.searates.com/graphql_rates", data, config);
-        // console.log(`
-        // {
-        //   shipment: fcl(from: [${from.lat}, ${from.long}],to: [${to.lat}, ${to.long}],${containers_str} , date: "${data_saida}",  currency: USD) {
-        //     shipmentId
-        //     transportationMode
-        //     incoterms
-        //     currency
-        //     cityFrom: city(mode: EXPORT) {
-        //       ...cityFields
-        //     }
-        //     cityTo: city(mode: IMPORT) {
-        //       ...cityFields
-        //     }
-        //     portFrom: port(mode: EXPORT) {
-        //       ...portFields
-        //     }
-        //     portTo: port(mode: IMPORT) {
-        //       ...portFields
-        //     }
-        //     freight: oceanFreight {
-        //       ...ratesFields
-        //     }
-        //   }
-        //   default {
-        //     services
-        //     bookingViaEmail
-        //   }
-        //   identity {
-        //     first_name
-        //     last_name
-        //     admin
-        //     carrier
-        //     dfa
-        //     email
-        //     phone
-        //   }
-        // }
-        // fragment ratesFields on OceanFreight {
-        //   shippingLine
-        //   logo
-        //   containerCode
-        //   validTo
-        //   containerType
-        //   overdue
-        //   co2
-        //   quantity
-        //   linerTerms
-        //   originalPrice
-        //   originalCurrency
-        //   price
-        //   distance
-        //   comment
-        //   transitTime
-        //   transportFrom
-        //   transportTo
-        //   alternative
-        //   portFeesFrom: portFees(mode: EXPORT) {
-        //     ...portFeesFields
-        //   }
-        //   portFeesTo: portFees(mode: IMPORT) {
-        //     ...portFeesFields
-        //   }
-        //   truckFrom: truck(mode: EXPORT) {
-        //     originalPrice
-        //     originalCurrency
-        //     price
-        //     comment
-        //     distance
-        //     transitTime
-        //     interpolation
-        //     co2
-        //   }
-        //   truckTo: truck(mode: IMPORT) {
-        //     originalPrice
-        //     originalCurrency
-        //     price
-        //     comment
-        //     distance
-        //     transitTime
-        //     interpolation
-        //     co2
-        //   }
-        //   railFrom: rail(mode: EXPORT) {
-        //     originalPrice
-        //     originalCurrency
-        //     price
-        //     distance
-        //     transitTime
-        //     interpolation
-        //     co2
-        //   }
-        //   railTo: rail(mode: IMPORT) {
-        //     originalPrice
-        //     originalCurrency
-        //     price
-        //     distance
-        //     transitTime
-        //     interpolation
-        //     co2
-        //   }
-        //   dryFrom: dry(mode: EXPORT) {
-        //     price
-        //     distance
-        //     transitTime
-        //     interpolation
-        //     city(mode: EXPORT) {
-        //       ...cityFields
-        //     }
-        //   }
-        //   dryTo: dry(mode: IMPORT) {
-        //     price
-        //     distance
-        //     transitTime
-        //     interpolation
-        //     city(mode: IMPORT) {
-        //       ...cityFields
-        //     }
-        //   }
-        //     bargeFrom: barge(mode: EXPORT) {
-        //     price
-        //     distance
-        //     transitTime
-        //     validTo
-        //     currency
-        //     co2
-        //     port: portFrom {
-        //       ...portFields
-        //     }
-        //   }
-        //   bargeTo: barge(mode: IMPORT) {
-        //     price
-        //     distance
-        //     transitTime
-        //     validTo
-        //     co2
-        //     currency
-        //     port: portTo {
-        //       ...portFields
-        //     }
-        //   }
-        // }
-        // fragment cityFields on City {
-        //   id
-        //   name
-        //   code
-        //   countryCode
-        //   lat
-        //   lng
-        // }
-        // fragment portFields on Port {
-        //   id
-        //   name
-        //   code
-        //   countryCode
-        //   lat
-        //   lng
-        // }
-        // fragment portFeesFields on PortFees {
-        //   abbr
-        //   title
-        //   text
-        //   originalPrice
-        //   originalCurrency
-        //   price
-        //   perLot
-        //   co2
-        // }
-        //                               `);
         api_res.data.data.shipment.forEach((shipment) => {
             let freights = shipment.freight;
+            let bunkerFreight = 0;
             freights.forEach((freight) => {
+                freight.portFeesFrom.forEach((taxs) => {
+                    if (taxs.originalCurrency === 'USD') {
+                        bunkerFreight += taxs.price;
+                    }
+                });
                 let data_partida = (0, utils_1.converteStrToData2)(freight.validTo);
                 let tempo_trasito = parseInt(freight.transitTime.split(" ")[0]);
                 let data_chegada = new Date(data_partida);
@@ -451,8 +289,8 @@ const searates = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                     data_embarque: (0, utils_1.formataData)(data_partida),
                     tempo_de_transito: freight.transitTime,
                     data_chegada: (0, utils_1.formataData)(data_chegada),
-                    base_freight: freight.price,
-                    bunker: 0,
+                    base_freight: parseInt(freight.price) - bunkerFreight,
+                    bunker: bunkerFreight,
                     isps: 0,
                     imagem_link: freight.logo,
                 });

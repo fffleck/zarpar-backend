@@ -4,6 +4,7 @@ import { searates } from "./searatesController";
 import { evergreen } from "./evergreenController";
 import { cma } from "./cmaController";
 import { local } from "./localController";
+import cachedService from "../../services/cached.service"
 
 export const fretes = async (req: Request, res: Response) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -90,7 +91,7 @@ export const fretes = async (req: Request, res: Response) => {
     },
   ];
 
-  response_freight = response_freight.concat(msg_default);
+  // response_freight = response_freight.concat(msg_default);
 
   if (response_freight.length === 0) {
     console.log({
@@ -98,6 +99,9 @@ export const fretes = async (req: Request, res: Response) => {
     });
     res.status(200).json(msg_default);
   } else {
+    response_freight.forEach(async (result) => {
+      await cachedService.insert(result);
+    })
     res.status(200).json(response_freight);
   }
 };

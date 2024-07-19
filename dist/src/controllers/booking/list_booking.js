@@ -34,9 +34,10 @@ const list_booking = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         });
     }
     else {
-        res.status(401).json({
-            success: false,
-            message: "Problema ao localizar bookings."
+        res.json({
+            success: true,
+            message: "Booking Encontrado",
+            list: []
         });
     }
 });

@@ -11,7 +11,8 @@ export const login =  async (req: Request, res: Response)=>{
     res.setHeader('Access-Control-Allow-Headers', '*');
  
     const { email, password } = req.body.userData;
- 
+
+    
     const passwordHash = CryptoJS.MD5(password).toString(CryptoJS.enc.Hex);
  
     if(email === undefined || password === undefined){
@@ -21,7 +22,6 @@ export const login =  async (req: Request, res: Response)=>{
        })
     }else{
        const user = await userService.getByEmail(email); 
- 
        //Usuário encontrado e validado
        if(user.length > 0 && user[0].password === passwordHash){
           const usuarioEncontrado = user[0];

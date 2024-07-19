@@ -15,6 +15,7 @@ export const list_booking = async (req: Request, res: Response)=>{
     listBookings = await bookingService.getBookingByEmail(informacoesPedido.email)
   }
 
+
   if(listBookings.length){
       res.json({
           success: true,
@@ -22,9 +23,10 @@ export const list_booking = async (req: Request, res: Response)=>{
           list: listBookings
       })
   } else{
-    res.status(401).json({
-      success: false,
-      message: "Problema ao localizar bookings."
-    })
+    res.json({
+      success: true,
+      message: "Booking Encontrado",
+      list: []
+  })
   }
 };

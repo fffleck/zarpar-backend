@@ -8,6 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fretes = void 0;
 const zimController_1 = require("./zimController");
@@ -15,6 +18,7 @@ const searatesController_1 = require("./searatesController");
 const evergreenController_1 = require("./evergreenController");
 const cmaController_1 = require("./cmaController");
 const localController_1 = require("./localController");
+const cached_service_1 = __importDefault(require("../../services/cached.service"));
 const fretes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "*");
@@ -96,7 +100,7 @@ const fretes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             imagem_link: "/imagens/cosco.png",
         },
     ];
-    response_freight = response_freight.concat(msg_default);
+    // response_freight = response_freight.concat(msg_default);
     if (response_freight.length === 0) {
         console.log({
             message: "[COTAÇÕES] Fretes nao encontrado.",
@@ -104,6 +108,9 @@ const fretes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(200).json(msg_default);
     }
     else {
+        response_freight.forEach((result) => __awaiter(void 0, void 0, void 0, function* () {
+            yield cached_service_1.default.insert(result);
+        }));
         res.status(200).json(response_freight);
     }
 });
