@@ -13,11 +13,16 @@ export const save_schedule = async (req: Request, res: Response)=>{
 
   if (informacoesPedido.taxas.length > 0 ) {
     informacoesPedido.taxas.forEach((taxLine: ITaxes) => {
-      totalTaxas += totalTaxas + (taxLine.taxValue * informacoesPedido.quantidade_containers);
+      if (taxLine.applicability == "U") {
+        totalTaxas += totalTaxas + taxLine.taxValue;
+      } else {
+        totalTaxas += totalTaxas + (taxLine.taxValue * informacoesPedido.quantidade_containers);
+      }
+      
     })
   }
 
-  informacoesPedido.valor = valor_inicial + totalTaxas + 100;
+  informacoesPedido.valor = valor_inicial + totalTaxas;
   informacoesPedido.mercadoria = informacoesPedido.selectMercadoria ? informacoesPedido.selectMercadoria.split(" - ")[1] : null
   informacoesPedido.status = 'Pending'
   

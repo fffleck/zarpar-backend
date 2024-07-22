@@ -13,11 +13,15 @@ export const save_booking = async (req: Request, res: Response)=>{
 
   if (informacoesPedido.taxas.length > 0 ) {
     informacoesPedido.taxas.forEach((taxLine: ITaxes) => {
-      totalTaxas += totalTaxas + (taxLine.taxValue * informacoesPedido.quantidade_containers);
+      if (taxLine.applicability == "U") {
+        totalTaxas += totalTaxas + taxLine.taxValue;
+      } else {
+        totalTaxas += totalTaxas + (taxLine.taxValue * informacoesPedido.quantidade_containers);
+      }
     })
   }
 
-  informacoesPedido.valor = parseFloat(informacoesPedido.valor) + totalTaxas + 100;
+  informacoesPedido.valor = parseFloat(informacoesPedido.valor) + totalTaxas;
   
   const save_booking = await bookingService.create(informacoesPedido)
 

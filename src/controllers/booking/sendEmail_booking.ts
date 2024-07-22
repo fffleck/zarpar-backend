@@ -1,4 +1,5 @@
 import {Request, Response} from "express";
+import { ITaxes } from "../../models/Taxes";
 const nodemailer = require('nodemailer');
 const SMTP_CONFIG = require('../../config/mail_smtp');
 
@@ -27,8 +28,13 @@ export const send_email =  async (req: Request, res: Response)=>{
     const informacoesEmail = req.body;
     let totalTaxas = 0;
     if (informacoesEmail.taxas.length > 0) {
-        informacoesEmail.taxas.forEach((taxLine: { taxValue: number; }) => {
-            totalTaxas =+ totalTaxas+(taxLine.taxValue * informacoesEmail.quantidade_containers);
+        informacoesEmail.taxas.forEach((taxLine: ITaxes) => {
+            if (taxLine.applicability == "U") {
+                totalTaxas += totalTaxas + taxLine.taxValue;
+              } else {
+                totalTaxas =+ totalTaxas+(taxLine.taxValue * informacoesEmail.quantidade_containers);
+              }
+            
         })
     }
 
@@ -267,7 +273,7 @@ export const send_email =  async (req: Request, res: Response)=>{
             <p style="line-height: 19.6px;"><strong>Payment Location: </strong> ${informacoesEmail.inputPaymentLocation}</p>
             <p style="line-height: 19.6px;"><strong>Comments: </strong> ${informacoesEmail.textAreaCustomerComment}</p>
             <p style="line-height: 19.6px;"><strong>Email Notifications: </strong> ${informacoesEmail.inputPartnerEmailNotifications}</p>
-            <p style="line-height: 19.6px;"><strong>Total do Frete:</strong> ${parseFloat(informacoesEmail.valor) + totalTaxas + 100}</p>
+            <p style="line-height: 19.6px;"><strong>Total do Frete:</strong> ${parseFloat(informacoesEmail.valor) + totalTaxas}</p>
         </div>
 
 
