@@ -28,7 +28,8 @@ export const upload_taxes = async (req: Request, res: Response)=>{
           container, 
           taxname, 
           taxValue,
-          currency
+          currency,
+          applicability
         } = row;
 
         const newTaxes = {
@@ -38,7 +39,8 @@ export const upload_taxes = async (req: Request, res: Response)=>{
           container: container,
           taxname: taxname,
           taxValue: taxValue,
-          currency: currency
+          currency: currency,
+          applicability: applicability
       }
 
         total_registros++;

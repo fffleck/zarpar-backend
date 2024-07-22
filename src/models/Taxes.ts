@@ -8,6 +8,7 @@ export interface ITaxes extends mongoose.Document {
     container: number;
     taxname: string;
     taxValue: number;
+    applicability: string; 
     currency: string;
   }
 
@@ -18,6 +19,7 @@ export interface ITaxes extends mongoose.Document {
     container: { type: Number },
     taxname: { type: String },
     taxValue: { type: Number },
+    applicability: { type: String, default: "U"},
     currency: { type: String },
   })
 
