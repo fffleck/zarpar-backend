@@ -8,7 +8,7 @@ export const search_taxes = async (req: Request, res: Response)=>{
 
   const infoBooking = req.body
 
-  const porto = infoBooking.props.porto_embarque.split("-")[0];
+  const porto = infoBooking.props.porto_embarque.split("-")[0].toUpperCase();
   const armador = infoBooking.props.armador.replace(" ","-").toUpperCase();
   const typeContainer = infoBooking.props.tipo_container.replace(/[^0-9]/g,'')
 
