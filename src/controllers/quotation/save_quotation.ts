@@ -1,5 +1,6 @@
 import {Request, Response} from "express";
 import quotationsService from "../../services/quotations.service";
+import armadorService from "../../services/armador.service";
 
 export const save_quotation = async (req: Request, res: Response)=>{
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -16,7 +17,10 @@ export const save_quotation = async (req: Request, res: Response)=>{
 
   if (arrArmador.length > 0) {
     for (const armador of arrArmador) {
-      informacoesQuotations.armador = armador;
+      const dadosArmador = await armadorService.getByIdArmador(armador);
+
+      informacoesQuotations.armador = dadosArmador?.name
+      
       const saveQuotation = await quotationsService.create(informacoesQuotations);
       if (saveQuotation) {
         savedQuotations.push(saveQuotation);
