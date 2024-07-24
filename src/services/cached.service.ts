@@ -15,11 +15,11 @@ const insert = (body: ICached) => Cached.findOneAndUpdate(
     tempo_de_transito: body.tempo_de_transito
   }, body, {new: true, upsert: true, setDefaultsOnInsert: true});
 const getAll = () => Cached.find();
-const getOne = (params: FilterQuery<ICached>) => Cached.find(params);
+const getFreigth = (params: FilterQuery<ICached>) => Cached.find(params);
 
 export default {
     create,
     insert,
     getAll,
-    getOne
+    getFreigth
 }

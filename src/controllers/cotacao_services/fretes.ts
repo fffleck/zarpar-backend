@@ -5,6 +5,7 @@ import { evergreen } from "./evergreenController";
 import { cma } from "./cmaController";
 import { local } from "./localController";
 import cachedService from "../../services/cached.service"
+import { getCached } from "./cachedController";
 
 export const fretes = async (req: Request, res: Response) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -12,14 +13,21 @@ export const fretes = async (req: Request, res: Response) => {
   res.setHeader("Access-Control-Allow-Headers", "*");
 
   let response_freight: any[];
+  let response_cached = true;
   response_freight = [];
 
-  response_freight = await adicionar_servico(response_freight,req,res,searates);
-  response_freight = await adicionar_servico(response_freight, req, res, zim);
-  response_freight = await adicionar_servico(response_freight, req, res, cma);
-  response_freight = await adicionar_servico(response_freight, req, res, evergreen);
+  response_freight = await adicionar_servico(response_freight, req, res, getCached)
   response_freight = await adicionar_servico(response_freight, req, res, local);
+  
+  if (response_freight.length === 0 ) {
+    response_cached = false;
+    response_freight = await adicionar_servico(response_freight,req,res,searates);
+    response_freight = await adicionar_servico(response_freight, req, res, zim);
+    response_freight = await adicionar_servico(response_freight, req, res, cma);
+    response_freight = await adicionar_servico(response_freight, req, res, evergreen);
+  }
 
+  
   let msg_default = [
     {
       shipment_id: "1",
@@ -99,9 +107,11 @@ export const fretes = async (req: Request, res: Response) => {
     });
     res.status(200).json(msg_default);
   } else {
-    response_freight.forEach(async (result) => {
-      await cachedService.insert(result);
-    })
+    if (!response_cached) {
+      response_freight.forEach(async (result) => {
+        await cachedService.insert(result);
+      })
+    }
     res.status(200).json(response_freight);
   }
 };
