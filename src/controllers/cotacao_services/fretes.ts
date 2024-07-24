@@ -105,7 +105,7 @@ export const fretes = async (req: Request, res: Response) => {
     console.log({
       message: "[COTAÇÕES] Fretes nao encontrado.",
     });
-    res.status(200).json(msg_default);
+    res.status(200).json([]);
   } else {
     if (!response_cached) {
       response_freight.forEach(async (result) => {
