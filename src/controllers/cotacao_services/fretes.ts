@@ -27,7 +27,6 @@ export const fretes = async (req: Request, res: Response) => {
     response_freight = await adicionar_servico(response_freight, req, res, evergreen);
   }
 
-  
   let msg_default = [
     {
       shipment_id: "1",

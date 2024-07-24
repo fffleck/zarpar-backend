@@ -69,8 +69,8 @@ export const getCached = async (req: Request, res: Response) => {
             tempo_de_transito: linha.tempo_de_transito,
             data_chegada: linha.data_chegada,
             base_freight: parseFloat(linha.base_freight),
-            bunker: parseFloat(linha.bunker),
-            isps: parseFloat(linha.isps),
+            bunker: linha.bunker ?? 0,
+            isps: linha.isps ?? 0 ,
             imagem_link: ` - `,
         });
       });
