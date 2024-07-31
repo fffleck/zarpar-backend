@@ -39,13 +39,13 @@ const upload = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         const dia_chegada = data_chegada.split("/")[0];
         const mes_chegada = data_chegada.split("/")[1];
-        const ano_chagada = data_chegada.split("/")[2];
+        const ano_chegada = data_chegada.split("/")[2];
         let new_mes_chegada = mes_chegada;
         if (mes_chegada < 10) {
             new_mes_chegada = ("00" + mes_chegada).slice(-2);
         }
         const new_data_embarque = dia_embarque + '/' + new_mes_embarque + '/' + ano_embarque;
-        const new_data_chegada = dia_chegada + '/' + new_mes_chegada + '/' + ano_chagada;
+        const new_data_chegada = dia_chegada + '/' + new_mes_chegada + '/' + ano_chegada;
         const new_porto_descarga = porto_descarga.split("-")[0];
         const newFrete = {
             mercadoria: mercadoria,
