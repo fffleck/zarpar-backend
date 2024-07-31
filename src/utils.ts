@@ -5,6 +5,7 @@ export function formataData(data: Date){
        else
            return numero; 
    }
+
    let dataFormatada = (adicionaZero(data.getDate().toString()) + "/" + (adicionaZero(data.getMonth()+1).toString()) + "/" + data.getFullYear());
    return dataFormatada
  

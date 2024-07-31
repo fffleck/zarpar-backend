@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import portoService from "../../services/porto.service";
 import frete_maritmoService from "../../services/frete_maritmo.service";
+import { formataData, formataData2 } from "../../utils";
+import { isDate } from "util/types";
 
 export const localController = async (req: Request, res: Response) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -51,7 +53,6 @@ export const local = async (req: Request, res: Response) => {
 
     data_limite.setDate(data_1.getDate() + 10)
 
-
     let fretes_banco = await frete_maritmoService.getOne({porto_embarque: porto_embarque_1?.trim(), porto_descarga: porto_descarga_1?.trim(),tipo_container: containers_str,
       $expr: {
         $and: [
@@ -64,6 +65,7 @@ export const local = async (req: Request, res: Response) => {
     
     if (fretes_banco.length >= 1) {
       fretes_banco.forEach((linha) => {
+ 
         response_freight.push({
             shipment_id: linha._id,
             tipo_container: linha.tipo_container,
@@ -75,9 +77,9 @@ export const local = async (req: Request, res: Response) => {
             armador: linha.armador,
             id_armador: linha.id_armador,
             navio: linha.nome_navio,
-            data_embarque: linha.data_embarque,
+            data_embarque: ((new Date(linha.data_embarque).toString()) === 'Invalid Date') ? linha.data_embarque : formataData(new Date(linha.data_embarque)),
             tempo_de_transito: linha.tempo_de_transito,
-            data_chegada: linha.data_chegada,
+            data_chegada: ((new Date(linha.data_chegada).toString()) === 'Invalid Date') ? linha.data_chegada : formataData(new Date(linha.data_chegada)),
             base_freight: parseFloat(linha.base_freight),
             bunker: parseFloat(linha.bunker),
             isps: parseFloat(linha.isps),
