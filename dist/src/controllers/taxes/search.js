@@ -19,7 +19,7 @@ const search_taxes = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
     const infoBooking = req.body;
-    const porto = infoBooking.props.porto_embarque.split("-")[0];
+    const porto = infoBooking.props.porto_embarque.split("-")[0].toUpperCase();
     const armador = infoBooking.props.armador.replace(" ", "-").toUpperCase();
     const typeContainer = infoBooking.props.tipo_container.replace(/[^0-9]/g, '');
     const listTaxes = yield taxes_service_1.default.getByPort({ porto: porto, armador: armador, container: parseFloat(typeContainer) });

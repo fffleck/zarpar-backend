@@ -23,10 +23,15 @@ const save_schedule = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const valor_inicial = parseFloat(informacoesPedido.quantidade_containers) * parseFloat(informacoesPedido.frete);
     if (informacoesPedido.taxas.length > 0) {
         informacoesPedido.taxas.forEach((taxLine) => {
-            totalTaxas += totalTaxas + (taxLine.taxValue * informacoesPedido.quantidade_containers);
+            if (taxLine.applicability == "U") {
+                totalTaxas += totalTaxas + taxLine.taxValue;
+            }
+            else {
+                totalTaxas += totalTaxas + (taxLine.taxValue * informacoesPedido.quantidade_containers);
+            }
         });
     }
-    informacoesPedido.valor = valor_inicial + totalTaxas + 100;
+    informacoesPedido.valor = valor_inicial + totalTaxas;
     informacoesPedido.mercadoria = informacoesPedido.selectMercadoria ? informacoesPedido.selectMercadoria.split(" - ")[1] : null;
     informacoesPedido.status = 'Pending';
     const save_schedule = yield booking_service_1.default.scheduleBooking(informacoesPedido);

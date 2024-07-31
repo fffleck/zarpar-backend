@@ -34,7 +34,12 @@ const send_email = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     let totalTaxas = 0;
     if (informacoesEmail.taxas.length > 0) {
         informacoesEmail.taxas.forEach((taxLine) => {
-            totalTaxas = +totalTaxas + (taxLine.taxValue * informacoesEmail.quantidade_containers);
+            if (taxLine.applicability == "U") {
+                totalTaxas += totalTaxas + taxLine.taxValue;
+            }
+            else {
+                totalTaxas = +totalTaxas + (taxLine.taxValue * informacoesEmail.quantidade_containers);
+            }
         });
     }
     yield transporter.sendMail({
@@ -270,7 +275,7 @@ const send_email = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             <p style="line-height: 19.6px;"><strong>Payment Location: </strong> ${informacoesEmail.inputPaymentLocation}</p>
             <p style="line-height: 19.6px;"><strong>Comments: </strong> ${informacoesEmail.textAreaCustomerComment}</p>
             <p style="line-height: 19.6px;"><strong>Email Notifications: </strong> ${informacoesEmail.inputPartnerEmailNotifications}</p>
-            <p style="line-height: 19.6px;"><strong>Total do Frete:</strong> ${parseFloat(informacoesEmail.valor) + totalTaxas + 100}</p>
+            <p style="line-height: 19.6px;"><strong>Total do Frete:</strong> ${parseFloat(informacoesEmail.valor) + totalTaxas}</p>
         </div>
 
 

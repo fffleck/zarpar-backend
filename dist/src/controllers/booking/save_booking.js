@@ -22,10 +22,15 @@ const save_booking = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     let totalTaxas = 0;
     if (informacoesPedido.taxas.length > 0) {
         informacoesPedido.taxas.forEach((taxLine) => {
-            totalTaxas += totalTaxas + (taxLine.taxValue * informacoesPedido.quantidade_containers);
+            if (taxLine.applicability == "U") {
+                totalTaxas += totalTaxas + taxLine.taxValue;
+            }
+            else {
+                totalTaxas += totalTaxas + (taxLine.taxValue * informacoesPedido.quantidade_containers);
+            }
         });
     }
-    informacoesPedido.valor = parseFloat(informacoesPedido.valor) + totalTaxas + 100;
+    informacoesPedido.valor = parseFloat(informacoesPedido.valor) + totalTaxas;
     const save_booking = yield booking_service_1.default.create(informacoesPedido);
     if (save_booking) {
         res.json({

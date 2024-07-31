@@ -75,7 +75,7 @@ export const upload = async (req: Request, res: Response)=>{
                 armador.toUpperCase()=="HAPAG" ? "6" : 
                 armador.toUpperCase()=="ONE" ? "7" : 
                 armador.toUpperCase()=="HMM" ? "8" :  "0",
-            navio: navio,
+            nome_navio: navio,
             data_embarque: new_data_embarque,
             tempo_de_transito: tempo_de_transito,
             data_chegada: new_data_chegada,

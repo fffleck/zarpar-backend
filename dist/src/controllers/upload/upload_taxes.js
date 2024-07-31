@@ -29,7 +29,7 @@ const upload_taxes = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     let name_arquivo = null;
     let save_taxes = null;
     for (const row of dataFromExcel) {
-        const { direcao, armador, porto, container, taxname, taxValue, currency } = row;
+        const { direcao, armador, porto, container, taxname, taxValue, currency, applicability } = row;
         const newTaxes = {
             direcao: direcao,
             armador: armador,
@@ -37,7 +37,8 @@ const upload_taxes = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             container: container,
             taxname: taxname,
             taxValue: taxValue,
-            currency: currency
+            currency: currency,
+            applicability: applicability
         };
         total_registros++;
         name_arquivo = armador;

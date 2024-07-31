@@ -19,17 +19,23 @@ const evergreenController_1 = require("./evergreenController");
 const cmaController_1 = require("./cmaController");
 const localController_1 = require("./localController");
 const cached_service_1 = __importDefault(require("../../services/cached.service"));
+const cachedController_1 = require("./cachedController");
 const fretes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "*");
     res.setHeader("Access-Control-Allow-Headers", "*");
     let response_freight;
+    let response_cached = true;
     response_freight = [];
-    response_freight = yield adicionar_servico(response_freight, req, res, searatesController_1.searates);
-    response_freight = yield adicionar_servico(response_freight, req, res, zimController_1.zim);
-    response_freight = yield adicionar_servico(response_freight, req, res, cmaController_1.cma);
-    response_freight = yield adicionar_servico(response_freight, req, res, evergreenController_1.evergreen);
+    response_freight = yield adicionar_servico(response_freight, req, res, cachedController_1.getCached);
     response_freight = yield adicionar_servico(response_freight, req, res, localController_1.local);
+    if (response_freight.length === 0) {
+        response_cached = false;
+        response_freight = yield adicionar_servico(response_freight, req, res, searatesController_1.searates);
+        response_freight = yield adicionar_servico(response_freight, req, res, zimController_1.zim);
+        response_freight = yield adicionar_servico(response_freight, req, res, cmaController_1.cma);
+        response_freight = yield adicionar_servico(response_freight, req, res, evergreenController_1.evergreen);
+    }
     let msg_default = [
         {
             shipment_id: "1",
@@ -105,12 +111,14 @@ const fretes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.log({
             message: "[COTAÇÕES] Fretes nao encontrado.",
         });
-        res.status(200).json(msg_default);
+        res.status(200).json([]);
     }
     else {
-        response_freight.forEach((result) => __awaiter(void 0, void 0, void 0, function* () {
-            yield cached_service_1.default.insert(result);
-        }));
+        if (!response_cached) {
+            response_freight.forEach((result) => __awaiter(void 0, void 0, void 0, function* () {
+                yield cached_service_1.default.insert(result);
+            }));
+        }
         res.status(200).json(response_freight);
     }
 });

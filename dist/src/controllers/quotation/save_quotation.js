@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.save_quotation = void 0;
 const quotations_service_1 = __importDefault(require("../../services/quotations.service"));
+const armador_service_1 = __importDefault(require("../../services/armador.service"));
 const save_quotation = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
@@ -25,7 +26,8 @@ const save_quotation = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const arrArmador = armadores.split(',');
     if (arrArmador.length > 0) {
         for (const armador of arrArmador) {
-            informacoesQuotations.armador = armador;
+            const dadosArmador = yield armador_service_1.default.getByIdArmador(armador);
+            informacoesQuotations.armador = dadosArmador === null || dadosArmador === void 0 ? void 0 : dadosArmador.name;
             const saveQuotation = yield quotations_service_1.default.create(informacoesQuotations);
             if (saveQuotation) {
                 savedQuotations.push(saveQuotation);

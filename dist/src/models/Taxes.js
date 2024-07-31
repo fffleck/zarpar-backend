@@ -11,6 +11,7 @@ const TaxesSChema = new mongoose_1.default.Schema({
     container: { type: Number },
     taxname: { type: String },
     taxValue: { type: Number },
+    applicability: { type: String, default: "U" },
     currency: { type: String },
 });
 const Taxes = mongoose_1.default.model("Taxes", TaxesSChema);

@@ -142,6 +142,7 @@ const cma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 routingChegada = routingDetail;
             }
         });
+        const bunker = ((chargeBAF08 ? chargeBAF08.amount : 0) + ((_a = chargeBAF03.amount) !== null && _a !== void 0 ? _a : 0));
         response_freight.push({
             shipment_id: voyageReference,
             tipo_container: tipo_container,
@@ -157,7 +158,7 @@ const cma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             tempo_de_transito: `${transitTime} days`,
             data_chegada: (0, utils_1.formataData)(dataChegada),
             base_freight: chargeFRT00.amount,
-            bunker: ((chargeBAF08 ? chargeBAF08.amount : 0) + ((_a = chargeBAF03.amount) !== null && _a !== void 0 ? _a : 0)),
+            bunker: bunker !== null && bunker !== void 0 ? bunker : 0,
             isps: otherTaxsValue,
             imagem_link: "http://www.cma-cgm.com/Images/2018/logo/logo-cmacgm.svg",
         });

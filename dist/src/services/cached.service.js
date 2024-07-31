@@ -17,10 +17,10 @@ const insert = (body) => Cached_1.default.findOneAndUpdate({ porto_embarque: bod
     tempo_de_transito: body.tempo_de_transito
 }, body, { new: true, upsert: true, setDefaultsOnInsert: true });
 const getAll = () => Cached_1.default.find();
-const getOne = (params) => Cached_1.default.find(params);
+const getFreigth = (params) => Cached_1.default.find(params);
 exports.default = {
     create,
     insert,
     getAll,
-    getOne
+    getFreigth
 };
