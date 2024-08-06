@@ -16,18 +16,18 @@ export const fretes = async (req: Request, res: Response) => {
   let response_cached = true;
   response_freight = [];
 
-  response_freight = await adicionar_servico(response_freight, req, res, getCached)
+  // response_freight = await adicionar_servico(response_freight, req, res, getCached)
   
   
-  if (response_freight.length === 0 ) {
-    response_cached = false;
+  // if (response_freight.length === 0 ) {
+  //   response_cached = false;
     
     response_freight = await adicionar_servico(response_freight,req,res,searates);
     response_freight = await adicionar_servico(response_freight, req, res, zim);
     response_freight = await adicionar_servico(response_freight, req, res, cma);
     response_freight = await adicionar_servico(response_freight, req, res, evergreen);
     response_freight = await adicionar_servico(response_freight, req, res, local);
-  }
+  // }
 
   let msg_default = [
     {
