@@ -19,7 +19,6 @@ const evergreenController_1 = require("./evergreenController");
 const cmaController_1 = require("./cmaController");
 const localController_1 = require("./localController");
 const cached_service_1 = __importDefault(require("../../services/cached.service"));
-const cachedController_1 = require("./cachedController");
 const fretes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "*");
@@ -27,15 +26,15 @@ const fretes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let response_freight;
     let response_cached = true;
     response_freight = [];
-    response_freight = yield adicionar_servico(response_freight, req, res, cachedController_1.getCached);
+    // response_freight = await adicionar_servico(response_freight, req, res, getCached)
+    // if (response_freight.length === 0 ) {
+    //   response_cached = false;
+    response_freight = yield adicionar_servico(response_freight, req, res, searatesController_1.searates);
+    response_freight = yield adicionar_servico(response_freight, req, res, zimController_1.zim);
+    response_freight = yield adicionar_servico(response_freight, req, res, cmaController_1.cma);
+    response_freight = yield adicionar_servico(response_freight, req, res, evergreenController_1.evergreen);
     response_freight = yield adicionar_servico(response_freight, req, res, localController_1.local);
-    if (response_freight.length === 0) {
-        response_cached = false;
-        response_freight = yield adicionar_servico(response_freight, req, res, searatesController_1.searates);
-        response_freight = yield adicionar_servico(response_freight, req, res, zimController_1.zim);
-        response_freight = yield adicionar_servico(response_freight, req, res, cmaController_1.cma);
-        response_freight = yield adicionar_servico(response_freight, req, res, evergreenController_1.evergreen);
-    }
+    // }
     let msg_default = [
         {
             shipment_id: "1",
