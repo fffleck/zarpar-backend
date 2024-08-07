@@ -35,6 +35,7 @@ export const local = async (req: Request, res: Response) => {
 
   let response_freight: any[];
   response_freight = [];
+
   
   try {
     let portos = await portoService.getAll()
@@ -61,7 +62,6 @@ export const local = async (req: Request, res: Response) => {
         ]
       }
     })
-
     
     if (fretes_banco.length >= 1) {
       fretes_banco.forEach((linha) => {
@@ -94,6 +94,7 @@ export const local = async (req: Request, res: Response) => {
       return response_freight;
     }
   } catch (error) {
+      console.log("ERRO", error)
       console.log("Não existe frete local para esta pesquisa.");
       return [];
   } 

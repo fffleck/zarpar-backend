@@ -26,8 +26,14 @@ const FornecedorSchema = new mongoose.Schema({
     phone: {
       type: String,
       required:true,
+    },
+    tradelane: {
+      type:String,
+      required:true,
     }
 });
+
+FornecedorSchema.index({idArmador: 1, email: 1, tradelane: 1}, {unique: true})
 
 const Fornecedor = mongoose.model<IFornecedor>("Fornecedor", FornecedorSchema);
 

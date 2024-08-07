@@ -96,6 +96,7 @@ const local = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
     }
     catch (error) {
+        console.log("ERRO", error);
         console.log("Não existe frete local para esta pesquisa.");
         return [];
     }

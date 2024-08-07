@@ -9,6 +9,7 @@ import emailRouter from "./routes/emailRouter";
 import uploadRouter from "./routes/uploadRouter";
 import bookingRouter from "./routes/bookingRouter";
 import quotationsNACRouter from "./routes/cotacoesNacRouter";
+import fornecedorRouter from "./routes/fornecedorRoute"
 
 // Importando Swagger
 import swaggerApp from "./swagger";
@@ -36,6 +37,7 @@ class App {
     this.server.use("/user", userRouter);
     this.server.use("/email", emailRouter);
     this.server.use("/upload", uploadRouter);
+    this.server.use("/fornecedor", fornecedorRouter);
     this.server.use("/booking", bookingRouter);
     this.server.use("/quotations", quotationsNACRouter);
     this.server.use("/swagger", swaggerApp); // Rota para a documentação do Swagger
