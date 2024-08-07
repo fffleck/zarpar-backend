@@ -6,7 +6,8 @@ const nodemailer = require("nodemailer");
 const SMTP_CONFIG = require("../../config/mail_smtp");
 import userService from "../../services/user.service";
 const KEY_JWT = "karavel2023jwt";
-const BASE_URL = "https://zarpar-f2dd5224c9f5.herokuapp.com"
+// const BASE_URL = "https://zarpar-f2dd5224c9f5.herokuapp.com"
+const BASE_URL = "https://zarpar-dev-3f11c6a6e076.herokuapp.com"
 
 
 export const forgotPassword = async (req: Request, res: Response) => {
