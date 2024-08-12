@@ -18,7 +18,8 @@ const nodemailer = require("nodemailer");
 const SMTP_CONFIG = require("../../config/mail_smtp");
 const user_service_1 = __importDefault(require("../../services/user.service"));
 const KEY_JWT = "karavel2023jwt";
-const BASE_URL = "https://zarpar-f2dd5224c9f5.herokuapp.com";
+// const BASE_URL = "https://zarpar-f2dd5224c9f5.herokuapp.com"
+const BASE_URL = "https://zarpar-dev-3f11c6a6e076.herokuapp.com";
 const forgotPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "*");

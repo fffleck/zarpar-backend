@@ -65,6 +65,6 @@ const routes = express_1.default.Router();
  *                   type: string
  *                   description: Mensagem de erro
  */
-routes.post('/add', list_1.add_fornecedor);
-routes.get('/list', add_1.list_fornecedor);
+routes.post('/add', add_1.add_fornecedor);
+routes.post('/list/', list_1.list_fornecedor);
 exports.default = routes;

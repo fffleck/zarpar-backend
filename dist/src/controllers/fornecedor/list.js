@@ -12,16 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.add_fornecedor = void 0;
+exports.list_fornecedor = void 0;
 const fornecedor_service_1 = __importDefault(require("../../services/fornecedor.service"));
-const add_fornecedor = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const list_fornecedor = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
     const search = req.body.email;
     let listFornecedor = [];
     if (search == "ffleck@gmail.com" || search === "alvaro@karavel.com.br") {
-        console.log("email", search);
         listFornecedor = yield fornecedor_service_1.default.getAll();
     }
     else {
@@ -41,4 +40,4 @@ const add_fornecedor = (req, res) => __awaiter(void 0, void 0, void 0, function*
         });
     }
 });
-exports.add_fornecedor = add_fornecedor;
+exports.list_fornecedor = list_fornecedor;

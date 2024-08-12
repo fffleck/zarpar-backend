@@ -12,19 +12,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.list_fornecedor = void 0;
+exports.add_fornecedor = void 0;
 const fornecedor_service_1 = __importDefault(require("../../services/fornecedor.service"));
-const list_fornecedor = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const add_fornecedor = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
     const objFornecedor = req.body;
-    const save_fornecedor = yield fornecedor_service_1.default.create(objFornecedor);
-    if (save_fornecedor) {
-        res.json({
+    objFornecedor.idArmador = objFornecedor.armador;
+    objFornecedor.name = objFornecedor.nome;
+    objFornecedor.tradelane = objFornecedor.tradelane.toString();
+    const save_fornecedor = yield fornecedor_service_1.default.create(objFornecedor).then((id) => {
+        return res.status(200).json({
             success: true,
             message: "Fornecedor salvo com sucesso."
         });
+    }).catch(err => {
+        if (err.name === 'MongoServerError' && err.code === 11000) {
+            return res.status(200).send({ succes: false, errorCode: err.code, message: 'Fornecedor já cadastrado!' });
+        }
+        else {
+            return res.status(500).json({ success: false, errorCode: err.code, message: "Problema ao cadastrar Fornecedor" });
+        }
+    });
+    if (save_fornecedor) {
     }
     else {
         res.status(403).json({
@@ -33,4 +44,4 @@ const list_fornecedor = (req, res) => __awaiter(void 0, void 0, void 0, function
         });
     }
 });
-exports.list_fornecedor = list_fornecedor;
+exports.add_fornecedor = add_fornecedor;
