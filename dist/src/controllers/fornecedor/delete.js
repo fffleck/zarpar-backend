@@ -20,7 +20,7 @@ const del_fornecedor = (req, res) => __awaiter(void 0, void 0, void 0, function*
     res.setHeader('Access-Control-Allow-Headers', '*');
     const objFornecedor = req.body;
     objFornecedor.tradelane = objFornecedor.tradelane.toString();
-    const delete_fornecedor = yield fornecedor_service_1.default.deleteOne(objFornecedor).then((id) => {
+    const delete_fornecedor = yield fornecedor_service_1.default.deleteOne(objFornecedor.id).then((id) => {
         return res.status(200).json({
             success: true,
             message: "Fornecedor removido com sucesso."

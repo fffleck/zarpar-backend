@@ -7,10 +7,10 @@ export const del_fornecedor = async (req: Request, res: Response)=>{
   res.setHeader('Access-Control-Allow-Headers', '*');
 
   const objFornecedor = req.body
-
+  
   objFornecedor.tradelane = objFornecedor.tradelane.toString()
 
-  const delete_fornecedor = await fornecedorService.deleteOne(objFornecedor).then((id) => {
+  const delete_fornecedor = await fornecedorService.deleteOne(objFornecedor.id).then((id) => {
     return res.status(200).json({
         success: true,
         message: "Fornecedor removido com sucesso."
