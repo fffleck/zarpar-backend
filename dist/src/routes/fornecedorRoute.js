@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const list_1 = require("../controllers/fornecedor/list");
 const add_1 = require("../controllers/fornecedor/add");
+const delete_1 = require("../controllers/fornecedor/delete");
 const routes = express_1.default.Router();
 /**
  * @swagger
@@ -67,4 +68,5 @@ const routes = express_1.default.Router();
  */
 routes.post('/add', add_1.add_fornecedor);
 routes.post('/list/', list_1.list_fornecedor);
+routes.post('/del/', delete_1.del_fornecedor);
 exports.default = routes;

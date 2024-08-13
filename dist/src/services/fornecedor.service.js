@@ -8,7 +8,7 @@ const create = (body) => Fornecedores_1.default.create(body);
 const getAll = () => Fornecedores_1.default.find();
 const getOne = (params) => Fornecedores_1.default.find(params);
 const getByIdFornecedor = (id) => Fornecedores_1.default.findOne({ id: id });
-const deleteOne = (body) => Fornecedores_1.default.deleteOne({ idArmador: body.idArmador, email: body.email, tradelane: body.tradelane });
+const deleteOne = (body) => Fornecedores_1.default.deleteOne({ id: body.id });
 exports.default = {
     create,
     getAll,
