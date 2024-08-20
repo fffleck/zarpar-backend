@@ -325,6 +325,7 @@ export const searates = async (req: Request, res: Response) => {
       });
     });
 
+    
     if (response_freight.length === 0) {
       return [];
     } else {

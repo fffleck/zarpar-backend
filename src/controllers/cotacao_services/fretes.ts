@@ -12,17 +12,19 @@ export const fretes = async (req: Request, res: Response) => {
   res.setHeader("Access-Control-Allow-Methods", "*");
   res.setHeader("Access-Control-Allow-Headers", "*");
 
+  let email = req.query.email
   let response_freight: any[];
-  let response_cached = true;
+  let response_cached = false;
   response_freight = [];
 
   // response_freight = await adicionar_servico(response_freight, req, res, getCached)
   
+  console.log("Email recebido", email)
   
   // if (response_freight.length === 0 ) {
   //   response_cached = false;
     
-    response_freight = await adicionar_servico(response_freight,req,res,searates);
+    response_freight = await adicionar_servico(response_freight, req, res, searates);
     response_freight = await adicionar_servico(response_freight, req, res, zim);
     response_freight = await adicionar_servico(response_freight, req, res, cma);
     response_freight = await adicionar_servico(response_freight, req, res, evergreen);
@@ -110,6 +112,7 @@ export const fretes = async (req: Request, res: Response) => {
   } else {
     if (!response_cached) {
       response_freight.forEach(async (result) => {
+        result.email = email
         await cachedService.insert(result);
       })
     }
