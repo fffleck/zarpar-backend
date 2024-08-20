@@ -14,8 +14,10 @@ export const fretes = async (req: Request, res: Response) => {
 
   let email = req.query.email
   let response_freight: any[];
+  let response_filter: any[];
   let response_cached = false;
   response_freight = [];
+  response_filter = [];
 
   // response_freight = await adicionar_servico(response_freight, req, res, getCached)
   
@@ -116,7 +118,21 @@ export const fretes = async (req: Request, res: Response) => {
         await cachedService.insert(result);
       })
     }
-    res.status(200).json(response_freight);
+
+    response_freight.forEach((linha)=> {
+      const data_cotacao = linha.data_embarque.split("/")[2]+"-"+linha.data_embarque.split("/")[1]+"-"+linha.data_embarque.split("/")[0];
+
+      if ((req.query.data_saida) && (req.query.data_saida <= data_cotacao)) {
+        response_filter.push(linha)
+      }
+    })
+
+    if (response_filter.length === 0) {
+      res.status(200).json([]);
+    } else {
+      response_freight = response_filter
+      res.status(200).json(response_freight);
+    }
   }
 };
 

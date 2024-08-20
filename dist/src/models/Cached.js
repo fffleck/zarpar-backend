@@ -20,7 +20,9 @@ const CachedSchema = new mongoose_1.default.Schema({
     bunker: { type: Number, default: 0 },
     isps: { type: Number, default: 0 },
     imagem_link: { type: String },
+    email: { type: String },
+    dateRegister: { type: Date, default: Date.now, required: true }
 });
-CachedSchema.index({ shipment_id: 1, tipo_container: 1, id_tipo_container: 1, porto_embarque: 1, porto_descarga: 1, armador: 1, navio: 1, data_embarque: 1, tempo_de_transito: 1, data_chegada: 1 }, { unique: true });
+CachedSchema.index({ shipment_id: 1, tipo_container: 1, id_tipo_container: 1, porto_embarque: 1, porto_descarga: 1, armador: 1, navio: 1, data_embarque: 1, tempo_de_transito: 1, data_chegada: 1, email: 1 }, { unique: true });
 const Cached = mongoose_1.default.model("Cached", CachedSchema);
 exports.default = Cached;
