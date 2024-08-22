@@ -29,7 +29,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
   if (!user) {
     return res.status(404).send({ message: "Usuário não encontrado." });
   } else if (user.active === "B") {
-    return res.status(403).send({ message: "Usuário temporariamente bloqueado." });
+    return res.status(404).send({ message: "Usuário temporariamente bloqueado." });
   }
 
   // Gerar um token de redefinição de senha
