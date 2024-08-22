@@ -45,6 +45,10 @@ const UserSchema = new mongoose_1.default.Schema({
     search: {
         type: Number,
         required: false
+    },
+    active: {
+        type: String,
+        default: "A"
     }
 });
 const User = mongoose_1.default.model("User", UserSchema);

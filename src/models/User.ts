@@ -11,6 +11,7 @@ export interface IUser extends mongoose.Document {
     telefone: string;
     password: string;
     search: number;
+    active: string;
 }
 
 const UserSchema = new mongoose.Schema({
@@ -54,6 +55,10 @@ const UserSchema = new mongoose.Schema({
     search:{
         type: Number,
         required:false
+    },
+    active:{
+        type: String,
+        default: "A"
     }
 });
 
