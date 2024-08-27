@@ -3,6 +3,7 @@ import portoService from "../../services/porto.service";
 import frete_maritmoService from "../../services/frete_maritmo.service";
 import { formataData, formataData2 } from "../../utils";
 import { isDate } from "util/types";
+import moment from "moment";
 
 export const localController = async (req: Request, res: Response) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -49,15 +50,12 @@ export const local = async (req: Request, res: Response) => {
     let porto_embarque_1 = pe_obj?.port_id.split("/")[1]
     let porto_descarga_1 = pd_obj?.port_id.split("/")[1]
 
-    let data_1 = new Date(data_saida)
-    let data_limite = new Date()
-
-    data_limite.setDate(data_1.getDate() + 10)
+    let data_limite = moment(data_saida).add(10,'days').format('DD/MM/YYYY')
 
     let fretes_banco = await frete_maritmoService.getOne({porto_embarque: porto_embarque_1?.trim(), porto_descarga: porto_descarga_1?.trim(),tipo_container: containers_str,
       $expr: {
         $and: [
-          { $gte: [{ $dateFromString: { dateString: "$data_embarque", format: "%d/%m/%Y" } }, new Date(data_saida)] },
+          { $gte: [{ $dateFromString: { dateString: "$data_embarque", format: "%d/%m/%Y" } }, moment(data_saida).format('DD/MM/YYYY')] },
           { $lte: [{ $dateFromString: { dateString: "$data_embarque", format: "%d/%m/%Y" } }, new Date(data_limite)] }
         ]
       }
