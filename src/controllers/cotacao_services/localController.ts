@@ -60,6 +60,8 @@ export const local = async (req: Request, res: Response) => {
         ]
       }
     })
+
+    console.log('fretes banco', fretes_banco)
     
     if (fretes_banco.length >= 1) {
       fretes_banco.forEach((linha) => {
