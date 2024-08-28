@@ -37,7 +37,7 @@ const forgotPassword = (req, res) => __awaiter(void 0, void 0, void 0, function*
         return res.status(404).send({ message: "Usuário não encontrado." });
     }
     else if (user.active === "B") {
-        return res.status(403).send({ message: "Usuário temporariamente bloqueado." });
+        return res.status(404).send({ message: "Usuário temporariamente bloqueado." });
     }
     // Gerar um token de redefinição de senha
     const token = jsonwebtoken_1.default.sign({ email: user.email }, KEY_JWT, {

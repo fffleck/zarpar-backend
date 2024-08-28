@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.local = exports.localController = void 0;
 const porto_service_1 = __importDefault(require("../../services/porto.service"));
 const frete_maritmo_service_1 = __importDefault(require("../../services/frete_maritmo.service"));
-const utils_1 = require("../../utils");
+const moment_1 = __importDefault(require("moment"));
 const localController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "*");
@@ -55,14 +55,13 @@ const local = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         let porto_embarque_1 = pe_obj === null || pe_obj === void 0 ? void 0 : pe_obj.port_id.split("/")[1];
         let porto_descarga_1 = pd_obj === null || pd_obj === void 0 ? void 0 : pd_obj.port_id.split("/")[1];
-        let data_1 = new Date(data_saida);
-        let data_limite = new Date();
-        data_limite.setDate(data_1.getDate() + 10);
+        let data_limite = (0, moment_1.default)(data_saida).add(10, 'days').format('DD/MM/YYYY');
+        let data_inicial = (0, moment_1.default)(data_saida).format('DD/MM/YYYY');
         let fretes_banco = yield frete_maritmo_service_1.default.getOne({ porto_embarque: porto_embarque_1 === null || porto_embarque_1 === void 0 ? void 0 : porto_embarque_1.trim(), porto_descarga: porto_descarga_1 === null || porto_descarga_1 === void 0 ? void 0 : porto_descarga_1.trim(), tipo_container: containers_str,
             $expr: {
                 $and: [
-                    { $gte: [{ $dateFromString: { dateString: "$data_embarque", format: "%d/%m/%Y" } }, new Date(data_saida)] },
-                    { $lte: [{ $dateFromString: { dateString: "$data_embarque", format: "%d/%m/%Y" } }, new Date(data_limite)] }
+                    { $gte: [{ $dateFromString: { dateString: "$data_embarque", format: "%d/%m/%Y" } }, data_inicial] },
+                    // { $lte: [{ $dateFromString: { dateString: "$data_embarque", format: "%d/%m/%Y" } }, data_limite ] }
                 ]
             } });
         if (fretes_banco.length >= 1) {
@@ -78,9 +77,9 @@ const local = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                     armador: linha.armador,
                     id_armador: linha.id_armador,
                     navio: linha.nome_navio,
-                    data_embarque: ((new Date(linha.data_embarque).toString()) === 'Invalid Date') ? linha.data_embarque : (0, utils_1.formataData)(new Date(linha.data_embarque)),
+                    data_embarque: linha.data_embarque,
                     tempo_de_transito: linha.tempo_de_transito,
-                    data_chegada: ((new Date(linha.data_chegada).toString()) === 'Invalid Date') ? linha.data_chegada : (0, utils_1.formataData)(new Date(linha.data_chegada)),
+                    data_chegada: linha.data_chegada,
                     base_freight: parseFloat(linha.base_freight),
                     bunker: parseFloat(linha.bunker),
                     isps: parseFloat(linha.isps),

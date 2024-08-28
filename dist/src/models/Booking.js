@@ -5,46 +5,102 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const BookingSchema = new mongoose_1.default.Schema({
+    qtdContainers: {
+        type: String,
+        required: true,
+    },
     armador: {
+        type: String,
+        required: true,
+    },
+    contractNumber: {
+        type: String,
+        required: true,
+    },
+    bookingOffice: {
+        type: String,
+    },
+    shipper: {
+        type: String,
+    },
+    forwarder: {
+        type: String,
+    },
+    consignee: {
+        type: String,
+    },
+    shipperRefNumber: {
+        type: String,
+    },
+    forward_ref_number: {
+        type: String,
+    },
+    purchaseOrderNumber: {
+        type: String,
+    },
+    moveType: {
+        type: String,
+        required: true,
+    },
+    porto_embarque: {
         type: String,
         required: true,
     },
     data_embarque: {
         type: String,
-        required: true
-    },
-    embarcador_nome: {
-        type: String,
-        required: true
-    },
-    embarcador_email: {
-        type: String,
-        required: true
-    },
-    tipo_mercadoria: {
-        type: String,
-        required: true
-    },
-    porto_embarque: {
-        type: String,
-        required: true
+        required: true,
     },
     porto_descarga: {
         type: String,
-        required: true
+        required: true,
     },
-    quantidade_containers: {
+    data_chegada: {
         type: String,
-        required: true
+        required: true,
     },
     tipo_container: {
         type: String,
-        required: true
+        required: true,
     },
-    valor: {
+    nomeMercadoria: {
         type: String,
-        required: true
+        required: true,
     },
+    paymentChargeType: {
+        type: String,
+        required: true,
+    },
+    paymentTerm: {
+        type: String,
+        required: true,
+    },
+    payer: {
+        type: String,
+        required: true,
+    },
+    paymentLocation: {
+        type: String,
+    },
+    customerComment: {
+        type: String,
+    },
+    emailnotifications: {
+        type: String,
+    },
+    email: {
+        type: String,
+        required: true,
+    },
+    status: {
+        type: String,
+        required: true,
+        default: 'pending'
+    },
+    created_at: {
+        type: Date,
+        required: true,
+        default: new Date()
+    }
 });
 const Booking = mongoose_1.default.model("Booking", BookingSchema);
 exports.default = Booking;

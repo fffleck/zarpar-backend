@@ -51,12 +51,13 @@ export const local = async (req: Request, res: Response) => {
     let porto_descarga_1 = pd_obj?.port_id.split("/")[1]
 
     let data_limite = moment(data_saida).add(10,'days').format('DD/MM/YYYY')
+    let data_inicial =  moment(data_saida).format('DD/MM/YYYY')
 
     let fretes_banco = await frete_maritmoService.getOne({porto_embarque: porto_embarque_1?.trim(), porto_descarga: porto_descarga_1?.trim(),tipo_container: containers_str,
       $expr: {
         $and: [
-          { $gte: [{ $dateFromString: { dateString: "$data_embarque", format: "%d/%m/%Y" } }, moment(data_saida).format('DD/MM/YYYY')] },
-          { $lte: [{ $dateFromString: { dateString: "$data_embarque", format: "%d/%m/%Y" } }, new Date(data_limite)] }
+          { $gte: [{ $dateFromString: { dateString: "$data_embarque", format: "%d/%m/%Y" } }, data_inicial] },
+          // { $lte: [{ $dateFromString: { dateString: "$data_embarque", format: "%d/%m/%Y" } }, data_limite ] }
         ]
       }
     })
@@ -75,9 +76,9 @@ export const local = async (req: Request, res: Response) => {
             armador: linha.armador,
             id_armador: linha.id_armador,
             navio: linha.nome_navio,
-            data_embarque: ((new Date(linha.data_embarque).toString()) === 'Invalid Date') ? linha.data_embarque : formataData(new Date(linha.data_embarque)),
+            data_embarque: linha.data_embarque,
             tempo_de_transito: linha.tempo_de_transito,
-            data_chegada: ((new Date(linha.data_chegada).toString()) === 'Invalid Date') ? linha.data_chegada : formataData(new Date(linha.data_chegada)),
+            data_chegada: linha.data_chegada,
             base_freight: parseFloat(linha.base_freight),
             bunker: parseFloat(linha.bunker),
             isps: parseFloat(linha.isps),

@@ -7,10 +7,12 @@ import { search_taxes } from "../controllers/taxes/search";
 import { update_booking } from "../controllers/booking/update_booking";
 import { send_email } from "../controllers/booking/sendEmail_booking";
 import { edit_booking } from "../controllers/booking/edit_booking";
+import { new_booking } from "../controllers/booking/new_booking";
 
 const routes: Router = express.Router();
 
 routes.post("/save_booking", save_booking);
+routes.post("/new", new_booking);
 routes.post("/save_quotation", save_quotation);
 routes.post("/list_booking", list_booking);
 routes.post("/reservas", save_schedule);

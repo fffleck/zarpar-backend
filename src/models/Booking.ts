@@ -2,59 +2,130 @@ import mongoose from 'mongoose';
 
 // Document interface
 export interface Ibooking extends mongoose.Document {
-    armador: string;
-    data_embarque: string;
-    embarcador_nome: string;
-    embarcador_email: string;
-    tipo_mercadoria: string;
-    porto_embarque: string;
-    porto_descarga: string;
-    quantidade_containers: string;
-    tipo_container: string;
-    valor: string;
+    qtdContainers: string,
+    armador: string,
+    contractNumber: string,
+    bookingOffice: string,
+    shipper: string,
+    forwarder: string,
+    consignee: string,
+    shipperRefNumber: string,
+    forward_ref_number: string,
+    purchaseOrderNumber: string,
+    moveType: string,
+    porto_embarque: string,
+    data_embarque: string,
+    porto_descarga: string,
+    data_chegada: string,
+    tipo_container: string,
+    nomeMercadoria: string,
+    paymentChargeType: string,
+    paymentTerm: string,
+    payer: string,
+    paymentLocation: string,
+    customerComment: string,
+    emailnotifications: string,
+    email: string,
+    created_at: Date,
   }
 
 const BookingSchema = new mongoose.Schema({
-    armador:{
-        type:String,
-        required:true,
+    qtdContainers: {
+        type: String,
+        required: true,
     },
-    data_embarque:{
-        type:String,
-        required:true
+    armador: {
+        type: String,
+        required: true,
     },
-    embarcador_nome:{
-      type:String,
-      required:true
+    contractNumber: {
+        type: String,
+        required: true,
     },
-    embarcador_email:{
-      type:String,
-      required:true
+    bookingOffice: {
+        type: String,
     },
-    tipo_mercadoria:{
-      type:String,
-      required:true
+    shipper: {
+        type: String,
     },
-    porto_embarque:{
-      type:String,
-      required:true
+    forwarder: {
+        type: String,
     },
-    porto_descarga:{
-      type:String,
-      required:true
+    consignee: {
+        type: String,
     },
-    quantidade_containers:{
-      type:String,
-      required:true
+    shipperRefNumber: {
+        type: String,
     },
-    tipo_container:{
-      type:String,
-      required:true
+    forward_ref_number: {
+        type: String,
     },
-    valor:{
-      type:String,
-      required:true
+    purchaseOrderNumber: {
+        type: String,
     },
+    moveType: {
+        type: String,
+        required: true,
+    },
+    porto_embarque: {
+        type: String,
+        required: true,
+    },
+    data_embarque: {
+        type: String,
+        required: true,
+    },
+    porto_descarga: {
+        type: String,
+        required: true,
+    },
+    data_chegada: {
+        type: String,
+        required: true,
+    },
+    tipo_container: {
+        type: String,
+        required: true,
+    },
+    nomeMercadoria: {
+        type: String,
+        required: true,
+    },
+    paymentChargeType: {
+        type: String,
+        required: true,
+    },
+    paymentTerm: {
+        type: String,
+        required: true,
+    },
+    payer: {
+        type: String,
+        required: true,
+    },
+    paymentLocation: {
+        type: String,
+    },
+    customerComment: {
+        type: String,
+    },
+    emailnotifications: {
+        type: String,
+    },
+    email: {
+        type: String,
+        required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+      default: 'pending'
+    },
+    created_at: {
+      type: Date,
+      required:true,
+      default: new Date()
+    }
 });
 
 const Booking = mongoose.model<Ibooking>("Booking", BookingSchema);

@@ -23,19 +23,23 @@ const upload = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const base64Buffer = Buffer.from(data.split(',')[1], 'base64');
     const workbook = xlsx_1.default.read(base64Buffer, { type: 'buffer' });
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const dataFromExcel = xlsx_1.default.utils.sheet_to_json(sheet, { raw: false });
+    const dataFromExcel = xlsx_1.default.utils.sheet_to_json(sheet, { raw: false, dateNF: 'dd/mm/yyyy' });
     let total_registros = 0;
     let total_importados = 0;
     let name_arquivo = null;
     let save_frete = null;
     for (const row of dataFromExcel) {
         const { Mercadoria: mercadoria, 'Tipo de Mercadoria': tipo_mercadoria, 'Tipo de Container': tipo_container, 'Porto de Embarque': porto_embarque, 'Porto de Descarga': porto_descarga, 'Data de Embarque': data_embarque, 'Cia Maritima': armador, 'Navio': navio, 'Transit Time': tempo_de_transito, 'Data Chegada': data_chegada, 'Base Frete': base_freight, 'Bunker': bunker, 'ISPS': isps, 'Transbordo': transbordo } = row;
-        const dia_embarque = data_embarque.split("/")[0];
-        const mes_embarque = data_embarque.split("/")[1];
+        const dia_embarque = data_embarque.split("/")[1];
+        const mes_embarque = data_embarque.split("/")[0];
         const ano_embarque = data_embarque.split("/")[2];
+        let new_dia_embarque = dia_embarque;
         let new_mes_embarque = mes_embarque;
         if (mes_embarque < 10) {
             new_mes_embarque = ("00" + mes_embarque).slice(-2);
+        }
+        if (dia_embarque < 10) {
+            new_dia_embarque = ("00" + dia_embarque).slice(-2);
         }
         const dia_chegada = data_chegada.split("/")[0];
         const mes_chegada = data_chegada.split("/")[1];
@@ -44,7 +48,7 @@ const upload = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (mes_chegada < 10) {
             new_mes_chegada = ("00" + mes_chegada).slice(-2);
         }
-        const new_data_embarque = dia_embarque + '/' + new_mes_embarque + '/' + ano_embarque;
+        const new_data_embarque = new_dia_embarque + '/' + new_mes_embarque + '/' + ano_embarque;
         const new_data_chegada = dia_chegada + '/' + new_mes_chegada + '/' + ano_chegada;
         const new_porto_descarga = porto_descarga.split("-")[0];
         const newFrete = {
