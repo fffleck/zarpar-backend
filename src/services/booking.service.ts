@@ -4,8 +4,8 @@ import Schedule, { ISchedule } from "../models/Schedule";
 
 const create = (body: Ibooking) => Booking.create(body);
 const getListByEmail = (emailRequerido: any) => Booking.find({embarcador_email: emailRequerido});
-const getBookingByEmail = (emailRequerido: any) => Schedule.find({embarcador_email: emailRequerido});
-const getAll = () => Schedule.find();
+const getBookingByEmail = (emailRequerido: any) => Booking.find({email: emailRequerido});
+const getAll = () => Booking.find();
 const getBookingById = (id: ObjectId) => Schedule.findById(id);
 const scheduleBooking = (body: ISchedule) => Schedule.create(body);
 const updateBooking = async (body: any, bookingId: any) => {

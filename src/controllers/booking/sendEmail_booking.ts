@@ -1,5 +1,6 @@
 import {Request, Response} from "express";
 import { ITaxes } from "../../models/Taxes";
+import moment from "moment";
 const nodemailer = require('nodemailer');
 const SMTP_CONFIG = require('../../config/mail_smtp');
 
@@ -26,22 +27,10 @@ export const send_email =  async (req: Request, res: Response)=>{
     res.setHeader('Access-Control-Allow-Headers', '*');
  
     const informacoesEmail = req.body;
-    let totalTaxas = 0;
-    if (informacoesEmail.taxas.length > 0) {
-        informacoesEmail.taxas.forEach((taxLine: ITaxes) => {
-            if (taxLine.applicability == "U") {
-                totalTaxas += totalTaxas + taxLine.taxValue;
-              } else {
-                totalTaxas =+ totalTaxas+(taxLine.taxValue * informacoesEmail.quantidade_containers);
-              }
-            
-        })
-    }
-
     
     await transporter.sendMail({
         from: `Novo Pedido de Booking Zarpar- <lephanyx@gmail.com>`,
-        subject: `Pedido de Booking de - ${informacoesEmail.embarcador_nome}`,
+        subject: `Pedido de Booking de - ${informacoesEmail.email}`,
         to: emailsAnalise,
         html: 
         `
@@ -237,100 +226,36 @@ export const send_email =  async (req: Request, res: Response)=>{
         <tbody>
             <tr>
             <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
-                
-            <div class="v-font-size" style="line-height: 140%; text-align: left; word-wrap: break-word;">
-            <p style="line-height: 19.6px;"><strong>Nome Embarcador:</strong> ${informacoesEmail.embarcador_nome}</p>
-            <p style="line-height: 19.6px;"><strong>Endereço do Embarcador:</strong> ${informacoesEmail.embarcador_endereco}</p>
-            <p style="line-height: 19.6px;"><strong>CNPJ Embarcador:</strong> ${informacoesEmail.embarcador_cnpj}</p>    
-            <p style="line-height: 19.6px;"><strong>Armador:</strong> ${informacoesEmail.armador}</p>
-            <p style="line-height: 19.6px;"><strong>Tipo de Container:</strong> ${informacoesEmail.tipo_container}</p>
-            <p style="line-height: 19.6px;"><strong>Porto de Embarque:</strong> ${informacoesEmail.porto_embarque}</p>
-            <p style="line-height: 19.6px;"><strong>Porto de Descarga:</strong> ${informacoesEmail.porto_descarga}</p>
-            <p style="line-height: 19.6px;"><strong>Navio:</strong> ${informacoesEmail.navio}</p>
-            <p style="line-height: 19.6px;"><strong>Data de Embarque:</strong> ${informacoesEmail.data_embarque}</p>
-            <p style="line-height: 19.6px;"><strong>Tempo de Transito:</strong> ${informacoesEmail.tempo_de_transito}</p>
-            <p style="line-height: 19.6px;"><strong>Data de Chegada:</strong> ${informacoesEmail.data_chegada}</p>
-            <p style="line-height: 19.6px;"><strong>Base de Calculo de Frete:</strong> ${informacoesEmail.frete_base}</p>
-            <p style="line-height: 19.6px;"><strong>Taxa Bunker de Frete:</strong> ${informacoesEmail.frete_bunker}</p>
-            <p style="line-height: 19.6px;"><strong>Taxa ISPS de Frete:</strong> ${informacoesEmail.frete_isps}</p>
-            <p style="line-height: 19.6px;"><strong>Id de Shipment:</strong> ${informacoesEmail.shipment_id}</p>
-            <p style="line-height: 19.6px;"><strong>Quantidade de Conteiners :</strong> ${informacoesEmail.quantidade_containers}</p>
-            <p style="line-height: 19.6px;"><strong>Carrier:</strong> ${informacoesEmail.selectCarrier}</p>
-            <p style="line-height: 19.6px;"><strong>Contract Number:</strong> ${informacoesEmail.inputContracNumber}</p>
-            <p style="line-height: 19.6px;"><strong>Booking Office:</strong> ${informacoesEmail.inputBookingOffice}</p>
-            <p style="line-height: 19.6px;"><strong>Shipper:</strong> ${informacoesEmail.inputShipper}</p>
-            <p style="line-height: 19.6px;"><strong>Forwarder:</strong> ${informacoesEmail.inputForwarder}</p>
-            <p style="line-height: 19.6px;"><strong>Ref. Shipper Number</strong> ${informacoesEmail.inputshipperRefNumber}</p>
-            <p style="line-height: 19.6px;"><strong>Ref. Forwarder Number</strong> ${informacoesEmail.inputforwardRefNumber}</p>
-            <p style="line-height: 19.6px;"><strong>Consignee</strong> ${informacoesEmail.inputConsignee}</p>
-            <p style="line-height: 19.6px;"><strong>Purchase Order Number</strong> ${informacoesEmail.inputpurchaseOrderNumber}</p>
-            <p style="line-height: 19.6px;"><strong>Departure Early: </strong> ${informacoesEmail.dateDepartureEarly.split("/")[1]}/${informacoesEmail.dateDepartureEarly.split("/")[0]}/${informacoesEmail.dateDepartureEarly.split("/")[2]}</p>
-            <p style="line-height: 19.6px;"><strong>Delivery Lastest: </strong> ${informacoesEmail.dateDeliveryLatest.split("/")[1]}/${informacoesEmail.dateDeliveryLatest.split("/")[0]}/${informacoesEmail.dateDeliveryLatest.split("/")[2]}</p>
-            <p style="line-height: 19.6px;"><strong>Mercadoria: </strong> ${informacoesEmail.selectMercadoria.split(" - ")[1]}</p>
-            <p style="line-height: 19.6px;"><strong>Charge Type:  </strong> ${informacoesEmail.selectPaymentChargeType}</p>
-            <p style="line-height: 19.6px;"><strong>Paymnent Term:  </strong> ${informacoesEmail.selectPaymentTerm}</p>
-            <p style="line-height: 19.6px;"><strong>Payer: </strong> ${informacoesEmail.selectPayer}</p>
-            <p style="line-height: 19.6px;"><strong>Payment Location: </strong> ${informacoesEmail.inputPaymentLocation}</p>
-            <p style="line-height: 19.6px;"><strong>Comments: </strong> ${informacoesEmail.textAreaCustomerComment}</p>
-            <p style="line-height: 19.6px;"><strong>Email Notifications: </strong> ${informacoesEmail.inputPartnerEmailNotifications}</p>
-            <p style="line-height: 19.6px;"><strong>Total do Frete:</strong> ${parseFloat(informacoesEmail.valor) + totalTaxas}</p>
-        </div>
-
-
+                <div class="v-font-size" style="line-height: 140%; text-align: left; word-wrap: break-word;">
+                    <p style="line-height: 19.6px;"><strong>Cliente:</strong> ${informacoesEmail.email}</p>
+                    <p style="line-height: 19.6px;"><strong>Armador:</strong> ${informacoesEmail.armador}</p>
+                    <p style="line-height: 19.6px;"><strong>Tipo de Container:</strong> ${informacoesEmail.tipo_container}</p>
+                    <p style="line-height: 19.6px;"><strong>Porto de Embarque:</strong> ${informacoesEmail.porto_embarque}</p>
+                    <p style="line-height: 19.6px;"><strong>Porto de Descarga:</strong> ${informacoesEmail.porto_descarga}</p>
+                    <p style="line-height: 19.6px;"><strong>Data de Embarque:</strong> ${informacoesEmail.data_embarque}</p>
+                    <p style="line-height: 19.6px;"><strong>Data de Chegada:</strong> ${informacoesEmail.data_chegada}</p>
+                    <p style="line-height: 19.6px;"><strong>Quantidade de Conteiners :</strong> ${informacoesEmail.qtdContainers}</p>
+                    <p style="line-height: 19.6px;"><strong>Contract Number:</strong> ${informacoesEmail.contractNumber}</p>
+                    <p style="line-height: 19.6px;"><strong>Booking Office:</strong> ${informacoesEmail.bookingOffice}</p>
+                    <p style="line-height: 19.6px;"><strong>Shipper:</strong> ${informacoesEmail.shipper}</p>
+                    <p style="line-height: 19.6px;"><strong>Forwarder:</strong> ${informacoesEmail.forwarder}</p>
+                    <p style="line-height: 19.6px;"><strong>Ref. Shipper Number</strong> ${informacoesEmail.shipperRefNumber}</p>
+                    <p style="line-height: 19.6px;"><strong>Ref. Forwarder Number</strong> ${informacoesEmail.forward_ref_number}</p>
+                    <p style="line-height: 19.6px;"><strong>Consignee</strong> ${informacoesEmail.consignee}</p>
+                    <p style="line-height: 19.6px;"><strong>Purchase Order Number</strong> ${informacoesEmail.purchaseOrderNumber}</p>
+                    <p style="line-height: 19.6px;"><strong>Departure Early: </strong> ${informacoesEmail.data_embarque.split("/")[1]}/${informacoesEmail.data_embarque.split("/")[0]}/${informacoesEmail.data_embarque.split("/")[2]}</p>
+                    <p style="line-height: 19.6px;"><strong>Delivery Lastest: </strong> ${informacoesEmail.data_chegada.split("/")[1]}/${informacoesEmail.data_chegada.split("/")[0]}/${informacoesEmail.data_chegada.split("/")[2]}</p>
+                    <p style="line-height: 19.6px;"><strong>Mercadoria: </strong> ${informacoesEmail.nomeMercadoria.split(" - ")[1]}</p>
+                    <p style="line-height: 19.6px;"><strong>Charge Type:  </strong> ${informacoesEmail.paymentChargeType}</p>
+                    <p style="line-height: 19.6px;"><strong>Paymnent Term:  </strong> ${informacoesEmail.paymentTerm}</p>
+                    <p style="line-height: 19.6px;"><strong>Payer: </strong> ${informacoesEmail.payer}</p>
+                    <p style="line-height: 19.6px;"><strong>Payment Location: </strong> ${informacoesEmail.paymentLocation}</p>
+                    <p style="line-height: 19.6px;"><strong>Comments: </strong> ${informacoesEmail.customerComment}</p>
+                    <p style="line-height: 19.6px;"><strong>Email Notifications: </strong> ${informacoesEmail.emailnotifications}</p>
+                    <p style="line-height: 19.6px;"><strong>Data do Pedido de Booking:</strong> ${moment(informacoesEmail.created_at).format('DD/MM/YYYY')}</p>
+                </div>
             </td>
             </tr>
-        </tbody>
-        </table>
-
-        <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-        </div>
-        </div>
-        <!--[if (mso)|(IE)]></td><![endif]-->
-        <!--[if (mso)|(IE)]><td align="center" width="250" style="width: 250px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-        <div class="u-col u-col-50" style="max-width: 320px;min-width: 250px;display: table-cell;vertical-align: top;">
-        <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-        <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-        
-        <table id="u_content_heading_3" style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-        <tbody>
-            <tr>
-            <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
-                
-        <h3 class="v-font-size" style="margin: 0px; line-height: 140%; text-align: left; word-wrap: break-word; font-size: 18px; "><strong>Dados embarcador:</strong></h3>
-
-            </td>
-            </tr>
-        </tbody>
-        </table>
-
-        <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-        <tbody>
-            <tr>
-            <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
-                
-        <div class="v-font-size" style="line-height: 140%; text-align: left; word-wrap: break-word;">
-            <p style="line-height: 19.6px;"><strong>Nome:</strong> ${informacoesEmail.embarcador_nome}</p>
-            <p style="line-height: 19.6px;"><strong>Endereco:</strong> ${informacoesEmail.embarcador_endereco}</p>
-            <p style="line-height: 19.6px;"><strong>CNPJ:</strong> ${informacoesEmail.embarcador_cnpj}</p>
-            <p style="line-height: 19.6px;"><strong>Telefone:</strong> ${informacoesEmail.embarcador_telefone}</p>
-        </div>
-
-            </td>
-            </tr>
-        </tbody>
-        </table>
-
-        <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-        </div>
-        </div>
-        <!--[if (mso)|(IE)]></td><![endif]-->
-            <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-            </div>
-        </div>
-        </div>
-            <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-            </td>
-        </tr>
         </tbody>
         </table>
         <!--[if mso]></div><![endif]-->
