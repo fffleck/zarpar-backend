@@ -6,16 +6,11 @@ const create = (body: Ibooking) => Booking.create(body);
 const getListByEmail = (emailRequerido: any) => Booking.find({embarcador_email: emailRequerido});
 const getBookingByEmail = (emailRequerido: any) => Booking.find({email: emailRequerido});
 const getAll = () => Booking.find();
-const getBookingById = (id: ObjectId) => Schedule.findById(id);
+const getBookingById = (id: ObjectId) => Booking.findById(id);
 const scheduleBooking = (body: ISchedule) => Schedule.create(body);
-const updateBooking = async (body: any, bookingId: any) => {
+const updateBooking = async (body: Ibooking, bookingId: any) => {
   try {
-    const updateBooking = await Schedule.findByIdAndUpdate(bookingId, {
-      status: body.Status,
-      id: bookingId,
-      bl_number: body.inputBLNumber,
-      booking_id: body.inputBookingId,
-    }, { new: true});
+    const updateBooking = await Booking.findByIdAndUpdate(bookingId, body, { new: true});
 
     if (!updateBooking) {
       throw new Error('Reserva não encontrada ou não pode ser atualizada.')

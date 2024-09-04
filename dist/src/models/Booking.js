@@ -100,6 +100,26 @@ const BookingSchema = new mongoose_1.default.Schema({
         type: Date,
         required: true,
         default: new Date()
+    },
+    bookingNumber: {
+        type: String,
+        required: false,
+    },
+    blId: {
+        type: String,
+        required: false,
+    },
+    bookingFile: {
+        type: String,
+        required: false,
+    },
+    blFile: {
+        type: String,
+        required: false,
+    },
+    oceanFreigth: {
+        type: String,
+        required: false,
     }
 });
 const Booking = mongoose_1.default.model("Booking", BookingSchema);

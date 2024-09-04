@@ -1,6 +1,8 @@
-import { upload } from "../controllers/upload/upload";
+import { uploadxls } from "../controllers/upload/upload";
 import express, { Router } from "express";
 import { upload_taxes } from "../controllers/upload/upload_taxes";
+import { uploadPdf } from "../controllers/upload/upload_bookings";
+import upload from "../config/multer_config";
 const routes: Router = express.Router();
 
 /**
@@ -62,7 +64,8 @@ const routes: Router = express.Router();
  *                   type: string
  *                   description: Mensagem de erro
  */
-routes.post('/files', upload);
+routes.post('/files', uploadxls);
 routes.post('/taxes', upload_taxes);
+routes.post('/bookings', uploadPdf)
 
 export default routes;

@@ -27,6 +27,11 @@ export interface Ibooking extends mongoose.Document {
     emailnotifications: string,
     email: string,
     created_at: Date,
+    bookingNumber?: string,
+    blId?: string,
+    bookingFile?: string,
+    blFile?: string,
+    oceanFreigth?: string,
   }
 
 const BookingSchema = new mongoose.Schema({
@@ -125,6 +130,26 @@ const BookingSchema = new mongoose.Schema({
       type: Date,
       required:true,
       default: new Date()
+    },
+    bookingNumber: {
+        type: String,
+        required: false,
+    },
+    blId: {
+        type: String,
+        required: false,
+    },
+    bookingFile: {
+        type: String,
+        required: false,
+    },
+    blFile: {
+        type: String,
+        required: false,
+    },
+    oceanFreigth: {
+        type: String, 
+        required: false,       
     }
 });
 

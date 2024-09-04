@@ -12,10 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.upload = void 0;
+exports.uploadxls = void 0;
 const xlsx_1 = __importDefault(require("xlsx"));
 const frete_maritmo_service_1 = __importDefault(require("../../services/frete_maritmo.service"));
-const upload = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const uploadxls = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
@@ -102,4 +102,4 @@ const upload = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
 });
-exports.upload = upload;
+exports.uploadxls = uploadxls;

@@ -1,4 +1,3 @@
-import { upload } from "../controllers/upload/upload";
 import express, { Router } from "express";
 import { list_fornecedor } from "../controllers/fornecedor/list";
 import { add_fornecedor } from "../controllers/fornecedor/add";

@@ -3,7 +3,7 @@ import xlsx from 'xlsx'
 import frete_maritmoService from "../../services/frete_maritmo.service";
 
 
-export const upload = async (req: Request, res: Response)=>{
+export const uploadxls = async (req: Request, res: Response)=>{
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');

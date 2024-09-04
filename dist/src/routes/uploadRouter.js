@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const upload_1 = require("../controllers/upload/upload");
 const express_1 = __importDefault(require("express"));
 const upload_taxes_1 = require("../controllers/upload/upload_taxes");
+const upload_bookings_1 = require("../controllers/upload/upload_bookings");
 const routes = express_1.default.Router();
 /**
  * @swagger
@@ -65,6 +66,7 @@ const routes = express_1.default.Router();
  *                   type: string
  *                   description: Mensagem de erro
  */
-routes.post('/files', upload_1.upload);
+routes.post('/files', upload_1.uploadxls);
 routes.post('/taxes', upload_taxes_1.upload_taxes);
+routes.post('/bookings', upload_bookings_1.uploadPdf);
 exports.default = routes;
