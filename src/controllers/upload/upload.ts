@@ -1,6 +1,7 @@
 import {Request, Response} from "express";
 import xlsx from 'xlsx'
 import frete_maritmoService from "../../services/frete_maritmo.service";
+import moment from "moment";
 
 
 export const uploadxls = async (req: Request, res: Response)=>{
@@ -38,8 +39,8 @@ export const uploadxls = async (req: Request, res: Response)=>{
             'Transbordo': transbordo
         } = row;
 
-        const dia_embarque = data_embarque.split("/")[1];
-        const mes_embarque = data_embarque.split("/")[0];
+        const dia_embarque = data_embarque.split("/")[0];
+        const mes_embarque = data_embarque.split("/")[1];
         const ano_embarque = data_embarque.split("/")[2];
         let new_dia_embarque = dia_embarque;
         let new_mes_embarque = mes_embarque;
@@ -78,9 +79,9 @@ export const uploadxls = async (req: Request, res: Response)=>{
                 armador.toUpperCase()=="ONE" ? "7" : 
                 armador.toUpperCase()=="HMM" ? "8" :  "0",
             nome_navio: navio,
-            data_embarque: new_data_embarque,
+            data_embarque: moment(new_data_embarque,'DD/MM/YYYY').toDate(),
             tempo_de_transito: tempo_de_transito,
-            data_chegada: new_data_chegada,
+            data_chegada: moment(new_data_chegada, 'DD/MM/YYYY').toDate(),
             base_freight: base_freight,
             bunker: bunker,
             isps: isps,

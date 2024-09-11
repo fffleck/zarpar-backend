@@ -6,6 +6,7 @@ import { cma } from "./cmaController";
 import { local } from "./localController";
 import cachedService from "../../services/cached.service"
 import { getCached } from "./cachedController";
+import moment from "moment";
 
 export const fretes = async (req: Request, res: Response) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -18,10 +19,9 @@ export const fretes = async (req: Request, res: Response) => {
   let response_cached = false;
   response_freight = [];
   response_filter = [];
+  let data_saida_formatada: Date
 
   // response_freight = await adicionar_servico(response_freight, req, res, getCached)
-  
-  console.log("Email recebido", email)
   
   // if (response_freight.length === 0 ) {
   //   response_cached = false;
@@ -106,6 +106,8 @@ export const fretes = async (req: Request, res: Response) => {
 
   // response_freight = response_freight.concat(msg_default);
 
+  
+
   if (response_freight.length === 0) {
     console.log({
       message: "[COTAÇÕES] Fretes nao encontrado.",
@@ -119,20 +121,33 @@ export const fretes = async (req: Request, res: Response) => {
       })
     }
 
-    response_freight.forEach((linha)=> {
-      const data_cotacao = linha.data_embarque.split("/")[2]+"-"+linha.data_embarque.split("/")[1]+"-"+linha.data_embarque.split("/")[0];
 
-      if ((req.query.data_saida) && (req.query.data_saida <= data_cotacao)) {
-        response_filter.push(linha)
-      }
-    })
+    res.status(200).json(response_freight)
+    
 
-    if (response_filter.length === 0) {
-      res.status(200).json([]);
-    } else {
-      response_freight = response_filter
-      res.status(200).json(response_freight);
-    }
+    // response_freight.forEach((linha)=> {
+    //   const data_cotacao = linha.data_embarque.split("/")[2]+"-"+linha.data_embarque.split("/")[1]+"-"+linha.data_embarque.split("/")[0];
+    //   const data_cotacao_formatada = moment(data_cotacao, "YYYY-MM-DD").toDate()
+    //   if (typeof req.query.data_saida === 'string') {
+    //     data_saida_formatada = moment(new Date(req.query.data_saida), 'YYYY-MM-DD').toDate();
+    //   }
+
+    //   if (data_saida_formatada >= data_cotacao_formatada) {
+    //     response_filter.push(linha)
+    //   }
+    // })
+
+    // if (response_filter.length === 0) {
+    //   res.status(200).json([]);
+    // } else {
+    //   response_filter.forEach((linha) => {
+    //     linha.data_chegada = moment(moment(linha.data_chegada, "DD/MM/YYYY").toDate()).format('DD/MM/YYYY')
+    //     linha.data_embarque = moment(moment(linha.data_embarque, "DD/MM/YYYY").toDate()).format('DD/MM/YYYY')
+    //   })
+
+    //   response_freight = response_filter
+    //   res.status(200).json(response_freight);
+    // }
   }
 };
 

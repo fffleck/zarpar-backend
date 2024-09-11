@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadxls = void 0;
 const xlsx_1 = __importDefault(require("xlsx"));
 const frete_maritmo_service_1 = __importDefault(require("../../services/frete_maritmo.service"));
+const moment_1 = __importDefault(require("moment"));
 const uploadxls = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
@@ -30,8 +31,8 @@ const uploadxls = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let save_frete = null;
     for (const row of dataFromExcel) {
         const { Mercadoria: mercadoria, 'Tipo de Mercadoria': tipo_mercadoria, 'Tipo de Container': tipo_container, 'Porto de Embarque': porto_embarque, 'Porto de Descarga': porto_descarga, 'Data de Embarque': data_embarque, 'Cia Maritima': armador, 'Navio': navio, 'Transit Time': tempo_de_transito, 'Data Chegada': data_chegada, 'Base Frete': base_freight, 'Bunker': bunker, 'ISPS': isps, 'Transbordo': transbordo } = row;
-        const dia_embarque = data_embarque.split("/")[1];
-        const mes_embarque = data_embarque.split("/")[0];
+        const dia_embarque = data_embarque.split("/")[0];
+        const mes_embarque = data_embarque.split("/")[1];
         const ano_embarque = data_embarque.split("/")[2];
         let new_dia_embarque = dia_embarque;
         let new_mes_embarque = mes_embarque;
@@ -72,9 +73,9 @@ const uploadxls = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                                     armador.toUpperCase() == "ONE" ? "7" :
                                         armador.toUpperCase() == "HMM" ? "8" : "0",
             nome_navio: navio,
-            data_embarque: new_data_embarque,
+            data_embarque: (0, moment_1.default)(new_data_embarque, 'DD/MM/YYYY').toDate(),
             tempo_de_transito: tempo_de_transito,
-            data_chegada: new_data_chegada,
+            data_chegada: (0, moment_1.default)(new_data_chegada, 'DD/MM/YYYY').toDate(),
             base_freight: base_freight,
             bunker: bunker,
             isps: isps,

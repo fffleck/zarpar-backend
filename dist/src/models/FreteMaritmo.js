@@ -58,7 +58,7 @@ const FreteMaritmoSchema = new mongoose_1.default.Schema({
         required: true
     },
     data_embarque: {
-        type: String,
+        type: Date,
         required: true
     },
     tempo_de_transito: {
@@ -66,7 +66,7 @@ const FreteMaritmoSchema = new mongoose_1.default.Schema({
         required: true
     },
     data_chegada: {
-        type: String,
+        type: Date,
         required: true
     },
     base_freight: {
