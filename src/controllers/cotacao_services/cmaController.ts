@@ -178,6 +178,8 @@ export const cma = async (req: Request, res: Response) => {
 
     const bunker = ((chargeBAF08 ? chargeBAF08.amount : 0) + (chargeBAF03.amount ?? 0))
 
+    console.log("BUNKER ", bunker)
+
     response_freight.push({
       shipment_id: voyageReference,
       tipo_container: tipo_container,
@@ -193,12 +195,15 @@ export const cma = async (req: Request, res: Response) => {
       tempo_de_transito: `${transitTime} days`,
       data_chegada: formataData(dataChegada),
       base_freight: chargeFRT00.amount,
-      bunker: bunker ?? 0,
+      bunker: (typeof bunker === "number") ? bunker :  0,
       isps: otherTaxsValue,
       imagem_link: "http://www.cma-cgm.com/Images/2018/logo/logo-cmacgm.svg",
     });    
   });
 
+
+  console.log("RETORNO CMA", response_freight)
+  
   if (response_freight.length === 0) {
     return [];
   } else {
