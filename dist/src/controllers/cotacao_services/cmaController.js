@@ -104,7 +104,7 @@ const cma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let otherTaxsValue = 0;
     let objFrete = [];
     chargeFRT00 = surcharges.matchingCargoSurcharges.find((charge) => {
-        // console.log(charge);
+        // console.log("VERIFICACAO RETORNO", charge);
         return charge.charge.chargeCode === "FRT00";
     });
     chargeBAF03 = surcharges.matchingCargoSurcharges.find((charge) => {
@@ -115,7 +115,6 @@ const cma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     });
     let frete = chargeFRT00.amount + chargeBAF03.amount; //FRETE
     routings_api_data.forEach((routing) => {
-        var _a;
         let transitTime = routing.transitTime;
         let voyageReference = routing.routingDetails[0].transportation.vehicule.reference;
         let vessel = routing.routingDetails[0].transportation.vehicule.vehiculeName;
@@ -142,8 +141,10 @@ const cma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 routingChegada = routingDetail;
             }
         });
-        const bunker = ((chargeBAF08 ? chargeBAF08.amount : 0) + ((_a = chargeBAF03.amount) !== null && _a !== void 0 ? _a : 0));
-        console.log("BUNKER ", bunker);
+        let bunker = ((chargeBAF08 ? chargeBAF08.amount : 0) + (chargeBAF03 ? chargeBAF03.amount : 0));
+        if (isNaN(bunker)) {
+            bunker = 0;
+        }
         response_freight.push({
             shipment_id: voyageReference,
             tipo_container: tipo_container,
@@ -164,7 +165,6 @@ const cma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             imagem_link: "http://www.cma-cgm.com/Images/2018/logo/logo-cmacgm.svg",
         });
     });
-    console.log("RETORNO CMA", response_freight);
     if (response_freight.length === 0) {
         return [];
     }

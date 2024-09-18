@@ -23,8 +23,11 @@ const save_quotation = (req, res) => __awaiter(void 0, void 0, void 0, function*
     let salvou = false;
     const informacoesQuotations = req.body;
     const armadores = informacoesQuotations.Armadores;
-    const arrArmador = armadores.split(',');
+    let arrArmador = armadores.split(',');
     if (arrArmador.length > 0) {
+        if (arrArmador === 'todos') {
+            arrArmador = armador_service_1.default.getAll();
+        }
         for (const armador of arrArmador) {
             const dadosArmador = yield armador_service_1.default.getByIdArmador(armador);
             informacoesQuotations.armador = dadosArmador === null || dadosArmador === void 0 ? void 0 : dadosArmador.name;

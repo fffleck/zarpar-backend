@@ -11,11 +11,14 @@ export const save_quotation = async (req: Request, res: Response)=>{
   let salvou = false
   const informacoesQuotations = req.body
 
-  const armadores = informacoesQuotations.Armadores
+  
 
-  const arrArmador = armadores.split(',')
+  const armadores = informacoesQuotations.Armadores
+  let arrArmador = armadores.split(',')
 
   if (arrArmador.length > 0) {
+    if (arrArmador === 'todos') { arrArmador = armadorService.getAll() }
+
     for (const armador of arrArmador) {
       const dadosArmador = await armadorService.getByIdArmador(armador);
 
