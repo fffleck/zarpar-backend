@@ -18,7 +18,7 @@ const list_quotations = (req, res) => __awaiter(void 0, void 0, void 0, function
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
-    const listQuotations = yield quotations_service_1.default.getAll();
+    const listQuotations = yield quotations_service_1.default.getAllActives();
     if (listQuotations) {
         res.json({
             success: true,

@@ -13,14 +13,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const QuotationNAC_1 = __importDefault(require("../models/QuotationNAC"));
+const Quotation_1 = __importDefault(require("../models/Quotation"));
 const create = (body) => QuotationNAC_1.default.create(body);
-const getListByEmail = (emailRequerido) => QuotationNAC_1.default.find({ embarcador_email: emailRequerido });
-const getQuotationById = (id) => QuotationNAC_1.default.findById(id);
+const save = (body) => Quotation_1.default.create(body);
+const getListByEmail = (emailRequerido) => Quotation_1.default.find({ embarcador_email: emailRequerido });
+const getQuotationNACById = (id) => QuotationNAC_1.default.findById(id);
 const getAll = () => QuotationNAC_1.default.find();
-const updateQuotation = (status, quotationId) => __awaiter(void 0, void 0, void 0, function* () {
+const getAllActives = () => QuotationNAC_1.default.find({ status: { $nin: ["Selected", "Discarted"] } });
+const getQuotationAll = () => Quotation_1.default.find();
+const getQuotationById = (id) => Quotation_1.default.findById(id);
+const getQuotationNacByQuotationId = (quotationId) => QuotationNAC_1.default.find({ quotationId: quotationId });
+const getTotalNacs = (quotatonId) => QuotationNAC_1.default.count({ quotationId: quotatonId });
+const getTotalNacsCotados = (quotatonId) => QuotationNAC_1.default.count({ quotationId: quotatonId, valorCotado: { $gt: 0 } });
+const getQuotationsBrothers = (quotatonId) => QuotationNAC_1.default.find({ quotationId: quotatonId, status: { $ne: "Selected" } });
+const updateQuotation = (status, valor, quotationId) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const updateQuotations = yield QuotationNAC_1.default.findByIdAndUpdate(quotationId, {
             status: status,
+            valorCotado: valor,
             id: quotationId
         }, { new: true });
         if (!updateQuotations) {
@@ -33,10 +43,51 @@ const updateQuotation = (status, quotationId) => __awaiter(void 0, void 0, void 
         throw error;
     }
 });
+const finalizaQuotationPai = (status, quotationId) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const updateQuotation = yield Quotation_1.default.findByIdAndUpdate(quotationId, {
+            status: status
+        }, { new: true });
+        if (!updateQuotation) {
+            throw new Error('Quotation Pai não encontrada ou não pode ser atualizada.');
+        }
+        return updateQuotation;
+    }
+    catch (error) {
+        console.log('Erro ao atualizado quotation Pai: ', error);
+        throw error;
+    }
+});
+const finalizaQuotation = (status, quotationId) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const updateQuotation = yield QuotationNAC_1.default.findByIdAndUpdate(quotationId, {
+            status: status,
+            id: quotationId
+        }, { new: true });
+        if (!updateQuotation) {
+            throw new Error('Quotation não encontrada ou não pode ser atualizada.');
+        }
+        return updateQuotation;
+    }
+    catch (error) {
+        console.log('Erro ao atualizado quotation: ', error);
+        throw error;
+    }
+});
 exports.default = {
     create,
+    save,
     getListByEmail,
     getQuotationById,
     getAll,
-    updateQuotation
+    getAllActives,
+    updateQuotation,
+    getQuotationAll,
+    getQuotationNACById,
+    getTotalNacs,
+    getTotalNacsCotados,
+    finalizaQuotationPai,
+    finalizaQuotation,
+    getQuotationsBrothers,
+    getQuotationNacByQuotationId,
 };

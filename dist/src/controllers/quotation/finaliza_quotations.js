@@ -12,33 +12,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.list_mynacs = void 0;
+exports.finaliza_quotation = void 0;
 const quotations_service_1 = __importDefault(require("../../services/quotations.service"));
-const list_mynacs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const finaliza_quotation = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
-    const email = req.params.email;
-    const listQuotations = yield quotations_service_1.default.getListByEmail(email);
-    // console.log("MY NACS", listQuotations)
-    for (const quotation of listQuotations) {
-        const totalregistrosnac = yield quotations_service_1.default.getTotalNacs(quotation._id);
-        const totalregistroscotados = yield quotations_service_1.default.getTotalNacsCotados(quotation._id);
-        quotation.totalRegistros = totalregistrosnac;
-        quotation.totalCotados = totalregistroscotados;
+    const quotationPai = req.body.quotationId;
+    const quotationSelect = req.body.id;
+    const updateQuotationPai = yield quotations_service_1.default.finalizaQuotationPai('Done', quotationPai);
+    const updateQuotation = yield quotations_service_1.default.finalizaQuotation('Selected', quotationSelect);
+    const quotationBrothers = yield quotations_service_1.default.getQuotationsBrothers(quotationPai);
+    if (quotationBrothers.length > 0) {
+        quotationBrothers.forEach((quoteB) => __awaiter(void 0, void 0, void 0, function* () {
+            yield quotations_service_1.default.finalizaQuotation('Discarted', quoteB._id);
+        }));
     }
-    if (listQuotations) {
+    if (updateQuotation && updateQuotationPai) {
         res.json({
             success: true,
-            message: "Quotations Encontrado",
-            list: listQuotations
+            message: "Quotations Atualizada com sucesso",
         });
     }
     else {
         res.status(401).json({
             success: false,
-            message: "Problema ao localizar quotations."
+            message: "Problema ao atualizar quotations."
         });
     }
 });
-exports.list_mynacs = list_mynacs;
+exports.finaliza_quotation = finaliza_quotation;

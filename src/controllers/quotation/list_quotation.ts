@@ -7,7 +7,7 @@ export const list_quotations = async (req: Request, res: Response)=>{
   res.setHeader('Access-Control-Allow-Headers', '*');
 
 
-  const listQuotations = await quotationsService.getAll()
+  const listQuotations = await quotationsService.getAllActives()
 
   if(listQuotations){
       res.json({

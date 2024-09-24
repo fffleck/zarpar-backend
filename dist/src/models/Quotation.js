@@ -4,8 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const QuotationNACSchema = new mongoose_1.default.Schema({
-    quotationId: { type: String, required: true },
+const QuotationSchema = new mongoose_1.default.Schema({
     shipper: { type: String },
     consignee: { type: String },
     selectPortoEmbarque: { type: String },
@@ -18,7 +17,6 @@ const QuotationNACSchema = new mongoose_1.default.Schema({
     freetimeDestino: { type: String },
     qtdContainers: { type: String },
     targetOceanFreight: { type: String },
-    armador: { type: String, required: true },
     embarcador_email: { type: String },
     embarcador_cnpj: { type: String },
     embarcador_endereco: { type: String },
@@ -26,8 +24,9 @@ const QuotationNACSchema = new mongoose_1.default.Schema({
     Currency: { type: String },
     agenteDeCarga: { type: String },
     CargaEspecial: { type: String },
-    valorCotado: { type: String, required: false, default: 0 },
-    status: { type: String, default: "Pending" },
+    totalRegistros: { type: Number, required: false },
+    totalCotados: { type: Number, required: false },
+    status: { type: String, default: "Waiting" },
 });
-const QuotationNac = mongoose_1.default.model("QuotationNac", QuotationNACSchema);
-exports.default = QuotationNac;
+const Quotation = mongoose_1.default.model("Quotation", QuotationSchema);
+exports.default = Quotation;

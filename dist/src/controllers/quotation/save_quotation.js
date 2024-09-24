@@ -22,18 +22,34 @@ const save_quotation = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const savedQuotations = [];
     let salvou = false;
     const informacoesQuotations = req.body;
+    const quotationPai = yield quotations_service_1.default.save(informacoesQuotations);
     const armadores = informacoesQuotations.Armadores;
     let arrArmador = armadores.split(',');
     if (arrArmador.length > 0) {
-        if (arrArmador === 'todos') {
-            arrArmador = armador_service_1.default.getAll();
+        if (armadores === 'todos') {
+            arrArmador = yield armador_service_1.default.getAll();
+            for (const armador of arrArmador) {
+                informacoesQuotations.armador = armador.name;
+                informacoesQuotations.quotationId = quotationPai._id;
+                const saveQuotation = yield quotations_service_1.default.create(informacoesQuotations);
+                if (saveQuotation) {
+                    savedQuotations.push(saveQuotation);
+                }
+            }
         }
-        for (const armador of arrArmador) {
-            const dadosArmador = yield armador_service_1.default.getByIdArmador(armador);
-            informacoesQuotations.armador = dadosArmador === null || dadosArmador === void 0 ? void 0 : dadosArmador.name;
-            const saveQuotation = yield quotations_service_1.default.create(informacoesQuotations);
-            if (saveQuotation) {
-                savedQuotations.push(saveQuotation);
+        else {
+            for (const armador of arrArmador) {
+                const dadosArmador = yield armador_service_1.default.getAll();
+                dadosArmador.forEach((linha) => {
+                    if (linha.idArmador === armador) {
+                        informacoesQuotations.armador = linha.name;
+                    }
+                });
+                informacoesQuotations.quotationId = quotationPai._id;
+                const saveQuotation = yield quotations_service_1.default.create(informacoesQuotations);
+                if (saveQuotation) {
+                    savedQuotations.push(saveQuotation);
+                }
             }
         }
         if (savedQuotations.length > 0) {

@@ -10,6 +10,14 @@ export const list_mynacs = async (req: Request, res: Response)=>{
 
   const listQuotations = await quotationsService.getListByEmail(email)
 
+  // console.log("MY NACS", listQuotations)
+  for (const quotation of listQuotations) {
+    const totalregistrosnac = await quotationsService.getTotalNacs(quotation._id);
+    const totalregistroscotados = await quotationsService.getTotalNacsCotados(quotation._id);
+    quotation.totalRegistros = totalregistrosnac
+    quotation.totalCotados = totalregistroscotados
+  }
+
   if(listQuotations){
       res.json({
           success: true,

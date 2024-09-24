@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 
 // Document interface
-export interface IQuotationsNAC extends mongoose.Document {
-  quotationId: string;
+export interface IQuotations extends mongoose.Document {
   shipper: string;
   consignee: string;
   selectPortoEmbarque: string;
@@ -15,7 +14,6 @@ export interface IQuotationsNAC extends mongoose.Document {
   freetimeDestino: string;
   qtdContainers: string;
   targetOceanFreight: string;
-  armador: string;
   embarcador_email: string;
   embarcador_cnpj: string;
   embarcador_endereco: string;
@@ -23,12 +21,12 @@ export interface IQuotationsNAC extends mongoose.Document {
   Currency: string;
   agenteDeCarga: string;
   CargaEspecial: string;
-  valorCotado: string;
+  totalRegistros: number;
+  totalCotados: number;
   status: string;
   }
 
-const QuotationNACSchema = new mongoose.Schema({
-  quotationId: { type: String, required: true },
+const QuotationSchema = new mongoose.Schema({
   shipper: { type: String },
   consignee: { type: String },
   selectPortoEmbarque: { type: String },
@@ -41,7 +39,6 @@ const QuotationNACSchema = new mongoose.Schema({
   freetimeDestino: { type: String },
   qtdContainers: { type: String },
   targetOceanFreight: { type: String },
-  armador: { type: String, required: true },
   embarcador_email: { type: String },
   embarcador_cnpj: { type: String },
   embarcador_endereco: { type: String },
@@ -49,10 +46,11 @@ const QuotationNACSchema = new mongoose.Schema({
   Currency: { type: String },
   agenteDeCarga: { type: String },
   CargaEspecial: { type: String },
-  valorCotado: { type: String, required: false, default: 0},
-  status: { type: String, default: "Pending" },
+  totalRegistros: { type: Number, required: false},
+  totalCotados: { type: Number, required: false},
+  status: { type: String, default: "Waiting" },
 });
 
-const QuotationNac = mongoose.model<IQuotationsNAC>("QuotationNac", QuotationNACSchema);
+const Quotation = mongoose.model<IQuotations>("Quotation", QuotationSchema);
 
-export default QuotationNac;
+export default Quotation;

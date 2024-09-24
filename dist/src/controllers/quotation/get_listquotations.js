@@ -12,21 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.list_mynacs = void 0;
+exports.getListQuotations = void 0;
 const quotations_service_1 = __importDefault(require("../../services/quotations.service"));
-const list_mynacs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getListQuotations = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
-    const email = req.params.email;
-    const listQuotations = yield quotations_service_1.default.getListByEmail(email);
-    // console.log("MY NACS", listQuotations)
-    for (const quotation of listQuotations) {
-        const totalregistrosnac = yield quotations_service_1.default.getTotalNacs(quotation._id);
-        const totalregistroscotados = yield quotations_service_1.default.getTotalNacsCotados(quotation._id);
-        quotation.totalRegistros = totalregistrosnac;
-        quotation.totalCotados = totalregistroscotados;
-    }
+    const quotationId = req.params.id;
+    const listQuotations = yield quotations_service_1.default.getQuotationNacByQuotationId(Object(quotationId));
     if (listQuotations) {
         res.json({
             success: true,
@@ -41,4 +34,4 @@ const list_mynacs = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
     }
 });
-exports.list_mynacs = list_mynacs;
+exports.getListQuotations = getListQuotations;

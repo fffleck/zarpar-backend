@@ -19,7 +19,7 @@ const getQuotation = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
     const quotationId = req.params.id;
-    const quotationFound = yield quotations_service_1.default.getQuotationById(Object(quotationId));
+    const quotationFound = yield quotations_service_1.default.getQuotationNACById(Object(quotationId));
     if (quotationFound) {
         res.json({
             success: true,

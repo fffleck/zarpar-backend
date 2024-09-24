@@ -1,6 +1,7 @@
 import {Request, Response} from "express";
 import quotationsService from "../../services/quotations.service";
 import armadorService from "../../services/armador.service";
+import Quotation from "../../models/Quotation";
 
 export const save_quotation = async (req: Request, res: Response)=>{
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -11,24 +12,44 @@ export const save_quotation = async (req: Request, res: Response)=>{
   let salvou = false
   const informacoesQuotations = req.body
 
-  
+  const quotationPai = await quotationsService.save(informacoesQuotations);
 
   const armadores = informacoesQuotations.Armadores
   let arrArmador = armadores.split(',')
 
   if (arrArmador.length > 0) {
-    if (arrArmador === 'todos') { arrArmador = armadorService.getAll() }
+    if (armadores === 'todos') { 
+      arrArmador = await armadorService.getAll() 
+      for (const armador of arrArmador) {
+        informacoesQuotations.armador = armador.name
+        informacoesQuotations.quotationId = quotationPai._id
 
-    for (const armador of arrArmador) {
-      const dadosArmador = await armadorService.getByIdArmador(armador);
+        const saveQuotation = await quotationsService.create(informacoesQuotations);
+        if (saveQuotation) {
+          savedQuotations.push(saveQuotation);
+        }
+      }
+    } else {
 
-      informacoesQuotations.armador = dadosArmador?.name
-      
-      const saveQuotation = await quotationsService.create(informacoesQuotations);
-      if (saveQuotation) {
-        savedQuotations.push(saveQuotation);
+      for (const armador of arrArmador) {
+        const dadosArmador = await armadorService.getAll();
+
+        dadosArmador.forEach((linha) => {
+          if (linha.idArmador === armador) {
+            informacoesQuotations.armador = linha.name
+          }
+        })
+  
+        informacoesQuotations.quotationId = quotationPai._id
+        
+        const saveQuotation = await quotationsService.create(informacoesQuotations);
+        if (saveQuotation) {
+          savedQuotations.push(saveQuotation);
+        }
       }
     }
+
+    
 
     if (savedQuotations.length > 0) {
       res.json({

@@ -19,8 +19,11 @@ const update_quotation = (req, res) => __awaiter(void 0, void 0, void 0, functio
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
     const quotationId = req.body.quotationId;
-    const updateQuotation = yield quotations_service_1.default.updateQuotation('Finally', quotationId);
+    const valorCotado = req.body.valorCotado;
+    const quotationPai = req.body.quotationPai;
+    const updateQuotation = yield quotations_service_1.default.updateQuotation('Quoted', valorCotado, quotationId);
     if (updateQuotation) {
+        yield quotations_service_1.default.finalizaQuotationPai('Processing', quotationPai);
         res.json({
             success: true,
             message: "Quotations Atualizada com sucesso",

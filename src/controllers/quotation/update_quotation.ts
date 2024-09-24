@@ -7,10 +7,13 @@ export const update_quotation = async (req: Request, res: Response)=>{
   res.setHeader('Access-Control-Allow-Headers', '*');
 
   const quotationId = req.body.quotationId
+  const valorCotado = req.body.valorCotado
+  const quotationPai = req.body.quotationPai
 
-  const updateQuotation = await quotationsService.updateQuotation('Finally', quotationId)
-  
+  const updateQuotation = await quotationsService.updateQuotation('Quoted', valorCotado, quotationId)
+
   if(updateQuotation){
+    await quotationsService.finalizaQuotationPai('Processing', quotationPai)
     res.json({
         success: true,
         message: "Quotations Atualizada com sucesso",
