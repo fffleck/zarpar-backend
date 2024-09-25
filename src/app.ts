@@ -13,6 +13,7 @@ import fornecedorRouter from "./routes/fornecedorRoute"
 
 // Importando Swagger
 import swaggerApp from "./swagger";
+import armadoresRouter from "./routes/armadoresRouter";
 
 class App {
   server: Application;
@@ -40,6 +41,7 @@ class App {
     this.server.use("/fornecedor", fornecedorRouter);
     this.server.use("/booking", bookingRouter);
     this.server.use("/quotations", quotationsNACRouter);
+    this.server.use("/armadores", armadoresRouter);
     this.server.use("/swagger", swaggerApp); // Rota para a documentação do Swagger
   }
 }
