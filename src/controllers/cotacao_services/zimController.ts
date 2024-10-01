@@ -52,7 +52,7 @@ export const zim = async (req: Request, res: Response) => {
     // console.log("URL ZIM ", `https://karavel-services-e63c55605b2e.herokuapp.com/zim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`);
 
     try {
-      let api_zim_res = await axios.get(`http://3.129.16.6:5001/szim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`)
+      let api_zim_res = await axios.get(`http://18.222.233.16:5001/szim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`)
       // let api_zim_res = await axios.get(
       //   `https://zarpar-bots-e77d3a940747.herokuapp.com/zim?data_saida=${data_saida_zim}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`
       // );

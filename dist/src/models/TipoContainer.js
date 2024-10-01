@@ -14,6 +14,10 @@ const TipoContainerSchema = new mongoose_1.default.Schema({
         type: String,
         required: true
     },
+    weight: {
+        type: String,
+        required: false
+    }
 });
 const TipoContainer = mongoose_1.default.model("TipoContainer", TipoContainerSchema);
 exports.default = TipoContainer;

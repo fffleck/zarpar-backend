@@ -45,7 +45,6 @@ const BookingSchema = new mongoose.Schema({
     },
     contractNumber: {
         type: String,
-        required: true,
     },
     bookingOffice: {
         type: String,

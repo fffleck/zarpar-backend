@@ -8,7 +8,6 @@ const ArmadorLoginSchema = new mongoose_1.default.Schema({
     armador: {
         type: String,
         required: true,
-        unique: true
     },
     user: {
         type: String,

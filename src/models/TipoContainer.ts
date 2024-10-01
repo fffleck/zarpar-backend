@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 export interface ITipoContainer extends mongoose.Document {
     idItem: string;
     name: string;
+    weight: string;
   }
 
 const TipoContainerSchema = new mongoose.Schema({
@@ -16,6 +17,10 @@ const TipoContainerSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    weight: {
+        type: String,
+        required: false
+    }
 });
 
 const TipoContainer = mongoose.model<ITipoContainer>("TipoContainer", TipoContainerSchema);

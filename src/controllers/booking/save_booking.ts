@@ -10,6 +10,7 @@ export const save_booking = async (req: Request, res: Response)=>{
   const informacoesPedido = req.body;  
   let totalTaxas = 0;
 
+  informacoesPedido.email = informacoesPedido.embarcador_email
 
   if (informacoesPedido.taxas.length > 0 ) {
     informacoesPedido.taxas.forEach((taxLine: ITaxes) => {

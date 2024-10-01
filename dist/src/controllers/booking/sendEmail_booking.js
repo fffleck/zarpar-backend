@@ -16,8 +16,8 @@ exports.send_email = void 0;
 const moment_1 = __importDefault(require("moment"));
 const nodemailer = require('nodemailer');
 const SMTP_CONFIG = require('../../config/mail_smtp');
-const emailsAnalise = ['alvaro@zarpar.net'];
-// const emailsAnalise = ['ffleck@gmail.com'];
+// const emailsAnalise = ['alvaro@zarpar.net'];
+const emailsAnalise = ['ffleck@gmail.com'];
 const transporter = nodemailer.createTransport({
     host: SMTP_CONFIG.host,
     port: SMTP_CONFIG.port,
@@ -35,6 +35,7 @@ const send_email = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
     const informacoesEmail = req.body;
+    informacoesEmail.email = informacoesEmail.embarcador_email;
     yield transporter.sendMail({
         from: `Novo Pedido de Booking Zarpar- <lephanyx@gmail.com>`,
         subject: `Pedido de Booking de - ${informacoesEmail.email}`,

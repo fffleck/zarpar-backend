@@ -15,7 +15,6 @@ const BookingSchema = new mongoose_1.default.Schema({
     },
     contractNumber: {
         type: String,
-        required: true,
     },
     bookingOffice: {
         type: String,

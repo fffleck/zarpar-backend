@@ -8,6 +8,7 @@ const getOne = (params: FilterQuery<IArmadorLogin>) => ArmadorLogin.find(params)
 const getByArmador = (armador: string) => ArmadorLogin.findOne({ armador: armador});
 const getByEmail = (email: string) => ArmadorLogin.find({ email: email});
 const getExistArmador = (armador: string, email: string) => ArmadorLogin.count({armador: armador, email: email})
+const getCredencialsArmadorEmail = (armador: string, email: string) => ArmadorLogin.findOne({armador: armador, email: email})
 const update = async (body: IArmadorLogin) => {
     try {
       const bodyObject = body.toObject ? body.toObject() : { ...body };
@@ -39,5 +40,6 @@ export default {
     getByArmador,
     getByEmail,
     getExistArmador, 
+    getCredencialsArmadorEmail,
     update
 }

@@ -7,9 +7,11 @@ const TipoContainer_1 = __importDefault(require("../models/TipoContainer"));
 const TipoContainerDepara_1 = __importDefault(require("../models/TipoContainerDepara"));
 const create = (body) => TipoContainer_1.default.create(body);
 const createDepara = (body) => TipoContainerDepara_1.default.create(body);
+const getOne = (typeContainer) => TipoContainer_1.default.findOne({ idItem: typeContainer });
 const getAll = () => TipoContainer_1.default.find();
 exports.default = {
     create,
     createDepara,
-    getAll
+    getAll,
+    getOne
 };

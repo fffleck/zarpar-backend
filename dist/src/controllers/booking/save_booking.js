@@ -20,6 +20,7 @@ const save_booking = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     res.setHeader('Access-Control-Allow-Headers', '*');
     const informacoesPedido = req.body;
     let totalTaxas = 0;
+    informacoesPedido.email = informacoesPedido.embarcador_email;
     if (informacoesPedido.taxas.length > 0) {
         informacoesPedido.taxas.forEach((taxLine) => {
             if (taxLine.applicability == "U") {

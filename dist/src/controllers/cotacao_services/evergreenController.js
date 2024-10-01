@@ -44,7 +44,7 @@ const evergreen = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         // Tratar data
         let data_saida_evergreen = (0, utils_1.formataData2)(new Date(data_saida));
         try {
-            let api_evergreen_res = yield axios_1.default.get(`http://3.129.16.6:5001/evergreen?data_saida=${data_saida_evergreen}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`);
+            let api_evergreen_res = yield axios_1.default.get(`http://18.222.233.16:5001/evergreen?data_saida=${data_saida_evergreen}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`);
             // let api_evergreen_res = await axios.get(
             //   `https://zarpar-bots-e77d3a940747.herokuapp.com/evergreen?data_saida=${data_saida_evergreen}&porto_embarque=${porto_embarque}&porto_descarga=${porto_descarga}&tipo_container=${tipo_container}`
             // );

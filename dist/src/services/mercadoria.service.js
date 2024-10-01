@@ -7,9 +7,11 @@ const Mercadoria_1 = __importDefault(require("../models/Mercadoria"));
 const MarcadoriaDepara_1 = __importDefault(require("../models/MarcadoriaDepara"));
 const create = (body) => Mercadoria_1.default.create(body);
 const createDepara = (body) => MarcadoriaDepara_1.default.create(body);
+const getOne = (mercadoria) => Mercadoria_1.default.findOne({ idItem: mercadoria });
 const getAll = () => Mercadoria_1.default.find();
 exports.default = {
     create,
     createDepara,
-    getAll
+    getAll,
+    getOne,
 };

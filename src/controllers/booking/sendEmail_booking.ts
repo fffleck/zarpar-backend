@@ -4,8 +4,8 @@ import moment from "moment";
 const nodemailer = require('nodemailer');
 const SMTP_CONFIG = require('../../config/mail_smtp');
 
-const emailsAnalise = ['alvaro@zarpar.net'];
-// const emailsAnalise = ['ffleck@gmail.com'];
+// const emailsAnalise = ['alvaro@zarpar.net'];
+const emailsAnalise = ['ffleck@gmail.com'];
 
 
 const transporter = nodemailer.createTransport({
@@ -27,6 +27,9 @@ export const send_email =  async (req: Request, res: Response)=>{
     res.setHeader('Access-Control-Allow-Headers', '*');
  
     const informacoesEmail = req.body;
+
+    informacoesEmail.email = informacoesEmail.embarcador_email
+
     
     await transporter.sendMail({
         from: `Novo Pedido de Booking Zarpar- <lephanyx@gmail.com>`,

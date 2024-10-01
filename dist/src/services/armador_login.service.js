@@ -19,6 +19,7 @@ const getOne = (params) => ArmadorLogin_1.default.find(params);
 const getByArmador = (armador) => ArmadorLogin_1.default.findOne({ armador: armador });
 const getByEmail = (email) => ArmadorLogin_1.default.find({ email: email });
 const getExistArmador = (armador, email) => ArmadorLogin_1.default.count({ armador: armador, email: email });
+const getCredencialsArmadorEmail = (armador, email) => ArmadorLogin_1.default.findOne({ armador: armador, email: email });
 const update = (body) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const bodyObject = body.toObject ? body.toObject() : Object.assign({}, body);
@@ -41,5 +42,6 @@ exports.default = {
     getByArmador,
     getByEmail,
     getExistArmador,
+    getCredencialsArmadorEmail,
     update
 };

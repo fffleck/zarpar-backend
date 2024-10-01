@@ -7,13 +7,19 @@ import { local } from "./localController";
 import cachedService from "../../services/cached.service"
 import { getCached } from "./cachedController";
 import moment from "moment";
+import armador_loginService from "../../services/armador_login.service";
+import Robot from "../../models/Robot";
+import mercadoriaService from "../../services/mercadoria.service";
+import portoService from "../../services/porto.service";
+import tipo_containerService from "../../services/tipo_container.service";
 
 export const fretes = async (req: Request, res: Response) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "*");
   res.setHeader("Access-Control-Allow-Headers", "*");
 
-  let email = req.query.email
+  const email: string = typeof req.query.email === 'string' ? req.query.email : '';
+  const tipo_mercadoria = typeof req.query.mercadoria === 'string' ? req.query.mercadoria : '1'
   let response_freight: any[];
   let response_filter: any[];
   let response_cached = false;
@@ -21,6 +27,35 @@ export const fretes = async (req: Request, res: Response) => {
   response_filter = [];
   let data_saida_formatada: Date
 
+  
+  const credencialsRobotMaersk = await armador_loginService.getCredencialsArmadorEmail('Maersk', email);
+  const objMercadoria = await mercadoriaService.getAll() // Quando mudar para o plano enterprise tem que revisar isso 
+  const objPortoOrigem = await portoService.getOne(typeof req.query.porto_embarque === 'string' ? req.query.porto_embarque : 'ND')
+  const objPortoDestino = await portoService.getOne(typeof req.query.porto_descarga === 'string' ? req.query.porto_descarga: 'ND')
+  const objContainer = await tipo_containerService.getOne(typeof req.query.tipo_container === 'string' ? req.query.tipo_container : 'ND')
+
+  
+
+
+
+
+  if (credencialsRobotMaersk && objMercadoria && objPortoOrigem && objPortoDestino && objContainer) {
+    const dadosRobot = new Robot();
+    dadosRobot.porto_origem = objPortoOrigem.port_name
+    dadosRobot.porto_origem_country = objPortoOrigem.country
+    dadosRobot.porto_destino = objPortoDestino.port_name
+    dadosRobot.porto_destino_country = objPortoDestino.country
+    dadosRobot.mercadoria = objMercadoria[0].name
+    dadosRobot.qtd_container = 1
+    dadosRobot.type_container = objContainer.name
+    dadosRobot.peso_container = objContainer.weight
+    dadosRobot.data_embarque = typeof req.query.data_saida === 'string' ? req.query.data_saida : moment(moment.now()).format('YYYY-MM-DD');
+    dadosRobot.user = credencialsRobotMaersk?.user ?? 'ND'
+    dadosRobot.password = credencialsRobotMaersk?.password ?? 'ND'
+
+    await dadosRobot.save()
+  }
+  
   // response_freight = await adicionar_servico(response_freight, req, res, getCached)
   
   // if (response_freight.length === 0 ) {
@@ -121,33 +156,8 @@ export const fretes = async (req: Request, res: Response) => {
       })
     }
 
-
     res.status(200).json(response_freight)
     
-
-    // response_freight.forEach((linha)=> {
-    //   const data_cotacao = linha.data_embarque.split("/")[2]+"-"+linha.data_embarque.split("/")[1]+"-"+linha.data_embarque.split("/")[0];
-    //   const data_cotacao_formatada = moment(data_cotacao, "YYYY-MM-DD").toDate()
-    //   if (typeof req.query.data_saida === 'string') {
-    //     data_saida_formatada = moment(new Date(req.query.data_saida), 'YYYY-MM-DD').toDate();
-    //   }
-
-    //   if (data_saida_formatada >= data_cotacao_formatada) {
-    //     response_filter.push(linha)
-    //   }
-    // })
-
-    // if (response_filter.length === 0) {
-    //   res.status(200).json([]);
-    // } else {
-    //   response_filter.forEach((linha) => {
-    //     linha.data_chegada = moment(moment(linha.data_chegada, "DD/MM/YYYY").toDate()).format('DD/MM/YYYY')
-    //     linha.data_embarque = moment(moment(linha.data_embarque, "DD/MM/YYYY").toDate()).format('DD/MM/YYYY')
-    //   })
-
-    //   response_freight = response_filter
-    //   res.status(200).json(response_freight);
-    // }
   }
 };
 
