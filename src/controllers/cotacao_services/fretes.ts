@@ -28,42 +28,42 @@ export const fretes = async (req: Request, res: Response) => {
   let data_saida_formatada: Date
 
   
-  // const credencialsRobotMaersk = await armador_loginService.getCredencialsArmadorEmail('Maersk', email);
-  // const objMercadoria = await mercadoriaService.getAll() // Quando mudar para o plano enterprise tem que revisar isso 
-  // const objPortoOrigem = await portoService.getOne(typeof req.query.porto_embarque === 'string' ? req.query.porto_embarque : 'ND')
-  // const objPortoDestino = await portoService.getOne(typeof req.query.porto_descarga === 'string' ? req.query.porto_descarga: 'ND')
-  // const objContainer = await tipo_containerService.getOne(typeof req.query.tipo_container === 'string' ? req.query.tipo_container : 'ND')
+  const credencialsRobotMaersk = await armador_loginService.getCredencialsArmadorEmail('Maersk', email);
+  const objMercadoria = await mercadoriaService.getAll() // Quando mudar para o plano enterprise tem que revisar isso 
+  const objPortoOrigem = await portoService.getOne(typeof req.query.porto_embarque === 'string' ? req.query.porto_embarque : 'ND')
+  const objPortoDestino = await portoService.getOne(typeof req.query.porto_descarga === 'string' ? req.query.porto_descarga: 'ND')
+  const objContainer = await tipo_containerService.getOne(typeof req.query.tipo_container === 'string' ? req.query.tipo_container : 'ND')
 
   
 
 
 
 
-  // if (credencialsRobotMaersk && objMercadoria && objPortoOrigem && objPortoDestino && objContainer) {
-  //   const dadosRobot = new Robot();
-  //   dadosRobot.porto_origem = objPortoOrigem.port_name
-  //   dadosRobot.porto_origem_country = objPortoOrigem.country
-  //   dadosRobot.porto_destino = objPortoDestino.port_name
-  //   dadosRobot.porto_destino_country = objPortoDestino.country
-  //   dadosRobot.mercadoria = objMercadoria[0].name
-  //   dadosRobot.qtd_container = 1
-  //   dadosRobot.type_container = objContainer.name
-  //   dadosRobot.peso_container = objContainer.weight
-  //   dadosRobot.data_embarque = typeof req.query.data_saida === 'string' ? req.query.data_saida : moment(moment.now()).format('YYYY-MM-DD');
-  //   dadosRobot.user = credencialsRobotMaersk?.user ?? 'ND'
-  //   dadosRobot.password = credencialsRobotMaersk?.password ?? 'ND'
+  if (credencialsRobotMaersk && objMercadoria && objPortoOrigem && objPortoDestino && objContainer) {
+    const dadosRobot = new Robot();
+    dadosRobot.porto_origem = objPortoOrigem.port_name
+    dadosRobot.porto_origem_country = objPortoOrigem.country
+    dadosRobot.porto_destino = objPortoDestino.port_name
+    dadosRobot.porto_destino_country = objPortoDestino.country
+    dadosRobot.mercadoria = objMercadoria[0].name
+    dadosRobot.qtd_container = 1
+    dadosRobot.type_container = objContainer.name
+    dadosRobot.peso_container = objContainer.weight
+    dadosRobot.data_embarque = typeof req.query.data_saida === 'string' ? req.query.data_saida : moment(moment.now()).format('YYYY-MM-DD');
+    dadosRobot.user = credencialsRobotMaersk?.user ?? 'ND'
+    dadosRobot.password = credencialsRobotMaersk?.password ?? 'ND'
 
-  //   await dadosRobot.save()
-  // }
+    await dadosRobot.save()
+  }
   
   // response_freight = await adicionar_servico(response_freight, req, res, getCached)
   
   // if (response_freight.length === 0 ) {
   //   response_cached = false;
     
+  response_freight = await adicionar_servico(response_freight, req, res, cma);
     response_freight = await adicionar_servico(response_freight, req, res, searates);
     response_freight = await adicionar_servico(response_freight, req, res, zim);
-    response_freight = await adicionar_servico(response_freight, req, res, cma);
     response_freight = await adicionar_servico(response_freight, req, res, evergreen);
     response_freight = await adicionar_servico(response_freight, req, res, local);
   // }

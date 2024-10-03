@@ -327,8 +327,10 @@ export const searates = async (req: Request, res: Response) => {
 
     
     if (response_freight.length === 0) {
+      console.log("NAO RETORNOU DADOS SEARATES")
       return [];
     } else {
+      console.log("RETONANDO DADOS SEARATES")
       return response_freight;
     }
   } catch (e) {

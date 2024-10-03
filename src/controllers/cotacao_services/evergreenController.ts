@@ -61,8 +61,10 @@ export const evergreen = async (req: Request, res: Response) => {
       console.log("Evergreen não trouxe resultados.");
     }
     if (response_freight.length === 0) {
+      console.log("Evergreen não trouxe resultados.");
       return [];
     } else {
+      console.log("Resultados Evergreen.");
       return response_freight;
     }
   } catch (e) {

@@ -64,8 +64,10 @@ export const zim = async (req: Request, res: Response) => {
       console.log("Zim não trouxe resultados.");
     }
     if (response_freight.length === 0) {
+      console.log("Zim não trouxe resultados.");
       return [];
     } else {
+      console.log("Resultados ZIM");
       return response_freight;
     }
   } catch (e) {
