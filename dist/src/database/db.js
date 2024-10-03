@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const moment_1 = require("moment");
 const mongoose_1 = __importDefault(require("mongoose"));
 function connectDatabase() {
     //  *********** BD PROD ************
@@ -13,7 +14,7 @@ function connectDatabase() {
             console.error(err);
         }
         else {
-            console.log('CONNECTED TO MONGODB PROD');
+            console.log('CONNECTED TO MONGODB PROD as ', new Date((0, moment_1.now)()));
         }
     });
     //   *********** BD LOCAL ************
@@ -25,7 +26,7 @@ function connectDatabase() {
     //       console.error('FAILED TO CONNECT TO MONGODB LOCAL');
     //       console.error(err);
     //     } else {
-    //       console.log('CONNECTED TO MONGODB LOCAL');
+    //       console.log('CONNECTED TO MONGODB LOCAL as ', new Date(now()));
     //     }
     //   }
     // )
@@ -38,7 +39,7 @@ function connectDatabase() {
     //       console.error('FAILED TO CONNECT TO MONGODB HOMOLOG');
     //       console.error(err);
     //     } else {
-    //       console.log('CONNECTED TO MONGODB HOMOLOG');
+    //       console.log('CONNECTED TO MONGODB HOMOLOG as ', new Date(now()));
     //     }
     //   }
     // )

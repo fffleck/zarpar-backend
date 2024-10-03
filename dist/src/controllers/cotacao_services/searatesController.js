@@ -297,9 +297,11 @@ const searates = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
         });
         if (response_freight.length === 0) {
+            console.log("NAO RETORNOU DADOS SEARATES");
             return [];
         }
         else {
+            console.log("RETONANDO DADOS SEARATES");
             return response_freight;
         }
     }

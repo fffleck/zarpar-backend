@@ -56,9 +56,11 @@ const evergreen = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             console.log("Evergreen não trouxe resultados.");
         }
         if (response_freight.length === 0) {
+            console.log("Evergreen não trouxe resultados.");
             return [];
         }
         else {
+            console.log("Resultados Evergreen.");
             return response_freight;
         }
     }

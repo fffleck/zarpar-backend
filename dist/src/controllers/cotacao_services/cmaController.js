@@ -166,9 +166,11 @@ const cma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     });
     if (response_freight.length === 0) {
+        console.log("CMA  não trouxe resultados.");
         return [];
     }
     else {
+        console.log("Resultados CMA.");
         return response_freight;
     }
     // } catch (e) {
