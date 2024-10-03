@@ -32,6 +32,8 @@ export interface Ibooking extends mongoose.Document {
     bookingFile?: string,
     blFile?: string,
     oceanFreigth?: string,
+    valor: string,
+    taxas: [],
   }
 
 const BookingSchema = new mongoose.Schema({
@@ -148,7 +150,15 @@ const BookingSchema = new mongoose.Schema({
     },
     oceanFreigth: {
         type: String, 
-        required: false,       
+        required: false,
+    },
+    valor: {
+        type: String, 
+        required: false,
+    },
+    taxas: {
+        type: Array,
+        required: false,
     }
 });
 

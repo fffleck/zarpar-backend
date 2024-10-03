@@ -31,7 +31,6 @@ const save_booking = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             }
         });
     }
-    informacoesPedido.valor = parseFloat(informacoesPedido.valor) + totalTaxas;
     const save_booking = yield booking_service_1.default.create(informacoesPedido);
     if (save_booking) {
         res.json({

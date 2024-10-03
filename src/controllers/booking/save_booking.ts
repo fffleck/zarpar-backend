@@ -22,7 +22,6 @@ export const save_booking = async (req: Request, res: Response)=>{
     })
   }
 
-  informacoesPedido.valor = parseFloat(informacoesPedido.valor) + totalTaxas;
   
   const save_booking = await bookingService.create(informacoesPedido)
 

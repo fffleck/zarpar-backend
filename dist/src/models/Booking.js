@@ -119,6 +119,14 @@ const BookingSchema = new mongoose_1.default.Schema({
     oceanFreigth: {
         type: String,
         required: false,
+    },
+    valor: {
+        type: String,
+        required: false,
+    },
+    taxas: {
+        type: Array,
+        required: false,
     }
 });
 const Booking = mongoose_1.default.model("Booking", BookingSchema);
