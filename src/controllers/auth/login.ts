@@ -27,6 +27,7 @@ export const login =  async (req: Request, res: Response)=>{
           const usuarioEncontrado = user[0];
           const tokenData = {nome: usuarioEncontrado.name, email: usuarioEncontrado.email}
           const generatedToken = jwt.sign(tokenData, KEY_JWT, {expiresIn: '240m'});
+          await userService.updateCountLogin(usuarioEncontrado.email)
  
           res.json(
              {

@@ -46,6 +46,14 @@ const UserSchema = new mongoose_1.default.Schema({
         type: Number,
         required: false
     },
+    countLogin: {
+        type: Number,
+        required: false
+    },
+    lastLogin: {
+        type: Date,
+        required: false
+    },
     active: {
         type: String,
         default: "A"

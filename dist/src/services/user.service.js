@@ -18,6 +18,7 @@ const UserToken_1 = __importDefault(require("../models/UserToken"));
 const create = (body) => User_1.default.create(body);
 const getByEmail = (emailRequerido) => User_1.default.find({ email: emailRequerido });
 const getOneByEmail = (emailRequerido) => User_1.default.findOne({ email: emailRequerido });
+const getAll = () => User_1.default.find();
 const updatePassword = (emailRequerido, password) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield User_1.default.findOne({ email: emailRequerido });
     if (!user) {
@@ -50,12 +51,35 @@ const updateSearch = (email) => __awaiter(void 0, void 0, void 0, function* () {
         yield user.save();
     }
 });
+const updateCountLogin = (email) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield User_1.default.findOne({ email: email });
+    if (!user) {
+        throw new Error("Erro ao atualizar, usuário não encontrado.");
+    }
+    const now = new Date();
+    const lastLogin = user.lastLogin || now; // Se não houver `lastLogin`, considere o login atual
+    const sameMonthAndYear = now.getMonth() === lastLogin.getMonth() && now.getFullYear() === lastLogin.getFullYear();
+    if (!sameMonthAndYear) {
+        // Se o mês mudou, reinicie o contador
+        user.countLogin = 1;
+    }
+    else {
+        // Se o mês não mudou, incremente o contador
+        user.countLogin = (user.countLogin || 0) + 1;
+    }
+    // Atualize a data de último login para a data atual
+    user.lastLogin = now;
+    // Salva as alterações no banco
+    yield user.save();
+});
 exports.default = {
     create,
+    getAll,
     getByEmail,
     getOneByEmail,
     getUserToken,
     updateUserToken,
     updatePassword,
     updateSearch,
+    updateCountLogin,
 };

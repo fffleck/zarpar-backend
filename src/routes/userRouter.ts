@@ -2,6 +2,7 @@ import { register } from '../controllers/user/register';
 import { find_user } from '../controllers/user/find_user';
 import { add_search } from '../controllers/user/add_search';
 import express, { Router } from "express";
+import { analitcs_user } from '../controllers/user/analitics';
 
 const routes: Router = express.Router();
 
@@ -164,5 +165,7 @@ routes.post('/find_user', find_user);
  *                   example: "ID de usuário inválido"
  */
 routes.post('/add_search', add_search);
+
+routes.post('/analitics', analitcs_user);
 
 export default routes;

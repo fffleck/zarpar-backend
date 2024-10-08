@@ -11,6 +11,8 @@ export interface IUser extends mongoose.Document {
     telefone: string;
     password: string;
     search: number;
+    countLogin: number;
+    lastLogin: Date;
     active: string;
 }
 
@@ -54,6 +56,14 @@ const UserSchema = new mongoose.Schema({
     },
     search:{
         type: Number,
+        required:false
+    },
+    countLogin:{
+        type: Number,
+        required:false
+    },
+    lastLogin: {
+        type: Date,
         required:false
     },
     active:{

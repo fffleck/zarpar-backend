@@ -36,6 +36,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             const usuarioEncontrado = user[0];
             const tokenData = { nome: usuarioEncontrado.name, email: usuarioEncontrado.email };
             const generatedToken = jsonwebtoken_1.default.sign(tokenData, KEY_JWT, { expiresIn: '240m' });
+            yield user_service_1.default.updateCountLogin(usuarioEncontrado.email);
             res.json({
                 success: true,
                 token: generatedToken,

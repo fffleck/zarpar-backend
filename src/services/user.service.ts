@@ -13,6 +13,9 @@ const getByEmail = (emailRequerido: any) =>
 const getOneByEmail = (emailRequerido: any) =>
   User.findOne({ email: emailRequerido });
 
+const getAll = () =>  User.find();
+  
+
 const updatePassword = async (
   emailRequerido: any,
   password: any
@@ -38,6 +41,8 @@ const updateUserToken = async (usertoken: IUserToken) => {
   }
 };
 
+
+
 const updateSearch = async (email: string) => {
   const user = await User.findOne({ email: email });
 
@@ -50,12 +55,42 @@ const updateSearch = async (email: string) => {
   }
 };
 
+const updateCountLogin = async (email: string) => {
+  const user = await User.findOne({ email: email });
+
+  if (!user) {
+    throw new Error("Erro ao atualizar, usuário não encontrado.");
+  }
+
+  const now = new Date();
+  const lastLogin = user.lastLogin || now; // Se não houver `lastLogin`, considere o login atual
+  const sameMonthAndYear = now.getMonth() === lastLogin.getMonth() && now.getFullYear() === lastLogin.getFullYear();
+
+  if (!sameMonthAndYear) {
+    // Se o mês mudou, reinicie o contador
+    user.countLogin = 1;
+  } else {
+    // Se o mês não mudou, incremente o contador
+    user.countLogin = (user.countLogin || 0) + 1;
+  }
+
+  // Atualize a data de último login para a data atual
+  user.lastLogin = now;
+
+  // Salva as alterações no banco
+  await user.save();
+};
+
+
+
 export default {
   create,
+  getAll,
   getByEmail,
   getOneByEmail,
   getUserToken,
   updateUserToken,
   updatePassword,
   updateSearch,
+  updateCountLogin,
 };

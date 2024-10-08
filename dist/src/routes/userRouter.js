@@ -7,6 +7,7 @@ const register_1 = require("../controllers/user/register");
 const find_user_1 = require("../controllers/user/find_user");
 const add_search_1 = require("../controllers/user/add_search");
 const express_1 = __importDefault(require("express"));
+const analitics_1 = require("../controllers/user/analitics");
 const routes = express_1.default.Router();
 /**
  * @swagger
@@ -164,4 +165,5 @@ routes.post('/find_user', find_user_1.find_user);
  *                   example: "ID de usuário inválido"
  */
 routes.post('/add_search', add_search_1.add_search);
+routes.post('/analitics', analitics_1.analitcs_user);
 exports.default = routes;
