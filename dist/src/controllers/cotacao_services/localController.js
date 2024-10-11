@@ -57,6 +57,10 @@ const local = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         let porto_descarga_1 = pd_obj === null || pd_obj === void 0 ? void 0 : pd_obj.port_id.split("/")[1];
         let data_limite = (0, moment_1.default)(data_saida).add(10, 'days').format('DD/MM/YYYY');
         let data_inicial = (0, moment_1.default)(data_saida).format('DD/MM/YYYY');
+        console.log("PORTO ORIGEM ", porto_embarque);
+        console.log("PORTO DETINO", porto_descarga);
+        console.log("DATA INICIAL", (0, moment_1.default)(data_inicial, "DD/MM/YYYY").toDate());
+        console.log("DATA FINAL", (0, moment_1.default)(data_limite, "DD/MM/YYYY").toDate());
         let fretes_banco = yield frete_maritmo_service_1.default.getOne({
             porto_embarque: porto_embarque_1 === null || porto_embarque_1 === void 0 ? void 0 : porto_embarque_1.trim(),
             porto_descarga: porto_descarga_1 === null || porto_descarga_1 === void 0 ? void 0 : porto_descarga_1.trim(),

@@ -10,7 +10,8 @@ import uploadRouter from "./routes/uploadRouter";
 import bookingRouter from "./routes/bookingRouter";
 import quotationsNACRouter from "./routes/cotacoesNacRouter";
 import fornecedorRouter from "./routes/fornecedorRoute"
-
+import freteRouter from "./routes/fretesRouter"
+import taxesRouter from "./routes/taxasRouter"
 // Importando Swagger
 import swaggerApp from "./swagger";
 import armadoresRouter from "./routes/armadoresRouter";
@@ -41,6 +42,8 @@ class App {
     this.server.use("/fornecedor", fornecedorRouter);
     this.server.use("/booking", bookingRouter);
     this.server.use("/quotations", quotationsNACRouter);
+    this.server.use("/fretes", freteRouter);
+    this.server.use("/taxes", taxesRouter);
     this.server.use("/armadores", armadoresRouter);
     this.server.use("/swagger", swaggerApp); // Rota para a documentação do Swagger
   }

@@ -15,6 +15,8 @@ const uploadRouter_1 = __importDefault(require("./routes/uploadRouter"));
 const bookingRouter_1 = __importDefault(require("./routes/bookingRouter"));
 const cotacoesNacRouter_1 = __importDefault(require("./routes/cotacoesNacRouter"));
 const fornecedorRoute_1 = __importDefault(require("./routes/fornecedorRoute"));
+const fretesRouter_1 = __importDefault(require("./routes/fretesRouter"));
+const taxasRouter_1 = __importDefault(require("./routes/taxasRouter"));
 // Importando Swagger
 const swagger_1 = __importDefault(require("./swagger"));
 const armadoresRouter_1 = __importDefault(require("./routes/armadoresRouter"));
@@ -39,6 +41,8 @@ class App {
         this.server.use("/fornecedor", fornecedorRoute_1.default);
         this.server.use("/booking", bookingRouter_1.default);
         this.server.use("/quotations", cotacoesNacRouter_1.default);
+        this.server.use("/fretes", fretesRouter_1.default);
+        this.server.use("/taxes", taxasRouter_1.default);
         this.server.use("/armadores", armadoresRouter_1.default);
         this.server.use("/swagger", swagger_1.default); // Rota para a documentação do Swagger
     }

@@ -53,6 +53,11 @@ export const local = async (req: Request, res: Response) => {
     let data_limite = moment(data_saida).add(10,'days').format('DD/MM/YYYY')
     let data_inicial =  moment(data_saida).format('DD/MM/YYYY')
 
+
+    console.log("PORTO ORIGEM ", porto_embarque)
+    console.log("PORTO DETINO", porto_descarga)
+    console.log("DATA INICIAL", moment(data_inicial, "DD/MM/YYYY").toDate())
+    console.log("DATA FINAL", moment(data_limite, "DD/MM/YYYY").toDate())
   
     let fretes_banco = await frete_maritmoService.getOne({
       porto_embarque: porto_embarque_1?.trim(),

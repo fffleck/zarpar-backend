@@ -27,7 +27,7 @@ export const fretes = async (req: Request, res: Response) => {
   response_filter = [];
   let data_saida_formatada: Date
 
-  
+  console.log("REQ ", req.query.porto_descarga)
   const credencialsRobotMaersk = await armador_loginService.getCredencialsArmadorEmail('Maersk', email);
   const objMercadoria = await mercadoriaService.getAll() // Quando mudar para o plano enterprise tem que revisar isso 
   const objPortoOrigem = await portoService.getOne(typeof req.query.porto_embarque === 'string' ? req.query.porto_embarque : 'ND')

@@ -38,6 +38,7 @@ const fretes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     response_freight = [];
     response_filter = [];
     let data_saida_formatada;
+    console.log("REQ ", req.query.porto_descarga);
     const credencialsRobotMaersk = yield armador_login_service_1.default.getCredencialsArmadorEmail('Maersk', email);
     const objMercadoria = yield mercadoria_service_1.default.getAll(); // Quando mudar para o plano enterprise tem que revisar isso 
     const objPortoOrigem = yield porto_service_1.default.getOne(typeof req.query.porto_embarque === 'string' ? req.query.porto_embarque : 'ND');
