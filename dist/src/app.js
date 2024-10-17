@@ -20,6 +20,8 @@ const taxasRouter_1 = __importDefault(require("./routes/taxasRouter"));
 // Importando Swagger
 const swagger_1 = __importDefault(require("./swagger"));
 const armadoresRouter_1 = __importDefault(require("./routes/armadoresRouter"));
+const portosRouter_1 = __importDefault(require("./routes/portosRouter"));
+const containersRouter_1 = __importDefault(require("./routes/containersRouter"));
 class App {
     constructor() {
         this.server = (0, express_1.default)();
@@ -44,6 +46,8 @@ class App {
         this.server.use("/fretes", fretesRouter_1.default);
         this.server.use("/taxes", taxasRouter_1.default);
         this.server.use("/armadores", armadoresRouter_1.default);
+        this.server.use("/portos", portosRouter_1.default);
+        this.server.use("/containers", containersRouter_1.default);
         this.server.use("/swagger", swagger_1.default); // Rota para a documentação do Swagger
     }
 }

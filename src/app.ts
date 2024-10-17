@@ -15,6 +15,8 @@ import taxesRouter from "./routes/taxasRouter"
 // Importando Swagger
 import swaggerApp from "./swagger";
 import armadoresRouter from "./routes/armadoresRouter";
+import portoRouter from "./routes/portosRouter";
+import containerRouter from "./routes/containersRouter";
 
 class App {
   server: Application;
@@ -45,6 +47,8 @@ class App {
     this.server.use("/fretes", freteRouter);
     this.server.use("/taxes", taxesRouter);
     this.server.use("/armadores", armadoresRouter);
+    this.server.use("/portos", portoRouter);
+    this.server.use("/containers", containerRouter);
     this.server.use("/swagger", swaggerApp); // Rota para a documentação do Swagger
   }
 }
